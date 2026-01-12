@@ -1,7 +1,5 @@
 package ru.javawebinar.topjava.service;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -10,15 +8,12 @@ import ru.javawebinar.topjava.model.Restaurant;
 import ru.javawebinar.topjava.repository.RestaurantRepository;
 import ru.javawebinar.topjava.to.RestaurantTo;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import static ru.javawebinar.topjava.util.ValidationUtil.checkNotFound;
 
 @Service
 public class RestaurantService {
-    private final Logger log = LoggerFactory.getLogger(getClass());
-
     private final RestaurantRepository repository;
 
     public RestaurantService(RestaurantRepository repository) {
@@ -35,7 +30,9 @@ public class RestaurantService {
     }
 
     @CacheEvict(value = "restaurantTosForToday", allEntries = true)
-    public int vote(int id, int userId) {return repository.vote(id, userId);}
+    public int vote(int id, int userId) {
+        return repository.vote(id, userId);
+    }
 
     public List<RestaurantTo> getAll() {
         return repository.getAll();
@@ -43,7 +40,6 @@ public class RestaurantService {
 
     @Cacheable("restaurantTosForToday")
     public List<RestaurantTo> getAllForToday() {
-        log.debug("getAllForToday");
         return repository.getAllForToday();
     }
 
@@ -58,5 +54,4 @@ public class RestaurantService {
         Assert.notNull(restaurant, "restaurant must not be null");
         return repository.save(restaurant);
     }
-
 }

@@ -1,13 +1,9 @@
 package ru.javawebinar.topjava.to;
 
-import org.hibernate.validator.constraints.Range;
 import ru.javawebinar.topjava.HasIdAndEmail;
-import ru.javawebinar.topjava.util.UsersUtil;
-
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serial;
 import java.io.Serializable;

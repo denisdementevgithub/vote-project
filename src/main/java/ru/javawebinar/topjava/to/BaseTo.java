@@ -1,10 +1,11 @@
 package ru.javawebinar.topjava.to;
 
-//import io.swagger.annotations.ApiModelProperty;
+
+import io.swagger.annotations.ApiModelProperty;
 import ru.javawebinar.topjava.HasId;
 
 public abstract class BaseTo implements HasId {
-    //@ApiModelProperty(hidden = true)
+    @ApiModelProperty(hidden = true)
     protected Integer id;
 
     public BaseTo() {

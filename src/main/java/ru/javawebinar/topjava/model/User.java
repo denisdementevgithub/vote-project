@@ -1,19 +1,14 @@
 package ru.javawebinar.topjava.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-//import io.swagger.annotations.ApiModelProperty;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.*;
-import org.hibernate.validator.constraints.Range;
 import org.springframework.util.CollectionUtils;
 import ru.javawebinar.topjava.HasIdAndEmail;
-import ru.javawebinar.topjava.View;
-
 
 import javax.persistence.Entity;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -64,12 +59,10 @@ public class User extends AbstractNamedEntity implements HasIdAndEmail {
             uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id", "role"}, name = "uk_user_role")})
     @Column(name = "role")
     @ElementCollection(fetch = FetchType.EAGER)
-    //    @Fetch(FetchMode.SUBSELECT)
     @BatchSize(size = 200)
     @JoinColumn
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<Role> roles;
-
 
 
     public User(User u) {

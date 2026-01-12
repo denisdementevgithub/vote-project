@@ -1,17 +1,12 @@
 package ru.javawebinar.topjava.web;
 
-import org.hibernate.validator.cfg.defs.Mod10CheckDef;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import ru.javawebinar.topjava.service.RestaurantService;
-import ru.javawebinar.topjava.service.UserService;
 import springfox.documentation.annotations.ApiIgnore;
-//import springfox.documentation.annotations.ApiIgnore;
+
 
 @ApiIgnore
 @Controller
@@ -24,7 +19,6 @@ public class RootController {
         return "redirect:restaurants";
     }
 
-    //    @Secured("ROLE_ADMIN")
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/users")
     public String getUsers() {

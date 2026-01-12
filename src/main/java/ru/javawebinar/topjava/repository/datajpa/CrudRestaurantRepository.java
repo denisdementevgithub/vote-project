@@ -28,12 +28,12 @@ public interface CrudRestaurantRepository extends JpaRepository<Restaurant, Inte
             "LEFT JOIN RestaurantUsers ru ON r = ru.restaurant WHERE r.registered between :startDateTime AND :endDateTime " +
             "GROUP BY r.id, r.name, r.menu ORDER BY r.id DESC")
     List<Object[]> getAllForToday(@Param("startDateTime") LocalDateTime startDateTime,
-                                 @Param("endDateTime") LocalDateTime endDateTime);
+                                  @Param("endDateTime") LocalDateTime endDateTime);
 
     @Modifying
     @Transactional
     @Query(value = "INSERT INTO restaurant_users (restaurant_id, user_id) VALUES (?1, ?2)", nativeQuery = true)
-    int vote( int id,  int userId);
+    int vote(int id, int userId);
 
     @Modifying
     @Transactional

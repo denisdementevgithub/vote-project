@@ -5,15 +5,11 @@ import ru.javawebinar.topjava.model.Role;
 import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.to.UserTo;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-
 public class UsersUtil {
 
     public static User createNewFromTo(UserTo userTo) {
         return new User(null, userTo.getName(), userTo.getEmail().toLowerCase(), userTo.getPassword(), Role.USER);
     }
-
 
 
     public static UserTo asTo(User user) {

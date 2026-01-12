@@ -1,11 +1,6 @@
 package ru.javawebinar.topjava.to;
 
-import org.springframework.format.annotation.DateTimeFormat;
-import ru.javawebinar.topjava.model.AbstractBaseEntity;
-import ru.javawebinar.topjava.util.DateTimeUtil;
-
 import java.beans.ConstructorProperties;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -19,9 +14,8 @@ public class RestaurantTo extends BaseTo {
 
     private final int sumOfVotes;
 
-
     @ConstructorProperties({"id", "name", "menu", "sumOfVotes", "registered"})
-    public RestaurantTo(Integer id, String name, String menu, Integer sumOfVotes , LocalDateTime registered) {
+    public RestaurantTo(Integer id, String name, String menu, Integer sumOfVotes, LocalDateTime registered) {
         super(id);
         this.name = name;
         this.menu = menu;
@@ -29,7 +23,9 @@ public class RestaurantTo extends BaseTo {
         this.registered = registered;
     }
 
-    public String getName() {        return name;    }
+    public String getName() {
+        return name;
+    }
 
     public LocalDateTime getRegistered() {
         return registered;

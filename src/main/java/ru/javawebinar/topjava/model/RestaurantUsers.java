@@ -5,7 +5,7 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "restaurant_users")
-public class RestaurantUsers extends AbstractBaseEntity{
+public class RestaurantUsers extends AbstractBaseEntity {
 
     @JoinColumn(name = "restaurant_id")
     @ManyToOne(fetch = FetchType.LAZY)

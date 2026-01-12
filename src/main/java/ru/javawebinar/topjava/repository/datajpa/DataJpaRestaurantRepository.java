@@ -1,8 +1,6 @@
 package ru.javawebinar.topjava.repository.datajpa;
 
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 import ru.javawebinar.topjava.model.Restaurant;
 import ru.javawebinar.topjava.repository.RestaurantRepository;
 import ru.javawebinar.topjava.to.RestaurantTo;

@@ -20,38 +20,32 @@ public abstract class AbstractRestaurantController {
     private RestaurantService service;
 
     public Restaurant get(int id) {
-        int userId = SecurityUtil.authUserId();
         log.info("get restaurant {}", id);
         return service.get(id);
     }
 
     public void delete(int id) {
-        int userId = SecurityUtil.authUserId();
         log.info("delete restaurant {}", id);
         service.delete(id);
     }
 
     public List<RestaurantTo> getAll() {
-        int userId = SecurityUtil.authUserId();
         log.info("getAll");
         return service.getAll();
     }
 
     public List<RestaurantTo> getAllForToday() {
-        int userId = SecurityUtil.authUserId();
         log.info("getAllForToday");
         return service.getAllForToday();
     }
 
     public Restaurant create(Restaurant restaurant) {
-        int userId = SecurityUtil.authUserId();
         log.info("create {}", restaurant);
         checkIsNew(restaurant);
         return service.create(restaurant);
     }
 
     public void update(Restaurant restaurant, int id) {
-        int userId = SecurityUtil.authUserId();
         log.info("update {}", restaurant);
         assureIdConsistent(restaurant, id);
         service.update(restaurant);
