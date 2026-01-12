@@ -14,20 +14,20 @@
             <div class="error">${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message}</div>
         </c:if>
         <c:if test="${not empty param.message}">
-            <div class="message"><spring:message code="${param.message}" text=""/></div>
+            <div class="message">Ошибка приложения</div>
         </c:if>
         <sec:authorize access="isAnonymous()">
             <div class="pt-2">
-                <a class="btn btn-lg btn-info mt-2" href="profile/register"><spring:message code="app.register"/> &raquo;</a>
+                <a class="btn btn-lg btn-info mt-2" href="profile/register">Регистрация &raquo;</a>
                 <button type="submit" class="btn btn-lg btn-primary mt-2" onclick="login('user@yandex.ru', 'password')">
-                    <spring:message code="app.login"/> User
+                    Зайти как User
                 </button>
                 <button type="submit" class="btn btn-lg btn-primary mt-2" onclick="login('admin@gmail.com', 'admin')">
-                    <spring:message code="app.login"/> Admin
+                    Зайти как Admin
                 </button>
             </div>
         </sec:authorize>
-        <div class="lead py-4"><spring:message code="app.stackTitle"/> <br>
+        <div class="lead py-4">Стек технологий приложения: <br>
             <a href="http://projects.spring.io/spring-security/">Spring Security</a>,
             <a href="https://docs.spring.io/spring/docs/current/spring-framework-reference/html/mvc.html">Spring MVC</a>,
             <a href="http://projects.spring.io/spring-data-jpa/">Spring Data JPA</a>,
@@ -55,7 +55,10 @@
     </div>
 </div>
 <div class="container">
-    <div class="lead"><spring:message code="app.description"/></div>
+    <div class="lead">Программа по подсчету голосов с регистрацией/авторизацией и правами доступа на основе ролей (USER, ADMIN). \
+        Администратор может создавать/редактировать/удалять пользователей, а пользователи - управлять своим профилем и голосами (за рестораны) через UI (по AJAX) и по REST интерфейсу с базовой авторизацией. \
+        Весь REST интерфейс покрывается JUnit тестами, используя Spring MVC Test и Spring Security Test.
+    </div>
     <a class="btn btn-lg btn-success my-4" href="swagger-ui.html" target="_blank">Swagger REST Api Documentation</a>
 </div>
 <jsp:include page="fragments/footer.jsp"/>

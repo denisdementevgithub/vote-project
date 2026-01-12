@@ -6,10 +6,6 @@
 
     <display-name>TopJava</display-name>
 
-    <context-param>
-        <param-name>spring.profiles.default</param-name>
-        <param-value>hsqldb,datajpa</param-value>
-    </context-param>
 
     <context-param>
         <param-name>contextConfigLocation</param-name>

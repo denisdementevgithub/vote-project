@@ -29,14 +29,14 @@ function makeEditable(datatableOpts) {
 }
 
 function add() {
-    $("#modalTitle").html(i18n["addTitle"]);
+    $("#modalTitle").html("Добавление");
     form.find(":input").val("");
     $("#editRow").modal();
 }
 
 function updateRow(id) {
     form.find(":input").val("");
-    $("#modalTitle").html(i18n["editTitle"]);
+    $("#modalTitle").html("Редактирование");
     $.get(ctx.ajaxUrl + id, function (data) {
         $.each(data, function (key, value) {
             form.find("input[name='" + key + "']").val(value);
@@ -46,13 +46,13 @@ function updateRow(id) {
 }
 
 function deleteRow(id) {
-    if (confirm(i18n['common.confirm'])) {
+    if (confirm("Подтвердите")) {
         $.ajax({
             url: ctx.ajaxUrl + id,
             type: "DELETE"
         }).done(function () {
             ctx.updateTable();
-            successNoty("common.deleted");
+            successNoty("Удалено");
         });
     }
 }
@@ -69,7 +69,7 @@ function save() {
     }).done(function () {
         $("#editRow").modal("hide");
         ctx.updateTable();
-        successNoty("common.saved");
+        successNoty("Сохранено");
     });
 }
 
@@ -85,7 +85,7 @@ function closeNoty() {
 function successNoty(key) {
     closeNoty();
     new Noty({
-        text: `<span class='fa fa-lg fa-check'></span> &nbsp;${i18n[key]}`,
+        text: `<span class='fa fa-lg fa-check'></span> &nbsp;"Ошибка"`,
         type: 'success',
         layout: "bottomRight",
         timeout: 1000
@@ -108,7 +108,7 @@ function failNoty(jqXHR) {
     closeNoty();
     var errorInfo = jqXHR.responseJSON;
     failedNote = new Noty({
-        text: `<span class='fa fa-lg fa-exclamation-circle'></span> &nbsp;${i18n['common.errorStatus']}: ${jqXHR.status}<br>${errorInfo.type}<br>${errorInfo.detail}`,
+        text: `<span class='fa fa-lg fa-exclamation-circle'></span> &nbsp;"Статус ошибки": ${jqXHR.status}<br>${errorInfo.type}<br>${errorInfo.detail}`,
         type: "error",
         layout: "bottomRight"
     });

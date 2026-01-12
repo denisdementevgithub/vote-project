@@ -9,8 +9,6 @@ const ctx = {
 }
 
 
-
-
 // $(document).ready(function () {
 $(function () {
     makeEditable({
@@ -54,13 +52,13 @@ function renderVoteBtn(data, type, row) {
     }
 }
 function voteRow(id) {
-    if (confirm(i18n['common.confirm'])) {
+    if (confirm("Подтвердите")) {
         $.ajax({
             url: ctx.ajaxUrl + id + "/vote",
             type: "POST"
         }).done(function () {
             ctx.updateTable();
-            successNoty("common.voted");
+            successNoty("Проголосовали");
         });
     }
 }

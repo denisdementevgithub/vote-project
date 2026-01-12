@@ -1,7 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<%@ taglib prefix="fn" uri="http://topjava.javawebinar.ru/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
@@ -13,24 +12,24 @@
 
 <div class="jumbotron pt-4">
     <div class="container">
-        <h3 class="text-center"><spring:message code="restaurant.title"/></h3>
+        <h3 class="text-center">Рестораны</h3>
         <sec:authorize access="hasRole('ADMIN')">
         <button class="btn btn-primary" onclick="add()">
             <span class="fa fa-plus"></span>
-            <spring:message code="common.add"/>
+            Добавить
         </button>
         </sec:authorize>
         <table class="table table-striped" id="datatable">
             <thead>
             <tr>
-                <th><spring:message code="restaurant.dateOfVoting"/></th>
-                <th><spring:message code="restaurant.name"/></th>
-                <th><spring:message code="restaurant.menu"/></th>
-                <th><spring:message code="restaurant.sumOfVotes"/></th>
-                <th><spring:message code="common.vote"/></th>
+                <th>Дата голосования</th>
+                <th>Имя ресторана</th>
+                <th>Меню</th>
+                <th>Голосов</th>
+                <th>Голосовать</th>
                 <sec:authorize access="hasRole('ADMIN')">
-                    <th><spring:message code="restaurant.edit"/></th>
-                    <th><spring:message code="common.delete"/></th>
+                    <th>Редактировать ресторан</th>
+                    <th>Удалить</th>
                 </sec:authorize>
 
 
@@ -45,7 +44,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title"><spring:message code="restaurant.add"/></h4>
+                <h4 class="modal-title">Добавить ресторан</h4>
                 <button type="button" class="close" data-dismiss="modal" onclick="closeNoty()">&times;</button>
             </div>
             <div class="modal-body">
@@ -53,26 +52,26 @@
                     <input type="hidden" id="id" name="id">
 
                     <div class="form-group">
-                        <label for="name" class="col-form-label"><spring:message code="restaurant.name"/></label>
+                        <label for="name" class="col-form-label">Имя ресторана</label>
                         <input type="text" class="form-control" id="name" name="name"
-                               placeholder="<spring:message code="restaurant.name"/>">
+                               placeholder="Имя ресторана">
                     </div>
 
                     <div class="form-group">
-                        <label for="menu" class="col-form-label"><spring:message code="restaurant.menu"/></label>
+                        <label for="menu" class="col-form-label">Меню</label>
                         <input type="text" class="form-control" id="menu" name="menu"
-                               placeholder="<spring:message code="restaurant.name"/>">
+                               placeholder="Меню">
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="closeNoty()">
                     <span class="fa fa-close"></span>
-                    <spring:message code="common.cancel"/>
+                    Отменить
                 </button>
                 <button type="button" class="btn btn-primary" onclick="save()">
                     <span class="fa fa-check"></span>
-                    <spring:message code="common.save"/>
+                    Сохранить
                 </button>
             </div>
         </div>
@@ -80,9 +79,7 @@
 </div>
 <jsp:include page="fragments/footer.jsp"/>
 </body>
-<jsp:include page="fragments/i18n.jsp">
-    <jsp:param name="page" value="user"/>
-</jsp:include>
+
 <sec:authorize access="hasRole('ADMIN')">
     <script src="resources/js/topjava.admin.restaurant.js" defer></script>
 </sec:authorize>

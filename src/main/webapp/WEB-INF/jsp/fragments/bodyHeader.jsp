@@ -5,13 +5,13 @@
 
 <nav class="navbar navbar-dark bg-dark py-0">
     <div class="container">
-        <a href="restaurants" class="navbar-brand"><spring:message code="app.title"/></a>
+        <a href="restaurants" class="navbar-brand">Подсчет голосов за рестораны</a>
         <sec:authorize access="isAuthenticated()">
             <form:form class="form-inline my-2" action="logout" method="post">
                 <sec:authorize access="hasRole('ADMIN')">
-                    <a class="btn btn-info mr-1" href="users"><spring:message code="user.title"/></a>
+                    <a class="btn btn-info mr-1" href="users">Пользователи</a>
                 </sec:authorize>
-                <a class="btn btn-info mr-1" href="profile">${userTo.name} <spring:message code="app.profile"/></a>
+                <a class="btn btn-info mr-1" href="profile">${userTo.name} профиль</a>
                 <button class="btn btn-primary my-1" type="submit">
                     <span class="fa fa-sign-out"></span>
                 </button>

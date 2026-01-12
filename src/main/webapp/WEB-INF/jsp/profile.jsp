@@ -14,7 +14,7 @@
         <%--@elvariable id="userTo" type="ru.javawebinar.topjava.to.UserTo"--%>
         <div class="row">
             <div class="col-5 offset-3">
-                <h3>${userTo.name} <spring:message code="${register ? 'app.register' : 'app.profile'}"/></h3>
+                <h3>${userTo.name} <${register ? 'Регистрация' : 'профиль'}"/></h3>
                 <form:form class="form-group" modelAttribute="userTo" method="post" action="${register ? 'profile/register' : 'profile'}"
                            charset="utf-8" accept-charset="UTF-8">
 
@@ -26,11 +26,11 @@
                     <div class="text-right">
                         <a class="btn btn-secondary" href="#" onclick="window.history.back()">
                             <span class="fa fa-close"></span>
-                            <spring:message code="common.cancel"/>
+                            Отменить
                         </a>
                         <button type="submit" class="btn btn-primary">
                             <span class="fa fa-check"></span>
-                            <spring:message code="common.save"/>
+                            Сохранить
                         </button>
                     </div>
                 </form:form>

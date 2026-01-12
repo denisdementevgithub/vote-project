@@ -12,19 +12,19 @@
 
 <div class="jumbotron pt-4">
     <div class="container">
-        <h3 class="text-center"><spring:message code="user.title"/></h3>
+        <h3 class="text-center">Пользователи</h3>
         <button class="btn btn-primary" onclick="add()">
             <span class="fa fa-plus"></span>
-            <spring:message code="common.add"/>
+            Добавить
         </button>
         <table class="table table-striped" id="datatable">
             <thead>
             <tr>
-                <th><spring:message code="user.name"/></th>
-                <th><spring:message code="user.email"/></th>
-                <th><spring:message code="user.roles"/></th>
-                <th><spring:message code="user.active"/></th>
-                <th><spring:message code="user.registered"/></th>
+                <th>Имя</th>
+                <th>Почта</th>
+                <th>Роли</th>
+                <th>Активный</th>
+                <th>Зарегистрирован</th>
                 <th></th>
                 <th></th>
             </tr>
@@ -45,32 +45,32 @@
                     <input type="hidden" id="id" name="id">
 
                     <div class="form-group">
-                        <label for="name" class="col-form-label"><spring:message code="user.name"/></label>
+                        <label for="name" class="col-form-label">Имя</label>
                         <input type="text" class="form-control" id="name" name="name"
-                               placeholder="<spring:message code="user.name"/>">
+                               placeholder="Имя">
                     </div>
 
                     <div class="form-group">
-                        <label for="email" class="col-form-label"><spring:message code="user.email"/></label>
+                        <label for="email" class="col-form-label">Почта</label>
                         <input type="email" class="form-control" id="email" name="email"
-                               placeholder="<spring:message code="user.email"/>">
+                               placeholder="Почта">
                     </div>
 
                     <div class="form-group">
-                        <label for="password" class="col-form-label"><spring:message code="user.password"/></label>
+                        <label for="password" class="col-form-label">Пароль</label>
                         <input type="password" class="form-control" id="password" name="password"
-                               placeholder="<spring:message code="user.password"/>">
+                               placeholder="Пароль"/>">
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="closeNoty()">
                     <span class="fa fa-close"></span>
-                    <spring:message code="common.cancel"/>
+                    Отменить
                 </button>
                 <button type="button" class="btn btn-primary" onclick="save()">
                     <span class="fa fa-check"></span>
-                    <spring:message code="common.save"/>
+                    Сохранить
                 </button>
             </div>
         </div>
@@ -78,7 +78,5 @@
 </div>
 <jsp:include page="fragments/footer.jsp"/>
 </body>
-<jsp:include page="fragments/i18n.jsp">
-    <jsp:param name="page" value="user"/>
-</jsp:include>
+
 </html>
