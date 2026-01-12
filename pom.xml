@@ -52,7 +52,7 @@
   </properties>
 
   <build>
-    <finalName>topjava</finalName>
+    <finalName>VoteProject</finalName>
     <defaultGoal>package</defaultGoal>
     <plugins>
       <plugin>
@@ -70,7 +70,6 @@
         </configuration>
       </plugin>
       <plugin>
-        <!--https://junit.org/junit5/docs/current/user-guide/#running-tests-build-maven -->
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
         <version>3.5.4</version>
@@ -79,8 +78,7 @@
         </configuration>
       </plugin>
 
-      <!-- http://stackoverflow.com/questions/4305935/is-it-possible-to-supply-tomcat6s-context-xml-file-via-the-maven-cargo-plugin#4417945 -->
-      <!-- https://codehaus-cargo.github.io/cargo/Tomcat+9.x.html -->
+
       <plugin>
         <groupId>org.codehaus.cargo</groupId>
         <artifactId>cargo-maven3-plugin</artifactId>
@@ -124,7 +122,7 @@
   </build>
 
   <dependencies>
-    <!-- Logging with SLF4J & LogBack -->
+
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
@@ -138,7 +136,7 @@
       <scope>runtime</scope>
     </dependency>
 
-    <!--  javax.annotation.meta.When.MAYBE compile warning, https://stackoverflow.com/questions/53326271/548473 -->
+
     <dependency>
       <groupId>com.google.code.findbugs</groupId>
       <artifactId>annotations</artifactId>
@@ -152,7 +150,7 @@
       <version>1.3.2</version>
     </dependency>
 
-    <!-- Spring -->
+
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-context-support</artifactId>
@@ -163,7 +161,7 @@
       <version>${spring-data-jpa.version}</version>
     </dependency>
 
-    <!--security-->
+
     <dependency>
       <groupId>org.springframework.security</groupId>
       <artifactId>spring-security-web</artifactId>
@@ -180,7 +178,7 @@
       <version>${spring.security.version}</version>
     </dependency>
 
-    <!--- ORM -->
+
     <dependency>
       <groupId>org.hibernate</groupId>
       <artifactId>hibernate-core</artifactId>
@@ -197,7 +195,7 @@
       <version>${hibernate.version}</version>
     </dependency>
 
-    <!--http://hibernate.org/validator/documentation/getting-started/#unified-expression-language-el-->
+
     <dependency>
       <groupId>org.glassfish</groupId>
       <artifactId>javax.el</artifactId>
@@ -205,7 +203,7 @@
       <scope>provided</scope>
     </dependency>
 
-    <!-- Cache -->
+
     <dependency>
       <groupId>javax.cache</groupId>
       <artifactId>cache-api</artifactId>
@@ -224,14 +222,14 @@
       </exclusions>
     </dependency>
 
-    <!--https://medium.com/criciumadev/its-time-migrating-to-java-11-5eb3868354f9-->
+
     <dependency>
       <groupId>org.glassfish.jaxb</groupId>
       <artifactId>jaxb-runtime</artifactId>
       <version>2.4.0-b180830.0438</version>
     </dependency>
 
-    <!--Web-->
+
     <dependency>
       <groupId>org.apache.tomcat</groupId>
       <artifactId>tomcat-servlet-api</artifactId>
@@ -250,7 +248,6 @@
       <artifactId>spring-webmvc</artifactId>
     </dependency>
 
-    <!-- Webjars (static dependencies distributed as JAR files) -->
     <dependency>
       <groupId>org.webjars</groupId>
       <artifactId>jquery</artifactId>
@@ -266,7 +263,7 @@
           <artifactId>jquery</artifactId>
         </exclusion>
         <exclusion>
-          <!--                https://getbootstrap.com/docs/4.5/components/popovers         -->
+
           <groupId>org.webjars</groupId>
           <artifactId>popper.js</artifactId>
         </exclusion>
@@ -294,7 +291,7 @@
       <version>${webjars-noty.version}</version>
     </dependency>
 
-    <!--JSON-->
+
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-databind</artifactId>
@@ -311,7 +308,7 @@
       <version>${jackson.version}</version>
     </dependency>
 
-    <!--Test-->
+
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-engine</artifactId>
@@ -351,7 +348,7 @@
       <scope>test</scope>
     </dependency>
 
-    <!--        https://youtrack.jetbrains.com/issue/IDEA-231927  -->
+
     <dependency>
       <groupId>org.junit.platform</groupId>
       <artifactId>junit-platform-launcher</artifactId>
