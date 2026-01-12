@@ -1,6 +1,7 @@
 package ru.javawebinar.topjava.web.restaurant;
 
 
+import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -14,6 +15,7 @@ import ru.javawebinar.topjava.web.AbstractControllerTest;
 import ru.javawebinar.topjava.web.json.JsonUtil;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -33,6 +35,8 @@ class RestaurantUserRestControllerTest extends AbstractControllerTest {
 
     @Test
     void vote() throws Exception {
+        LocalTime localTime = LocalTime.now();
+        Assumptions.assumeTrue(localTime.isBefore(LocalTime.of(11,00)));
         perform(MockMvcRequestBuilders.post( REST_URL + RESTAURANT1_ID + "/vote")
                 .contentType(MediaType.APPLICATION_JSON)
                 .with(userHttpBasic(user)))

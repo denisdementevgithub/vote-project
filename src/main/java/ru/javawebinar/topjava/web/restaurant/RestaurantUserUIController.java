@@ -8,13 +8,15 @@ import ru.javawebinar.topjava.util.exception.IllegalRequestDataException;
 import springfox.documentation.annotations.ApiIgnore;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 @ApiIgnore
 @RestController
 @RequestMapping(value = RestaurantUserUIController.REST_UI_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 public class RestaurantUserUIController extends AbstractRestaurantController {
-    static final String REST_UI_URL = "/profile/restaurants";
+    static final String REST_UI_URL = "/users/restaurants";
 
     @Override
     @GetMapping
@@ -26,7 +28,8 @@ public class RestaurantUserUIController extends AbstractRestaurantController {
     @PostMapping("/{id}/vote")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void vote(@PathVariable int id) {
-        if ((super.get(id).getRegistered().toLocalDate()).equals(LocalDate.now())) {
+        if ((super.get(id).getRegistered().toLocalDate()).equals(LocalDate.now()) &&
+                (LocalTime.now().isBefore(LocalTime.of(11,00)))) {
             super.vote(id);
         } else {
             throw new IllegalRequestDataException("Голосование для данной даты закрыто");

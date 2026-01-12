@@ -1,5 +1,6 @@
 package ru.javawebinar.topjava.repository.datajpa;
 
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import ru.javawebinar.topjava.model.Restaurant;
@@ -46,6 +47,7 @@ public class DataJpaRestaurantRepository implements RestaurantRepository {
 
     @Override
     public List<RestaurantTo> getAllForToday() {
+
         LocalDate today = LocalDate.now();
         LocalDateTime startDateTime = today.atTime(0, 0);
         System.out.println(startDateTime);

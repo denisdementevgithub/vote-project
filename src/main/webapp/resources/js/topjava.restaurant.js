@@ -1,4 +1,4 @@
-const restAjaxUrl = "profile/restaurants/";
+const restAjaxUrl = "users/restaurants/";
 
 // https://stackoverflow.com/a/5064235/548473
 const ctx = {
