@@ -17,11 +17,11 @@
     </jdbc:initialize-database>
 
     <tx:annotation-driven/>
-    <context:property-placeholder location="classpath:db/hsqldb.properties" system-properties-mode="OVERRIDE"/>
+    <context:property-placeholder location="classpath:db/h2db.properties" system-properties-mode="OVERRIDE"/>
 
     <bean id="dataSource"
           class="org.springframework.jdbc.datasource.DriverManagerDataSource"
-          p:driverClassName="org.hsqldb.jdbcDriver"
+          p:driverClassName="org.h2.Driver"
           p:url="${database.url}"
           p:username="${database.username}"
           p:password="${database.password}"/>
