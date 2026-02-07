@@ -4,7 +4,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
 import org.springframework.test.web.servlet.request.RequestPostProcessor;
-import ru.javawebinar.topjava.model.User;
+import ru.javawebinar.topjava.app.AuthorizedUser;
+import ru.javawebinar.topjava.user.model.User;
 
 public class TestUtil {
 

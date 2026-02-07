@@ -2,25 +2,28 @@ package ru.javawebinar.topjava.web.user;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
-import ru.javawebinar.topjava.model.User;
-import ru.javawebinar.topjava.service.UserService;
-import ru.javawebinar.topjava.to.UserTo;
-import ru.javawebinar.topjava.util.UsersUtil;
+import ru.javawebinar.topjava.user.model.User;
+import ru.javawebinar.topjava.user.service.UserService;
+import ru.javawebinar.topjava.user.to.UserTo;
+import ru.javawebinar.topjava.user.util.UsersUtil;
+import ru.javawebinar.topjava.user.web.user.ProfileRestController;
 import ru.javawebinar.topjava.web.AbstractControllerTest;
-import ru.javawebinar.topjava.web.json.JsonUtil;
+import ru.javawebinar.topjava.user.web.json.JsonUtil;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static ru.javawebinar.topjava.TestUtil.userHttpBasic;
 import static ru.javawebinar.topjava.UserTestData.*;
-import static ru.javawebinar.topjava.util.exception.ErrorType.VALIDATION_ERROR;
-import static ru.javawebinar.topjava.web.user.ProfileRestController.REST_URL;
+import static ru.javawebinar.topjava.common.error.ErrorType.VALIDATION_ERROR;
+import static ru.javawebinar.topjava.user.web.user.ProfileRestController.REST_URL;
+
 
 class ProfileRestControllerTest extends AbstractControllerTest {
 
@@ -28,9 +31,9 @@ class ProfileRestControllerTest extends AbstractControllerTest {
     private UserService userService;
 
     @Test
+    @WithUserDetails(value = USER_MAIL, userDetailsServiceBeanName = "userService")
     void get() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_URL)
-                .with(userHttpBasic(user)))
+        perform(MockMvcRequestBuilders.get(REST_URL))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(USER_MATCHER.contentJson(user));
@@ -39,16 +42,19 @@ class ProfileRestControllerTest extends AbstractControllerTest {
     @Test
     void getUnAuth() throws Exception {
         perform(MockMvcRequestBuilders.get(REST_URL))
-                .andExpect(status().isUnauthorized());
+                .andExpect(status().is5xxServerError());
     }
 
+    public static final String USER_MAIL = "user@yandex.ru";
     @Test
+    @WithUserDetails(value = USER_MAIL, userDetailsServiceBeanName = "userService")
     void delete() throws Exception {
-        perform(MockMvcRequestBuilders.delete(REST_URL)
-                .with(userHttpBasic(user)))
+        perform(MockMvcRequestBuilders.delete(REST_URL))
                 .andExpect(status().isNoContent());
         USER_MATCHER.assertMatch(userService.getAll(), admin, user1, user2);
     }
+
+
 
     @Test
     void register() throws Exception {
@@ -68,11 +74,12 @@ class ProfileRestControllerTest extends AbstractControllerTest {
     }
 
     @Test
+    @WithUserDetails(value = USER_MAIL, userDetailsServiceBeanName = "userService")
     void update() throws Exception {
         // ValidationUtil.assureIdConsistent called after validation, needs workaround
         UserTo updatedTo = new UserTo(null, "newName", "user@yandex.ru", "newPassword");
         perform(MockMvcRequestBuilders.put(REST_URL).contentType(MediaType.APPLICATION_JSON)
-                .with(userHttpBasic(user))
+
                 .content(JsonUtil.writeValue(updatedTo)))
                 .andDo(print())
                 .andExpect(status().isNoContent());

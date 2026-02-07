@@ -1,13 +1,9 @@
 package ru.javawebinar.topjava;
 
-import jdk.dynalink.linker.LinkerServices;
-import ru.javawebinar.topjava.model.Restaurant;
-import ru.javawebinar.topjava.model.RestaurantUsers;
+import ru.javawebinar.topjava.user.model.RestaurantUsers;
 
 import java.time.LocalDate;
 import java.util.List;
-
-import static ru.javawebinar.topjava.RestaurantTestData.restaurant1;
 
 public class RestaurantUsersTestData {
 

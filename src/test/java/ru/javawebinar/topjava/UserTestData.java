@@ -1,16 +1,14 @@
 package ru.javawebinar.topjava;
 
-import ru.javawebinar.topjava.model.Role;
-import ru.javawebinar.topjava.model.User;
-import ru.javawebinar.topjava.web.json.JsonUtil;
+import ru.javawebinar.topjava.user.model.Role;
+import ru.javawebinar.topjava.user.model.User;
+import ru.javawebinar.topjava.user.web.json.JsonUtil;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static ru.javawebinar.topjava.RestaurantTestData.*;
-import static ru.javawebinar.topjava.model.AbstractBaseEntity.START_SEQ;
+import static ru.javawebinar.topjava.common.model.AbstractBaseEntity.START_SEQ;
 
 public class UserTestData {
 

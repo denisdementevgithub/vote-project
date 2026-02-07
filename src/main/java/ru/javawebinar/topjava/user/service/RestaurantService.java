@@ -1,0 +1,57 @@
+package ru.javawebinar.topjava.user.service;
+
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
+import ru.javawebinar.topjava.user.model.Restaurant;
+import ru.javawebinar.topjava.user.repository.RestaurantRepository;
+import ru.javawebinar.topjava.user.to.RestaurantTo;
+
+import java.util.List;
+
+import static ru.javawebinar.topjava.common.validation.ValidationUtil.checkNotFound;
+
+@Service
+public class RestaurantService {
+    private final RestaurantRepository repository;
+
+    public RestaurantService(RestaurantRepository repository) {
+        this.repository = repository;
+    }
+
+    public Restaurant get(int id) {
+        return checkNotFound(repository.get(id), id);
+    }
+
+    @CacheEvict(value = "restaurantTosForToday", allEntries = true)
+    public void delete(int id) {
+        checkNotFound(repository.delete(id), id);
+    }
+
+    @CacheEvict(value = "restaurantTosForToday", allEntries = true)
+    public int vote(int id, int userId) {
+        return repository.vote(id, userId);
+    }
+
+    public List<RestaurantTo> getAll() {
+        return repository.getAll();
+    }
+
+    @Cacheable("restaurantTosForToday")
+    public List<RestaurantTo> getAllForToday() {
+        return repository.getAllForToday();
+    }
+
+    @CacheEvict(value = "restaurantTosForToday", allEntries = true)
+    public void update(Restaurant restaurant) {
+        Assert.notNull(restaurant, "restaurant must not be null");
+        checkNotFound(repository.save(restaurant), restaurant.id());
+    }
+
+    @CacheEvict(value = "restaurantTosForToday", allEntries = true)
+    public Restaurant create(Restaurant restaurant) {
+        Assert.notNull(restaurant, "restaurant must not be null");
+        return repository.save(restaurant);
+    }
+}

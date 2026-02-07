@@ -3,12 +3,12 @@ package ru.javawebinar.topjava.service;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
-import org.springframework.dao.DataIntegrityViolationException;
-import ru.javawebinar.topjava.model.Role;
-import ru.javawebinar.topjava.model.User;
-import ru.javawebinar.topjava.util.exception.NotFoundException;
+import ru.javawebinar.topjava.user.model.Role;
+import ru.javawebinar.topjava.user.model.User;
+import ru.javawebinar.topjava.common.error.NotFoundException;
+import ru.javawebinar.topjava.user.service.UserService;
 
-import javax.validation.ConstraintViolationException;
+import jakarta.validation.ConstraintViolationException;
 import java.util.Date;
 import java.util.List;
 

@@ -1,8 +1,8 @@
 package ru.javawebinar.topjava;
 
-import ru.javawebinar.topjava.model.Restaurant;
-import ru.javawebinar.topjava.model.RestaurantUsers;
-import ru.javawebinar.topjava.to.RestaurantTo;
+import ru.javawebinar.topjava.user.model.Restaurant;
+import ru.javawebinar.topjava.user.model.RestaurantUsers;
+import ru.javawebinar.topjava.user.to.RestaurantTo;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -13,7 +13,7 @@ import java.util.List;
 import static java.time.LocalDateTime.now;
 import static java.time.LocalDateTime.of;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static ru.javawebinar.topjava.model.AbstractBaseEntity.START_SEQ;
+import static ru.javawebinar.topjava.common.model.AbstractBaseEntity.START_SEQ;
 
 public class RestaurantTestData {
     //public static final MatcherFactory.Matcher<Restaurant> RESTAURANT_MATCHER = MatcherFactory.usingIgnoringFieldsComparator(Restaurant.class, "sumOfVotes");

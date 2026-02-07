@@ -2,10 +2,11 @@ package ru.javawebinar.topjava.service;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import ru.javawebinar.topjava.model.Restaurant;
-import ru.javawebinar.topjava.util.exception.NotFoundException;
+import ru.javawebinar.topjava.user.model.Restaurant;
+import ru.javawebinar.topjava.common.error.NotFoundException;
+import ru.javawebinar.topjava.user.service.RestaurantService;
 
-import javax.validation.ConstraintViolationException;
+import jakarta.validation.ConstraintViolationException;
 import java.time.LocalDateTime;
 import java.time.Month;
 

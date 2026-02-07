@@ -6,14 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 import ru.javawebinar.topjava.RestaurantTestData;
-import ru.javawebinar.topjava.model.Restaurant;
-import ru.javawebinar.topjava.service.RestaurantService;
-import ru.javawebinar.topjava.util.exception.NotFoundException;
+import ru.javawebinar.topjava.user.model.Restaurant;
+import ru.javawebinar.topjava.user.service.RestaurantService;
+import ru.javawebinar.topjava.common.error.NotFoundException;
+import ru.javawebinar.topjava.user.web.restaurant.RestaurantAdminRestController;
 import ru.javawebinar.topjava.web.AbstractControllerTest;
-import ru.javawebinar.topjava.web.json.JsonUtil;
+import ru.javawebinar.topjava.user.web.json.JsonUtil;
 
 import java.time.LocalDateTime;
 
@@ -25,10 +24,10 @@ import static ru.javawebinar.topjava.RestaurantTestData.*;
 import static ru.javawebinar.topjava.TestUtil.userHttpBasic;
 import static ru.javawebinar.topjava.UserTestData.*;
 
-import static ru.javawebinar.topjava.util.exception.ErrorType.VALIDATION_ERROR;
+import static ru.javawebinar.topjava.common.error.ErrorType.VALIDATION_ERROR;
 
 class RestaurantAdminRestControllerTest extends AbstractControllerTest {
-    private static final String REST_ADMIN_URL = RestaurantAdminRestController.REST_ADMIN_URL + '/';
+    public static final String REST_ADMIN_URL = RestaurantAdminRestController.REST_ADMIN_URL + '/';
 
     @Autowired
     private RestaurantService restaurantService;

@@ -3,12 +3,11 @@ package ru.javawebinar.topjava.web.json;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.javawebinar.topjava.model.Restaurant;
-import ru.javawebinar.topjava.model.User;
+import ru.javawebinar.topjava.user.model.Restaurant;
+import ru.javawebinar.topjava.user.web.json.JsonUtil;
 
 import java.util.List;
 
-import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;

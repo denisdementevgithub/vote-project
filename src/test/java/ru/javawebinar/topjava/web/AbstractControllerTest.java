@@ -1,9 +1,13 @@
 package ru.javawebinar.topjava.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
+import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.core.env.Environment;
 
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
@@ -13,9 +17,9 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.filter.CharacterEncodingFilter;
-import ru.javawebinar.topjava.util.exception.ErrorType;
+import ru.javawebinar.topjava.common.error.ErrorType;
 
-import javax.annotation.PostConstruct;
+import jakarta.annotation.PostConstruct;
 import java.util.Locale;
 
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
@@ -23,14 +27,20 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 
 
-@SpringJUnitWebConfig(locations = {
+/*@SpringJUnitWebConfig(locations = {
         "classpath:spring/spring-app.xml",
         "classpath:spring/spring-mvc.xml",
         "classpath:spring/spring-db.xml"
 })
+
+ */
 //@WebAppConfiguration
 //@ExtendWith(SpringExtension.class)
+//@SpringBootTest
+@SpringBootTest
 @Transactional
+@AutoConfigureMockMvc
+@ActiveProfiles("test")
 public abstract class AbstractControllerTest {
     private static final Locale RU_LOCALE = new Locale("ru");
     private static final CharacterEncodingFilter CHARACTER_ENCODING_FILTER = new CharacterEncodingFilter();
@@ -48,8 +58,6 @@ public abstract class AbstractControllerTest {
     @Autowired
     private WebApplicationContext webApplicationContext;
 
-    @Autowired
-    protected MessageSourceAccessor messageSourceAccessor;
 
 
 
@@ -66,15 +74,11 @@ public abstract class AbstractControllerTest {
         return mockMvc.perform(builder);
     }
 
-    private String getMessage(String code) {
-        return messageSourceAccessor.getMessage(code, RU_LOCALE);
-    }
+
 
     protected ResultMatcher errorType(ErrorType type) {
         return jsonPath("$.type").value(type.name());
     }
 
-    protected ResultMatcher detailMessage(String code) {
-        return jsonPath("$.details").value(getMessage(code));
-    }
+
 }

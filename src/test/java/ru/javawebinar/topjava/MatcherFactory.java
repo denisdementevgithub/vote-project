@@ -3,7 +3,7 @@ package ru.javawebinar.topjava;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.ResultMatcher;
-import ru.javawebinar.topjava.web.json.JsonUtil;
+import ru.javawebinar.topjava.user.web.json.JsonUtil;
 
 import java.io.UnsupportedEncodingException;
 import java.util.List;
