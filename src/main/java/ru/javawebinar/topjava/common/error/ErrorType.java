@@ -8,6 +8,4 @@ public enum ErrorType {
     DATA_ERROR,
     VALIDATION_ERROR,
     UNAUTHORIZED;
-
-
 }

@@ -43,7 +43,7 @@ public class SecurityConfig {
     @Bean
     UserDetailsService userDetailsService() {
         return email -> {
-            //log.debug("Authenticating '{}'", email);
+            log.debug("Authenticating '{}'", email);
             User optionalUser = userRepository.getByEmail(email);
             return new AuthorizedUser(optionalUser);
         };

@@ -99,11 +99,11 @@ class ProfileRestControllerTest extends AbstractControllerTest {
     }
 
     @Test
+    @WithUserDetails(value = USER_MAIL, userDetailsServiceBeanName = "userService")
     void updateInvalid() throws Exception {
         UserTo updatedTo = new UserTo(USER_ID0, null, "email@gmail.com", null);
         perform(MockMvcRequestBuilders.put(REST_URL)
                 .contentType(MediaType.APPLICATION_JSON)
-                .with(userHttpBasic(user))
                 .content(JsonUtil.writeValue(updatedTo)))
                 .andDo(print())
                 .andExpect(status().isUnprocessableEntity())
