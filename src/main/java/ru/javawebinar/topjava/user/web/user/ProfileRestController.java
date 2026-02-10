@@ -18,7 +18,7 @@ import static ru.javawebinar.topjava.user.web.SecurityUtil.authUserId;
 @RestController
 @RequestMapping(value = ProfileRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 public class ProfileRestController extends AbstractUserController {
-    public static final String REST_URL = "/rest/profile";
+    public static final String REST_URL = "/api/profile";
 
     @GetMapping
     public User get() {

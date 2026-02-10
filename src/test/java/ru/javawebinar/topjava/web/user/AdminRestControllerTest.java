@@ -3,12 +3,13 @@ package ru.javawebinar.topjava.web.user;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import ru.javawebinar.topjava.user.model.Role;
 import ru.javawebinar.topjava.user.model.User;
-import ru.javawebinar.topjava.user.service.UserService;
 import ru.javawebinar.topjava.common.error.NotFoundException;
+import ru.javawebinar.topjava.user.service.UserService;
 import ru.javawebinar.topjava.user.web.user.AdminRestController;
 import ru.javawebinar.topjava.web.AbstractControllerTest;
 
@@ -30,9 +31,10 @@ class AdminRestControllerTest extends AbstractControllerTest {
     private UserService userService;
 
     @Test
+    @WithUserDetails(value = USER_MAIL, userDetailsServiceBeanName = "userService")
+
     void get() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_URL + ADMIN_ID)
-                .with(userHttpBasic(admin)))
+        perform(MockMvcRequestBuilders.get(REST_URL + ADMIN_ID))
                 .andExpect(status().isOk())
                 .andDo(print())
                 // https://jira.spring.io/browse/SPR-14472
@@ -41,35 +43,38 @@ class AdminRestControllerTest extends AbstractControllerTest {
     }
 
     @Test
+    @WithUserDetails(value = USER_MAIL, userDetailsServiceBeanName = "userService")
+
     void getNotFound() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_URL + USER_NOT_FOUND)
-                .with(userHttpBasic(admin)))
+        perform(MockMvcRequestBuilders.get(REST_URL + USER_NOT_FOUND))
                 .andDo(print())
                 .andExpect(status().isUnprocessableEntity());
     }
 
     @Test
+    @WithUserDetails(value = USER_MAIL, userDetailsServiceBeanName = "userService")
     void getByEmail() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_URL + "by-email?email=" + user.getEmail())
-                .with(userHttpBasic(admin)))
+        perform(MockMvcRequestBuilders.get(REST_URL + "by-email?email=" + user.getEmail()))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(USER_MATCHER.contentJson(user));
     }
 
     @Test
+    @WithUserDetails(value = USER_MAIL, userDetailsServiceBeanName = "userService")
+
     void delete() throws Exception {
-        perform(MockMvcRequestBuilders.delete(REST_URL + USER_ID0)
-                .with(userHttpBasic(admin)))
+        perform(MockMvcRequestBuilders.delete(REST_URL + USER_ID0))
                 .andDo(print())
                 .andExpect(status().isNoContent());
         assertThrows(NotFoundException.class, () -> userService.get(USER_ID0));
     }
 
     @Test
+    @WithUserDetails(value = USER_MAIL, userDetailsServiceBeanName = "userService")
+
     void deleteNotFound() throws Exception {
-        perform(MockMvcRequestBuilders.delete(REST_URL + USER_NOT_FOUND)
-                .with(userHttpBasic(admin)))
+        perform(MockMvcRequestBuilders.delete(REST_URL + USER_NOT_FOUND))
                 .andDo(print())
                 .andExpect(status().isUnprocessableEntity());
     }
@@ -116,7 +121,9 @@ class AdminRestControllerTest extends AbstractControllerTest {
         USER_MATCHER.assertMatch(userService.get(newId), newUser);
     }
 
+    public static final String USER_MAIL = "admin@gmail.com";
     @Test
+    @WithUserDetails(value = USER_MAIL, userDetailsServiceBeanName = "userService")
     void getAll() throws Exception {
         perform(MockMvcRequestBuilders.get(REST_URL)
                 .with(userHttpBasic(admin)))

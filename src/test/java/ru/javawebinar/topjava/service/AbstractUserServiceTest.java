@@ -6,9 +6,10 @@ import org.springframework.dao.DataAccessException;
 import ru.javawebinar.topjava.user.model.Role;
 import ru.javawebinar.topjava.user.model.User;
 import ru.javawebinar.topjava.common.error.NotFoundException;
-import ru.javawebinar.topjava.user.service.UserService;
 
 import jakarta.validation.ConstraintViolationException;
+import ru.javawebinar.topjava.user.service.UserService;
+
 import java.util.Date;
 import java.util.List;
 

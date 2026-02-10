@@ -43,6 +43,7 @@ logging:
   level:
     root: WARN
     ru.javaops.topjava: DEBUG
+    org.springframework.security: DEBUG
     org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver: DEBUG
 
 springdoc.swagger-ui.path: /

@@ -2,7 +2,6 @@ package ru.javawebinar.topjava.web.user;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.web.servlet.ResultActions;
@@ -11,7 +10,6 @@ import ru.javawebinar.topjava.user.model.User;
 import ru.javawebinar.topjava.user.service.UserService;
 import ru.javawebinar.topjava.user.to.UserTo;
 import ru.javawebinar.topjava.user.util.UsersUtil;
-import ru.javawebinar.topjava.user.web.user.ProfileRestController;
 import ru.javawebinar.topjava.web.AbstractControllerTest;
 import ru.javawebinar.topjava.user.web.json.JsonUtil;
 
@@ -19,12 +17,11 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static ru.javawebinar.topjava.TestUtil.userHttpBasic;
 import static ru.javawebinar.topjava.UserTestData.*;
 import static ru.javawebinar.topjava.common.error.ErrorType.VALIDATION_ERROR;
 import static ru.javawebinar.topjava.user.web.user.ProfileRestController.REST_URL;
 
-
+//@ExtendWith(TimingExtension.class)
 class ProfileRestControllerTest extends AbstractControllerTest {
 
     @Autowired
@@ -47,7 +44,7 @@ class ProfileRestControllerTest extends AbstractControllerTest {
 
     public static final String USER_MAIL = "user@yandex.ru";
     @Test
-    @WithUserDetails(value = USER_MAIL, userDetailsServiceBeanName = "userService")
+    @WithUserDetails(value = USER_MAIL)
     void delete() throws Exception {
         perform(MockMvcRequestBuilders.delete(REST_URL))
                 .andExpect(status().isNoContent());
@@ -74,7 +71,7 @@ class ProfileRestControllerTest extends AbstractControllerTest {
     }
 
     @Test
-    @WithUserDetails(value = USER_MAIL, userDetailsServiceBeanName = "userService")
+    @WithUserDetails(value = USER_MAIL)
     void update() throws Exception {
         // ValidationUtil.assureIdConsistent called after validation, needs workaround
         UserTo updatedTo = new UserTo(null, "newName", "user@yandex.ru", "newPassword");
@@ -99,7 +96,7 @@ class ProfileRestControllerTest extends AbstractControllerTest {
     }
 
     @Test
-    @WithUserDetails(value = USER_MAIL, userDetailsServiceBeanName = "userService")
+    @WithUserDetails(value = USER_MAIL)
     void updateInvalid() throws Exception {
         UserTo updatedTo = new UserTo(USER_ID0, null, "email@gmail.com", null);
         perform(MockMvcRequestBuilders.put(REST_URL)

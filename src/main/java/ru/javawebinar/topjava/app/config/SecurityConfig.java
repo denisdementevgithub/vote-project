@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -20,6 +21,7 @@ import ru.javawebinar.topjava.user.model.User;
 import ru.javawebinar.topjava.user.repository.UserRepository;
 import ru.javawebinar.topjava.user.repository.datajpa.CrudUserRepository;
 import ru.javawebinar.topjava.user.repository.datajpa.DataJpaUserRepository;
+import ru.javawebinar.topjava.user.service.UserService;
 
 
 import java.util.Optional;
@@ -40,6 +42,7 @@ public class SecurityConfig {
         return PASSWORD_ENCODER;
     }
 
+    /*
     @Bean
     UserDetailsService userDetailsService() {
         return email -> {
@@ -48,6 +51,10 @@ public class SecurityConfig {
             return new AuthorizedUser(optionalUser);
         };
     }
+
+     */
+
+
 
     //https://stackoverflow.com/a/76538979/548473
     @Bean
@@ -61,5 +68,12 @@ public class SecurityConfig {
                 .sessionManagement(smc -> smc.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .csrf(AbstractHttpConfigurer::disable);
         return http.build();
+    }
+
+    @Bean
+    public DaoAuthenticationProvider authenticationProvider(UserService userService) {
+        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider(userService);
+        authProvider.setPasswordEncoder(passwordEncoder());
+        return authProvider;
     }
 }

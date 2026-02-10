@@ -1,7 +1,10 @@
 package ru.javawebinar.topjava.service;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Import;
 import ru.javawebinar.topjava.user.model.Restaurant;
 import ru.javawebinar.topjava.common.error.NotFoundException;
 import ru.javawebinar.topjava.user.service.RestaurantService;
@@ -10,7 +13,6 @@ import jakarta.validation.ConstraintViolationException;
 import java.time.LocalDateTime;
 import java.time.Month;
 
-import static java.time.LocalDateTime.of;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static ru.javawebinar.topjava.RestaurantTestData.*;
 

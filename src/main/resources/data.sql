@@ -1,3 +1,5 @@
+DELETE FROM user_role;
+DELETE FROM restaurant;
 DELETE FROM users;
 DELETE FROM restaurant_users;
 ALTER SEQUENCE global_seq RESTART WITH 100000;

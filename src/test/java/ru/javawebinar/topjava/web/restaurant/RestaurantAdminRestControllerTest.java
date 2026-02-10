@@ -4,6 +4,7 @@ package ru.javawebinar.topjava.web.restaurant;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import ru.javawebinar.topjava.RestaurantTestData;
@@ -27,14 +28,14 @@ import static ru.javawebinar.topjava.UserTestData.*;
 import static ru.javawebinar.topjava.common.error.ErrorType.VALIDATION_ERROR;
 
 class RestaurantAdminRestControllerTest extends AbstractControllerTest {
-    public static final String REST_ADMIN_URL = RestaurantAdminRestController.REST_ADMIN_URL + '/';
+    public static final String REST_ADMIN_URL = RestaurantAdminRestController.REST_ADMIN_URL;
 
     @Autowired
     private RestaurantService restaurantService;
 
     @Test
     void get() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_ADMIN_URL + (RESTAURANT1_ID+1))
+        perform(MockMvcRequestBuilders.get(REST_ADMIN_URL + "/" + (RESTAURANT1_ID+1))
                 .with(userHttpBasic(admin)))
                 .andExpect(status().isOk())
                 .andDo(print())
@@ -44,13 +45,13 @@ class RestaurantAdminRestControllerTest extends AbstractControllerTest {
 
     @Test
     void getUnauth() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_ADMIN_URL + RESTAURANT1_ID))
+        perform(MockMvcRequestBuilders.get(REST_ADMIN_URL + "/" + RESTAURANT1_ID))
                 .andExpect(status().isUnauthorized());
     }
 
     @Test
     void getNotFound() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_ADMIN_URL + RESTAURANT_NOT_FOUND)
+        perform(MockMvcRequestBuilders.get(REST_ADMIN_URL + "/" + RESTAURANT_NOT_FOUND)
                 .with(userHttpBasic(admin)))
                 .andDo(print())
                 .andExpect(status().isUnprocessableEntity());
@@ -58,7 +59,7 @@ class RestaurantAdminRestControllerTest extends AbstractControllerTest {
 
     @Test
     void delete() throws Exception {
-        perform(MockMvcRequestBuilders.delete(REST_ADMIN_URL + RESTAURANT1_ID)
+        perform(MockMvcRequestBuilders.delete(REST_ADMIN_URL + "/" + RESTAURANT1_ID)
                 .with(userHttpBasic(admin)))
                 .andExpect(status().isNoContent());
         assertThrows(NotFoundException.class, () -> restaurantService.get(RESTAURANT1_ID));
@@ -66,7 +67,7 @@ class RestaurantAdminRestControllerTest extends AbstractControllerTest {
 
     @Test
     void deleteNotFound() throws Exception {
-        perform(MockMvcRequestBuilders.delete(REST_ADMIN_URL + RESTAURANT_NOT_FOUND)
+        perform(MockMvcRequestBuilders.delete(REST_ADMIN_URL + "/" + RESTAURANT_NOT_FOUND)
                 .with(userHttpBasic(admin)))
                 .andExpect(status().isUnprocessableEntity());
     }
@@ -74,7 +75,7 @@ class RestaurantAdminRestControllerTest extends AbstractControllerTest {
     @Test
     void update() throws Exception {
         Restaurant updated = RestaurantTestData.getUpdated();
-        perform(MockMvcRequestBuilders.put(REST_ADMIN_URL + RESTAURANT1_ID).contentType(MediaType.APPLICATION_JSON)
+        perform(MockMvcRequestBuilders.put(REST_ADMIN_URL + "/" + RESTAURANT1_ID).contentType(MediaType.APPLICATION_JSON)
                 .with(userHttpBasic(admin))
                 .content(JsonUtil.writeValue(updated)))
                 .andExpect(status().isNoContent());
@@ -99,20 +100,21 @@ class RestaurantAdminRestControllerTest extends AbstractControllerTest {
     }
 
     @Test
+    @WithUserDetails(value = ADMIN_MAIL, userDetailsServiceBeanName = "userService")
     void vote() throws Exception {
-        perform(MockMvcRequestBuilders.post(REST_ADMIN_URL + RESTAURANT1_ID + "/vote")
-                .contentType(MediaType.APPLICATION_JSON)
-                .with(userHttpBasic(admin)))
+        perform(MockMvcRequestBuilders.post(REST_ADMIN_URL + "/" + RESTAURANT1_ID + "/vote")
+                .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isNoContent());
         TO_MATCHER.assertMatch(restaurantService.getAll().getLast(), restaurantTo1AfterVote);
     }
 
+    public static final String ADMIN_MAIL = "admin@gmail.com";
 
     @Test
+    @WithUserDetails(value = ADMIN_MAIL, userDetailsServiceBeanName = "userService")
     void getAll() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_ADMIN_URL)
-                .with(userHttpBasic(admin)))
+        perform(MockMvcRequestBuilders.get(REST_ADMIN_URL))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -134,7 +136,7 @@ class RestaurantAdminRestControllerTest extends AbstractControllerTest {
     @Test
     void updateInvalid() throws Exception {
         Restaurant invalid = new Restaurant(RESTAURANT1_ID, null, null, LocalDateTime.now());
-        perform(MockMvcRequestBuilders.put(REST_ADMIN_URL + RESTAURANT1_ID)
+        perform(MockMvcRequestBuilders.put(REST_ADMIN_URL + "/" + RESTAURANT1_ID)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(invalid))
                 .with(userHttpBasic(admin)))
