@@ -1,5 +1,6 @@
 package ru.javawebinar.topjava.app;
 
+import lombok.ToString;
 import ru.javawebinar.topjava.user.model.User;
 import ru.javawebinar.topjava.user.to.UserTo;
 import ru.javawebinar.topjava.user.util.UsersUtil;

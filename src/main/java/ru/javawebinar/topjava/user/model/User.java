@@ -6,6 +6,9 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.*;
 import org.hibernate.annotations.NamedQueries;
@@ -26,6 +29,9 @@ import java.util.*;
 })
 @Entity
 @Table(name = "users")
+@Getter
+@Setter
+@ToString
 public class User extends AbstractNamedEntity implements HasIdAndEmail {
 
     public static final String DELETE = "User.delete";
@@ -83,63 +89,9 @@ public class User extends AbstractNamedEntity implements HasIdAndEmail {
     }
 
     public User() {
-
-    }
-
-    public boolean isEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
-    }
-
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
-    }
-
-    @Override
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public Date getRegistered() {
-        return registered;
-    }
-
-    public void setRegistered(Date registered) {
-        this.registered = registered;
-    }
-
-
-    public Set<Role> getRoles() {
-        return roles;
     }
 
     public void setRoles(Collection<Role> roles) {
         this.roles = CollectionUtils.isEmpty(roles) ? EnumSet.noneOf(Role.class) : EnumSet.copyOf(roles);
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", email=" + email +
-                ", name=" + name +
-                ", roles=" + roles +
-                '}';
     }
 }

@@ -25,7 +25,7 @@ import static ru.javawebinar.topjava.common.error.ErrorType.VALIDATION_ERROR;
 
 class AdminRestControllerTest extends AbstractControllerTest {
 
-    private static final String REST_URL = AdminRestController.REST_URL + '/';
+    private static final String REST_URL = AdminRestController.REST_URL;
 
     @Autowired
     private UserService userService;
@@ -34,7 +34,7 @@ class AdminRestControllerTest extends AbstractControllerTest {
     @WithUserDetails(value = USER_MAIL, userDetailsServiceBeanName = "userService")
 
     void get() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_URL + ADMIN_ID))
+        perform(MockMvcRequestBuilders.get(REST_URL + "/" + ADMIN_ID))
                 .andExpect(status().isOk())
                 .andDo(print())
                 // https://jira.spring.io/browse/SPR-14472
@@ -46,7 +46,7 @@ class AdminRestControllerTest extends AbstractControllerTest {
     @WithUserDetails(value = USER_MAIL, userDetailsServiceBeanName = "userService")
 
     void getNotFound() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_URL + USER_NOT_FOUND))
+        perform(MockMvcRequestBuilders.get(REST_URL + "/" + USER_NOT_FOUND))
                 .andDo(print())
                 .andExpect(status().isUnprocessableEntity());
     }
@@ -54,7 +54,7 @@ class AdminRestControllerTest extends AbstractControllerTest {
     @Test
     @WithUserDetails(value = USER_MAIL, userDetailsServiceBeanName = "userService")
     void getByEmail() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_URL + "by-email?email=" + user.getEmail()))
+        perform(MockMvcRequestBuilders.get(REST_URL + "/" + "by-email?email=" + user.getEmail()))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(USER_MATCHER.contentJson(user));
@@ -64,7 +64,7 @@ class AdminRestControllerTest extends AbstractControllerTest {
     @WithUserDetails(value = USER_MAIL, userDetailsServiceBeanName = "userService")
 
     void delete() throws Exception {
-        perform(MockMvcRequestBuilders.delete(REST_URL + USER_ID0))
+        perform(MockMvcRequestBuilders.delete(REST_URL + "/" + USER_ID0))
                 .andDo(print())
                 .andExpect(status().isNoContent());
         assertThrows(NotFoundException.class, () -> userService.get(USER_ID0));
@@ -74,7 +74,7 @@ class AdminRestControllerTest extends AbstractControllerTest {
     @WithUserDetails(value = USER_MAIL, userDetailsServiceBeanName = "userService")
 
     void deleteNotFound() throws Exception {
-        perform(MockMvcRequestBuilders.delete(REST_URL + USER_NOT_FOUND))
+        perform(MockMvcRequestBuilders.delete(REST_URL +"/" + USER_NOT_FOUND))
                 .andDo(print())
                 .andExpect(status().isUnprocessableEntity());
     }
@@ -96,7 +96,7 @@ class AdminRestControllerTest extends AbstractControllerTest {
     void update() throws Exception {
         User updated = getUpdated();
         updated.setId(null);
-        perform(MockMvcRequestBuilders.put(REST_URL + USER_ID0)
+        perform(MockMvcRequestBuilders.put(REST_URL + "/" + USER_ID0)
                 .contentType(MediaType.APPLICATION_JSON)
                 .with(userHttpBasic(admin))
                 .content(jsonWithPassword(updated, updated.getPassword())))
@@ -123,10 +123,9 @@ class AdminRestControllerTest extends AbstractControllerTest {
 
     public static final String USER_MAIL = "admin@gmail.com";
     @Test
-    @WithUserDetails(value = USER_MAIL, userDetailsServiceBeanName = "userService")
+    @WithUserDetails(value = USER_MAIL)
     void getAll() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_URL)
-                .with(userHttpBasic(admin)))
+        perform(MockMvcRequestBuilders.get(REST_URL))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(USER_MATCHER.contentJson(admin, user1, user2, user));
@@ -134,7 +133,7 @@ class AdminRestControllerTest extends AbstractControllerTest {
 
     @Test
     void enable() throws Exception {
-        perform(MockMvcRequestBuilders.patch(REST_URL + USER_ID0)
+        perform(MockMvcRequestBuilders.patch(REST_URL + "/" + USER_ID0)
                 .param("enabled", "false")
                 .contentType(MediaType.APPLICATION_JSON)
                 .with(userHttpBasic(admin)))
@@ -160,7 +159,7 @@ class AdminRestControllerTest extends AbstractControllerTest {
     void updateInvalid() throws Exception {
         User invalid = new User(user);
         invalid.setName("");
-        perform(MockMvcRequestBuilders.put(REST_URL + USER_ID0)
+        perform(MockMvcRequestBuilders.put(REST_URL + "/" + USER_ID0)
                 .contentType(MediaType.APPLICATION_JSON)
                 .with(userHttpBasic(admin))
                 .content(jsonWithPassword(invalid, "password")))

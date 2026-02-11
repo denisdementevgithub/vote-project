@@ -39,7 +39,7 @@ class ProfileRestControllerTest extends AbstractControllerTest {
     @Test
     void getUnAuth() throws Exception {
         perform(MockMvcRequestBuilders.get(REST_URL))
-                .andExpect(status().is5xxServerError());
+                .andExpect(status().isUnauthorized());
     }
 
     public static final String USER_MAIL = "user@yandex.ru";

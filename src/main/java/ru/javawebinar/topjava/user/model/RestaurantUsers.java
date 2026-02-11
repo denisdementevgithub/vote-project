@@ -1,5 +1,7 @@
 package ru.javawebinar.topjava.user.model;
 
+import lombok.Getter;
+import lombok.Setter;
 import ru.javawebinar.topjava.common.model.AbstractBaseEntity;
 
 import jakarta.persistence.*;
@@ -7,6 +9,8 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "restaurant_users")
+@Getter
+@Setter
 public class RestaurantUsers extends AbstractBaseEntity {
 
     @JoinColumn(name = "restaurant_id")
@@ -30,27 +34,4 @@ public class RestaurantUsers extends AbstractBaseEntity {
         this.localDate = localDate;
     }
 
-    public Restaurant getRestaurant() {
-        return restaurant;
-    }
-
-    public void setRestaurant(Restaurant restaurant) {
-        this.restaurant = restaurant;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public LocalDate getLocalDate() {
-        return localDate;
-    }
-
-    public void setLocalDate(LocalDate localDate) {
-        this.localDate = localDate;
-    }
 }
