@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import ru.javawebinar.topjava.app.AuthorizedUser;
 import ru.javawebinar.topjava.user.model.User;
-import ru.javawebinar.topjava.user.repository.UserRepository;
+import ru.javawebinar.topjava.user.repository.datajpa.UserRepository;
 import ru.javawebinar.topjava.user.to.UserTo;
 import ru.javawebinar.topjava.user.util.UsersUtil;
 
@@ -41,6 +41,7 @@ public class UserService implements UserDetailsService {
 
     @CacheEvict(value = "users", allEntries = true)
     public void delete(int id) {
+        get(id);
         checkNotFound(repository.delete(id), id);
     }
 

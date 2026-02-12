@@ -8,8 +8,11 @@ import org.springframework.validation.BindingResult;
 import ru.javawebinar.topjava.common.HasId;
 import ru.javawebinar.topjava.common.error.IllegalRequestDataException;
 import ru.javawebinar.topjava.common.error.NotFoundException;
+import ru.javawebinar.topjava.user.model.Meal;
+import ru.javawebinar.topjava.user.model.Restaurant;
 
 
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -37,8 +40,17 @@ public class ValidationUtil {
         return object;
     }
 
+    public static <T> T checkNotFoundForMenu(T object, Restaurant restaurant) {
+        checkNotFoundForMenu(object != null, restaurant.getId());
+        return object;
+    }
+
     public static void checkNotFound(boolean found, int id) {
         checkNotFound(found, "id=" + id);
+    }
+
+    public static void checkNotFoundForMenu(boolean found, int id) {
+        checkNotFound(found, "restaurant_id=" + id);
     }
 
     public static <T> T checkNotFound(T object, String msg) {

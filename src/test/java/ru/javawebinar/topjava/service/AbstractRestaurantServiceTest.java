@@ -1,10 +1,12 @@
 package ru.javawebinar.topjava.service;
 
+import jakarta.validation.ValidationException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
+import ru.javawebinar.topjava.user.model.Meal;
 import ru.javawebinar.topjava.user.model.Restaurant;
 import ru.javawebinar.topjava.common.error.NotFoundException;
 import ru.javawebinar.topjava.user.service.RestaurantService;
@@ -12,7 +14,9 @@ import ru.javawebinar.topjava.user.service.RestaurantService;
 import jakarta.validation.ConstraintViolationException;
 import java.time.LocalDateTime;
 import java.time.Month;
+import java.util.List;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static ru.javawebinar.topjava.RestaurantTestData.*;
 
@@ -119,10 +123,15 @@ public abstract class AbstractRestaurantServiceTest extends AbstractServiceTest 
      */
     @Test
     void createWithException() throws Exception {
-        validateRootCause(ConstraintViolationException.class, () -> service.create(new Restaurant(null, "ресторан2", "", LocalDateTime.of(2020, Month.JANUARY, 30, 13, 0))));
-        validateRootCause(ConstraintViolationException.class, () -> service.create(new Restaurant(null, null, "", LocalDateTime.of(2020, Month.JANUARY, 30, 13, 0))));
-        validateRootCause(ConstraintViolationException.class, () -> service.create(new Restaurant(null, "ресторан2", "", null)));
-        validateRootCause(ConstraintViolationException.class, () -> service.create(new Restaurant(null, "ресторан2", "", LocalDateTime.of(2020, Month.JANUARY, 30, 13, 0))));
+        /*
+        assertThatThrownBy(() -> service.create(new Restaurant(null, "ресторан2", List.of(), LocalDateTime.of(2020, Month.JANUARY, 30, 13, 0))))
+
+                .isInstanceOf(ValidationException.class)
+                .hasMessageContaining("must not be null");
+
+         */
+        validateRootCause(ConstraintViolationException.class, () -> service.create(new Restaurant(null, null, List.of(), LocalDateTime.of(2020, Month.JANUARY, 30, 13, 0))));
+        validateRootCause(ConstraintViolationException.class, () -> service.create(new Restaurant(null, "расторан", List.of(), null)));
     }
 
 

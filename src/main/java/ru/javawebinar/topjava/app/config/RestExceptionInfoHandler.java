@@ -32,6 +32,7 @@ public class RestExceptionInfoHandler {
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
     @ExceptionHandler(NotFoundException.class)
     public ErrorInfo notFoundError(HttpServletRequest req, NotFoundException e) {
+
         return logAndGetErrorInfo(req, e, false, DATA_NOT_FOUND);
     }
 

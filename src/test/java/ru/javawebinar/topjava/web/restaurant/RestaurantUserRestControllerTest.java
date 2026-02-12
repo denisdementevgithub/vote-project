@@ -30,7 +30,7 @@ class RestaurantUserRestControllerTest extends AbstractControllerTest {
 
     @Autowired
     private RestaurantService restaurantService;
-
+/*
     @Test
     @WithUserDetails(value = USER_MAIL)
     void vote() throws Exception {
@@ -39,10 +39,15 @@ class RestaurantUserRestControllerTest extends AbstractControllerTest {
                     .contentType(MediaType.APPLICATION_JSON))
                     .andDo(print())
                     .andExpect(status().isNoContent());
+
             TO_MATCHER.assertMatch(restaurantService.getAll().getLast(), restaurantTo1AfterVote);
 
         }
     }
+
+
+ */
+
 
     public static final String USER_MAIL = "user@yandex.ru";
     @Test

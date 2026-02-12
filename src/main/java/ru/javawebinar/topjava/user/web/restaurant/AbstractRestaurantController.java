@@ -3,10 +3,12 @@ package ru.javawebinar.topjava.user.web.restaurant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import ru.javawebinar.topjava.user.model.Meal;
 import ru.javawebinar.topjava.user.model.Restaurant;
 import ru.javawebinar.topjava.user.service.RestaurantService;
 import ru.javawebinar.topjava.user.to.RestaurantTo;
 import ru.javawebinar.topjava.user.web.SecurityUtil;
+import ru.javawebinar.topjava.user.web.converter.RestaurantUtils;
 
 import java.util.List;
 
@@ -31,12 +33,13 @@ public abstract class AbstractRestaurantController {
 
     public List<RestaurantTo> getAll() {
         log.info("getAll");
-        return service.getAll();
+        return RestaurantUtils.listOfRestaurantsToRestaurantTos(service.getAll(), service.getVotes());
     }
 
     public List<RestaurantTo> getAllForToday() {
         log.info("getAllForToday");
-        return service.getAllForToday();
+        return RestaurantUtils.listOfRestaurantsToRestaurantTos(service.getAllForToday(), service.getVotes());
+
     }
 
     public Restaurant create(Restaurant restaurant) {
@@ -56,4 +59,16 @@ public abstract class AbstractRestaurantController {
         log.info("vote rest {}", id);
         service.vote(id, userId);
     }
+
+    public void setMenu(List<Meal> menu, int id) {
+        int userId = SecurityUtil.authUserId();
+        log.info("setMenu menu {}", id);
+        service.setMenu(menu, id);
+    }
+    public Restaurant getWithMenu(int id) {
+        int userId = SecurityUtil.authUserId();
+        log.info("getWithMenu {}", id);
+        return service.getWithMenu(id);
+    }
+
 }

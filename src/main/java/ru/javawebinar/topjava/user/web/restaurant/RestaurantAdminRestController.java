@@ -1,15 +1,16 @@
 package ru.javawebinar.topjava.user.web.restaurant;
 
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import ru.javawebinar.topjava.user.model.Meal;
 import ru.javawebinar.topjava.user.model.Restaurant;
 import ru.javawebinar.topjava.user.to.RestaurantTo;
 import ru.javawebinar.topjava.common.error.IllegalRequestDataException;
 
-import jakarta.validation.Valid;
 import java.net.URI;
 import java.time.LocalDate;
 import java.util.List;
@@ -29,6 +30,12 @@ public class RestaurantAdminRestController extends AbstractRestaurantController 
     @GetMapping("/{id}")
     public Restaurant get(@PathVariable int id) {
         return super.get(id);
+    }
+
+    @Override
+    @GetMapping("/{id}/with-menu")
+    public Restaurant getWithMenu(@PathVariable int id) {
+        return super.getWithMenu(id);
     }
 
     @Override
@@ -67,4 +74,12 @@ public class RestaurantAdminRestController extends AbstractRestaurantController 
             throw new IllegalRequestDataException("Голосование для данной даты закрыто");
         }
     }
+
+    @PostMapping("/{id}/menu")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void setMenu(@PathVariable int id, @RequestBody List<Meal> menu) {
+        super.setMenu(menu, id);
+    }
+
+
 }

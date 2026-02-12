@@ -1,29 +1,40 @@
 package ru.javawebinar.topjava.user.to;
 
+import lombok.Setter;
 import ru.javawebinar.topjava.common.to.BaseTo;
+import ru.javawebinar.topjava.user.model.Meal;
+
 
 import java.beans.ConstructorProperties;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
+@Setter
 public class RestaurantTo extends BaseTo {
 
-    private final String name;
+    private String name;
 
-    private final LocalDateTime registered;
+    private LocalDateTime registered;
 
-    private final String menu;
+    private List<Meal> menu = new ArrayList<>();
 
-    private final int sumOfVotes;
+    private int sumOfVotes;
 
     @ConstructorProperties({"id", "name", "menu", "sumOfVotes", "registered"})
-    public RestaurantTo(Integer id, String name, String menu, Integer sumOfVotes, LocalDateTime registered) {
+    public RestaurantTo(Integer id, String name, List<Meal> menu, Integer sumOfVotes, LocalDateTime registered) {
         super(id);
         this.name = name;
         this.menu = menu;
         this.sumOfVotes = sumOfVotes;
         this.registered = registered;
     }
+
+
+
+
+
 
     public String getName() {
         return name;
@@ -33,13 +44,15 @@ public class RestaurantTo extends BaseTo {
         return registered;
     }
 
-    public String getMenu() {
+    public List<Meal> getMenu() {
         return menu;
     }
 
-    public int getSumOfVotes() {
+    public long getSumOfVotes() {
         return sumOfVotes;
     }
+
+
 
     @Override
     public boolean equals(Object o) {
@@ -60,11 +73,11 @@ public class RestaurantTo extends BaseTo {
     @Override
     public String toString() {
         return "RestaurantTo{" +
-                "name='" + name + '\'' +
+                "id=" + id +
+                ", name='" + name + '\'' +
                 ", registered=" + registered +
-                ", menu='" + menu + '\'' +
+                ", menu=" + menu +
                 ", sumOfVotes=" + sumOfVotes +
-                ", id=" + id +
                 '}';
     }
 }
