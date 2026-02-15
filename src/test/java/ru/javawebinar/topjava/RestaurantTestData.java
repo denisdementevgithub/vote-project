@@ -2,7 +2,8 @@ package ru.javawebinar.topjava;
 
 import ru.javawebinar.topjava.user.model.Meal;
 import ru.javawebinar.topjava.user.model.Restaurant;
-import ru.javawebinar.topjava.user.model.RestaurantUsers;
+
+import ru.javawebinar.topjava.user.model.Vote;
 import ru.javawebinar.topjava.user.to.RestaurantTo;
 
 import java.time.LocalDate;
@@ -68,8 +69,8 @@ public class RestaurantTestData {
         List<RestaurantTo> restaurantTos = new ArrayList<>();
         int counter = 0;
         for (Restaurant currentRestaurant : restaurants) {
-            for (RestaurantUsers restaurantUsers : RestaurantUsersTestData.restaurantUsersList) {
-                if (restaurantUsers.getRestaurant().getId() == currentRestaurant.getId()) {
+            for (Vote vote : VoteTestData.VOTE_LIST) {
+                if (vote.getRestaurant().getId() == currentRestaurant.getId()) {
                     counter++;
                 }
             }

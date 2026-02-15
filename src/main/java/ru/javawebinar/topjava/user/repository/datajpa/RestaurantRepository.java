@@ -32,13 +32,13 @@ public interface RestaurantRepository extends JpaRepository<Restaurant, Integer>
     List<Restaurant> getAll();
 
     @Query(value = "SELECT r.id, CAST(COUNT(ru.id) AS integer) as sumOfVotes FROM Restaurant r " +
-            "LEFT JOIN RestaurantUsers ru ON r = ru.restaurant " +
+            "LEFT JOIN Vote ru ON r = ru.restaurant " +
             "GROUP BY r.id ORDER BY r.id DESC")
     List<Object[]> getVotes();
 
 
     @Query(value = "SELECT DISTINCT r FROM Restaurant r " +
-            "LEFT JOIN RestaurantUsers ru ON r = ru.restaurant " +
+            "LEFT JOIN Vote ru ON r = ru.restaurant " +
             "WHERE r.registered between :startDateTime AND :endDateTime " +
             "ORDER BY r.id DESC")
     List<Restaurant> getAllForToday(@Param("startDateTime") LocalDateTime startDateTime,
@@ -46,12 +46,12 @@ public interface RestaurantRepository extends JpaRepository<Restaurant, Integer>
 
     @Modifying
     @Transactional
-    @Query(value = "INSERT INTO restaurant_users (restaurant_id, user_id) VALUES (?1, ?2)", nativeQuery = true)
+    @Query(value = "INSERT INTO restaurant_user_vote (restaurant_id, user_id) VALUES (?1, ?2)", nativeQuery = true)
     int vote(int id, int userId);
 
     @Modifying
     @Transactional
-    @Query(value = "DELETE FROM restaurant_users ru WHERE ru.user_id =?1 AND ru.voting_date =?2", nativeQuery = true)
+    @Query(value = "DELETE FROM restaurant_user_vote ru WHERE ru.user_id =?1 AND ru.voting_date =?2", nativeQuery = true)
     int deleteVote(int userId, LocalDate votingDate);
 
     default Restaurant getExisted(int id) {

@@ -1,6 +1,6 @@
 DROP TABLE IF EXISTS user_role cascade;
 DROP TABLE IF EXISTS restaurant_meal cascade;
-DROP TABLE IF EXISTS restaurant_users cascade;
+DROP TABLE IF EXISTS restaurant_user_vote cascade;
 DROP TABLE IF EXISTS restaurant cascade;
 DROP TABLE IF EXISTS users cascade;
 DROP SEQUENCE IF EXISTS global_seq;
@@ -25,7 +25,7 @@ CREATE TABLE users
     enabled    BOOLEAN   DEFAULT TRUE NOT NULL
 );
 
-CREATE TABLE restaurant_users
+CREATE TABLE restaurant_user_vote
 (
     id            INTEGER DEFAULT NEXT VALUE FOR GLOBAL_SEQ PRIMARY KEY,
     restaurant_id INTEGER NOT NULL,

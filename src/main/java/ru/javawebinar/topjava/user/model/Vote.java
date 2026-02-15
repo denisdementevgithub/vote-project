@@ -8,10 +8,10 @@ import jakarta.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "restaurant_users")
+@Table(name = "restaurant_user_vote")
 @Getter
 @Setter
-public class RestaurantUsers extends AbstractBaseEntity {
+public class Vote extends AbstractBaseEntity {
 
     @JoinColumn(name = "restaurant_id")
     @ManyToOne(fetch = FetchType.LAZY)
@@ -24,10 +24,10 @@ public class RestaurantUsers extends AbstractBaseEntity {
     @Column(name = "voting_date")
     private LocalDate localDate;
 
-    public RestaurantUsers() {
+    public Vote() {
     }
 
-    public RestaurantUsers(Integer id, Restaurant restaurant, User user, LocalDate localDate) {
+    public Vote(Integer id, Restaurant restaurant, User user, LocalDate localDate) {
         super(id);
         this.restaurant = restaurant;
         this.user = user;

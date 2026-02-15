@@ -1,7 +1,7 @@
 DELETE FROM user_role;
 DELETE FROM restaurant;
 DELETE FROM users;
-DELETE FROM restaurant_users;
+DELETE FROM restaurant_user_vote;
 ALTER SEQUENCE global_seq RESTART WITH 100000;
 
 INSERT INTO users (name, email, password)
@@ -36,7 +36,7 @@ UPDATE RESTAURANT
 SET REGISTERED = '2025-12-11 13:50:49' WHERE ID = 100008;
 
 
-INSERT INTO restaurant_users (RESTAURANT_ID, USER_ID, VOTING_DATE)
+INSERT INTO restaurant_user_vote (RESTAURANT_ID, USER_ID, VOTING_DATE)
 VALUES (100005, 100000, CURRENT_DATE),
        (100006, 100002, Date '2025-12-11'),
        (100007, 100002, Date '2025-12-11'),
