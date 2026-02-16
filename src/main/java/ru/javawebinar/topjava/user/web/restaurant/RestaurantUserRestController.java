@@ -25,11 +25,6 @@ public class RestaurantUserRestController extends AbstractRestaurantController {
     @PostMapping("/{id}/vote")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void vote(@PathVariable int id) {
-        if ((super.get(id).getRegistered().toLocalDate()).equals(LocalDate.now()) &&
-                (LocalTime.now().isBefore(LocalTime.of(11,00)))) {
-            super.vote(id);
-        } else {
-            throw new IllegalRequestDataException("Голосование для данной даты закрыто");
-        }
+        super.vote(id);
     }
 }

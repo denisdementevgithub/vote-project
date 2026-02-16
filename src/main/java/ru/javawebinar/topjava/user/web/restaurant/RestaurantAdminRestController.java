@@ -9,7 +9,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ru.javawebinar.topjava.user.model.Meal;
 import ru.javawebinar.topjava.user.model.Restaurant;
 import ru.javawebinar.topjava.user.to.RestaurantTo;
-import ru.javawebinar.topjava.common.error.IllegalRequestDataException;
 
 import java.net.URI;
 import java.time.LocalDate;
@@ -68,11 +67,7 @@ public class RestaurantAdminRestController extends AbstractRestaurantController 
     @PostMapping("/{id}/vote")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void vote(@PathVariable int id) {
-        if ((super.get(id).getRegistered().toLocalDate()).equals(LocalDate.now())) {
-            super.vote(id);
-        } else {
-            throw new IllegalRequestDataException("Голосование для данной даты закрыто");
-        }
+        super.vote(id);
     }
 
     @PostMapping("/{id}/menu")

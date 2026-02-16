@@ -10,7 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import ru.javawebinar.topjava.common.TimeUtil;
 import ru.javawebinar.topjava.user.service.RestaurantService;
+import ru.javawebinar.topjava.user.to.RestaurantTo;
+import ru.javawebinar.topjava.user.web.converter.RestaurantUtils;
 import ru.javawebinar.topjava.user.web.restaurant.RestaurantUserRestController;
 import ru.javawebinar.topjava.web.AbstractControllerTest;
 
@@ -30,23 +33,35 @@ class RestaurantUserRestControllerTest extends AbstractControllerTest {
 
     @Autowired
     private RestaurantService restaurantService;
-/*
+
     @Test
     @WithUserDetails(value = USER_MAIL)
-    void vote() throws Exception {
-        try(MockedStatic<LocalTime> mocked = Mockito.mockStatic(LocalTime.class)) {
-            perform(MockMvcRequestBuilders.post( REST_URL + "/" + RESTAURANT1_ID + "/vote")
-                    .contentType(MediaType.APPLICATION_JSON))
-                    .andDo(print())
-                    .andExpect(status().isNoContent());
-
-            TO_MATCHER.assertMatch(restaurantService.getAll().getLast(), restaurantTo1AfterVote);
-
-        }
+    void voteSuccessful() throws Exception {
+        restaurantService.setClock(TimeUtil.getClock(9, 0, ZoneId.systemDefault()));
+        perform(MockMvcRequestBuilders.post(REST_URL + "/" + RESTAURANT1_ID + "/vote")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isNoContent());
+        TO_MATCHER.assertMatch(getRestaurantToAfterVoting(), restaurantTo1AfterVote);
     }
 
+    @Test
+    @WithUserDetails(value = USER_MAIL)
+    void voteNotSuccessful() throws Exception {
+        restaurantService.setClock(TimeUtil.getClock(11, 0, ZoneId.systemDefault()));
+        perform(MockMvcRequestBuilders.post(REST_URL + "/" + RESTAURANT1_ID + "/vote")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isUnprocessableEntity());
+    }
 
- */
+    RestaurantTo getRestaurantToAfterVoting() throws Exception {
+        return restaurantService.getAll().stream()
+                .filter(rest -> rest.getId() == RESTAURANT1_ID)
+                .map(rest -> RestaurantUtils.restaurantToRestaurantTo(rest, restaurantService.getVotes().get(RESTAURANT1_ID)))
+                .toList().getFirst();
+    }
+
 
 
     public static final String USER_MAIL = "user@yandex.ru";

@@ -17,6 +17,7 @@ import tools.jackson.databind.json.JsonMapper;
 import tools.jackson.datatype.hibernate7.Hibernate7Module;
 
 import java.sql.SQLException;
+import java.time.Clock;
 
 import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.ANY;
 import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.NONE;
@@ -31,6 +32,11 @@ public class AppConfig {
     Server h2Server() throws SQLException {
         log.info("Start H2 TCP server");
         return Server.createTcpServer("-tcp", "-tcpAllowOthers", "-tcpPort", "9092");
+    }
+
+    @Bean
+    public Clock clock() {
+        return Clock.systemDefaultZone(); // или Clock.system(ZoneId.of("UTC"))
     }
 
     /*//   https://stackoverflow.com/a/74630129/548473

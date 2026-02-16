@@ -1,17 +1,22 @@
 package ru.javawebinar.topjava.user.service;
 
+import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+import ru.javawebinar.topjava.common.error.IllegalRequestDataException;
 import ru.javawebinar.topjava.user.model.Meal;
 import ru.javawebinar.topjava.user.model.Restaurant;
 import ru.javawebinar.topjava.user.repository.datajpa.MealRepository;
 import ru.javawebinar.topjava.user.repository.datajpa.RestaurantRepository;
 
 
+import java.time.Clock;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,9 +24,12 @@ import java.util.Map;
 import static ru.javawebinar.topjava.common.validation.ValidationUtil.checkNotFound;
 
 @Service
+@Setter
 public class RestaurantService {
     private final RestaurantRepository crudRestaurantRepository;
     private final MealRepository crudMealRepository;
+    private Clock clock;
+
 
     public RestaurantService(RestaurantRepository crudRestaurantRepository, MealRepository crudMealRepository) {
         this.crudRestaurantRepository = crudRestaurantRepository;
@@ -40,9 +48,14 @@ public class RestaurantService {
 
     @CacheEvict(value = "restaurantTosForToday", allEntries = true)
     public int vote(int id, int userId) {
-        LocalDate date = LocalDate.now();
-        crudRestaurantRepository.deleteVote(userId, date);
-        return crudRestaurantRepository.vote(id, userId);
+        LocalDate dateToday = LocalDate.now();
+        if ((crudRestaurantRepository.get(id).getRegistered().toLocalDate()).equals(dateToday) &&
+                (LocalTime.now(clock).isBefore(LocalTime.of(10,0)))) {
+            crudRestaurantRepository.deleteVote(userId, dateToday);
+            return crudRestaurantRepository.vote(id, userId);
+        } else {
+            throw new IllegalRequestDataException("Голосование для данной даты закрыто");
+        }
     }
 
     public List<Restaurant> getAll() {
