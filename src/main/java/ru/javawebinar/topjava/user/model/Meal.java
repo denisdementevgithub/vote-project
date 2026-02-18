@@ -1,6 +1,7 @@
 package ru.javawebinar.topjava.user.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,9 +11,10 @@ import ru.javawebinar.topjava.common.model.AbstractNamedEntity;
 @Entity
 @Getter
 @Setter
-
+@Schema(description = "Meal entity")
 @Table(name = "restaurant_meal")
 public class Meal extends AbstractNamedEntity {
+    @Schema(description = "Price of meal")
     public int price;
 
     @ManyToOne(fetch = FetchType.LAZY)

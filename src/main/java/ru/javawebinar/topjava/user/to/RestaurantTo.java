@@ -1,5 +1,6 @@
 package ru.javawebinar.topjava.user.to;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Setter;
 import ru.javawebinar.topjava.common.to.BaseTo;
 import ru.javawebinar.topjava.user.model.Meal;
@@ -12,14 +13,18 @@ import java.util.List;
 import java.util.Objects;
 
 @Setter
+@Schema(description = "Restaurant DTO (consists of Restaurant and sum of votes)")
 public class RestaurantTo extends BaseTo {
-
+    @Schema(description = "Entity's name")
     private String name;
 
+    @Schema(description = "Date of registered")
     private LocalDateTime registered;
 
+    @Schema(description = "Menu of the restaurant (consists of Meal)")
     private List<Meal> menu = new ArrayList<>();
 
+    @Schema(description = "Sum of votes for a restaurant")
     private int sumOfVotes;
 
     @ConstructorProperties({"id", "name", "menu", "sumOfVotes", "registered"})

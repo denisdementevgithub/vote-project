@@ -1,5 +1,6 @@
 package ru.javawebinar.topjava.user.to;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -9,21 +10,25 @@ import ru.javawebinar.topjava.common.to.BaseTo;
 import java.io.Serial;
 import java.io.Serializable;
 
+@Schema(description = "User DTO (an user without roles)")
 public class UserTo extends BaseTo implements HasIdAndEmail, Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
     @NotBlank
     @Size(min = 2, max = 100)
+    @Schema(description = "Entity's name")
     private String name;
 
     @Email
     @NotBlank
     @Size(max = 100)
+    @Schema(description = "Email of the user")
     private String email;
 
     @NotBlank
     @Size(min = 5, max = 32, message = "length must be between 5 and 32 characters")
+    @Schema(description = "Password of the user")
     private String password;
 
     public UserTo() {

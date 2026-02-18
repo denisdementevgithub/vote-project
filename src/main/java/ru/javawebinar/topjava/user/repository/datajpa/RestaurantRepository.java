@@ -38,7 +38,7 @@ public interface RestaurantRepository extends JpaRepository<Restaurant, Integer>
 
 
     @Query(value = "SELECT DISTINCT r FROM Restaurant r " +
-            "LEFT JOIN Vote ru ON r = ru.restaurant " +
+            "LEFT JOIN FETCH r.menu " +
             "WHERE r.registered between :startDateTime AND :endDateTime " +
             "ORDER BY r.id DESC")
     List<Restaurant> getAllForToday(@Param("startDateTime") LocalDateTime startDateTime,

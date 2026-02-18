@@ -31,9 +31,10 @@ public class RestaurantService {
     private Clock clock;
 
 
-    public RestaurantService(RestaurantRepository crudRestaurantRepository, MealRepository crudMealRepository) {
+    public RestaurantService(Clock clock, RestaurantRepository crudRestaurantRepository, MealRepository crudMealRepository) {
         this.crudRestaurantRepository = crudRestaurantRepository;
         this.crudMealRepository = crudMealRepository;
+        this.clock = clock;
     }
 
     public Restaurant get(int id) {
@@ -50,7 +51,7 @@ public class RestaurantService {
     public int vote(int id, int userId) {
         LocalDate dateToday = LocalDate.now();
         if ((crudRestaurantRepository.get(id).getRegistered().toLocalDate()).equals(dateToday) &&
-                (LocalTime.now(clock).isBefore(LocalTime.of(10,0)))) {
+                (LocalTime.now(clock).isBefore(LocalTime.of(15,0)))) {
             crudRestaurantRepository.deleteVote(userId, dateToday);
             return crudRestaurantRepository.vote(id, userId);
         } else {

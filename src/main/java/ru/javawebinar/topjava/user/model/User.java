@@ -1,6 +1,7 @@
 package ru.javawebinar.topjava.user.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -31,6 +32,7 @@ import java.util.*;
 @Table(name = "users")
 @Getter
 @Setter
+@Schema(description = "User entity")
 public class User extends AbstractNamedEntity implements HasIdAndEmail {
 
     public static final String DELETE = "User.delete";
@@ -41,6 +43,7 @@ public class User extends AbstractNamedEntity implements HasIdAndEmail {
     @Email
     @NotBlank
     @Size(max = 128)
+    @Schema(description = "Email of the user")
     private String email;
 
     @Column(name = "password", nullable = false)
@@ -48,14 +51,17 @@ public class User extends AbstractNamedEntity implements HasIdAndEmail {
     @Size(min = 5, max = 128)
     // https://stackoverflow.com/a/12505165/548473
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @Schema(description = "Password of the user")
     private String password;
 
     @Column(name = "enabled", nullable = false, columnDefinition = "bool default true")
+    @Schema(description = "Enable/disable user")
     private boolean enabled = true;
 
     @Column(name = "registered", nullable = false, columnDefinition = "timestamp default now()", updatable = false)
     @NotNull
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    @Schema(description = "Date of registered")
     private Date registered = new Date();
 
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
@@ -65,7 +71,7 @@ public class User extends AbstractNamedEntity implements HasIdAndEmail {
     @Column(name = "role")
     @ElementCollection(fetch = FetchType.EAGER)
     @BatchSize(size = 200)
-
+    @Schema(description = "User's roles")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<Role> roles;
 

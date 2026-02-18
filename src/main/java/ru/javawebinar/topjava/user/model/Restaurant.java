@@ -1,5 +1,7 @@
 package ru.javawebinar.topjava.user.model;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import jakarta.persistence.CascadeType;
 import jakarta.validation.constraints.*;
@@ -26,7 +28,7 @@ import java.util.Set;
 @Table(name = "restaurant")
 @Getter
 @Setter
-
+@Schema(description = "Restaurant entity")
 public class Restaurant extends AbstractNamedEntity {
     //@Column(name = "menu", nullable = false)
     //@NotBlank
@@ -37,12 +39,13 @@ public class Restaurant extends AbstractNamedEntity {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "restaurant")
     @BatchSize(size = 30)
     @OnDelete(action = OnDeleteAction.CASCADE)
-
+    @Schema(description = "Menu of the restaurant (consists of Meal)")
     private List<Meal> menu;
 
     @Column(name = "registered", nullable = false, columnDefinition = "timestamp default now()", updatable = false)
     @NotNull
     @DateTimeFormat(pattern = DateTimeUtil.DATE_TIME_PATTERN)
+    @Schema(description = "Date of registered")
     private LocalDateTime registered = LocalDateTime.now();
 
 
