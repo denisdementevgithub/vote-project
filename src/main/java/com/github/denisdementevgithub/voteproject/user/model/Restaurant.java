@@ -1,0 +1,61 @@
+package com.github.denisdementevgithub.voteproject.user.model;
+
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
+import lombok.Getter;
+import lombok.Setter;
+import org.hibernate.annotations.*;
+import org.springframework.format.annotation.DateTimeFormat;
+import com.github.denisdementevgithub.voteproject.common.model.AbstractNamedEntity;
+import com.github.denisdementevgithub.voteproject.user.util.DateTimeUtil;
+
+
+import java.time.LocalDateTime;
+import java.util.List;
+
+
+@Entity
+@Table(name = "restaurant")
+@Getter
+@Setter
+@Schema(description = "Restaurant entity")
+public class Restaurant extends AbstractNamedEntity {
+    //@Column(name = "menu", nullable = false)
+    //@NotBlank
+    //@Size(min = 2, max = 120)
+    //@JdbcTypeCode(SqlTypes.JSON)
+    //@Column(name = "menu", nullable = false, columnDefinition = "json")
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "restaurant")
+    @BatchSize(size = 30)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @Schema(description = "Menu of the restaurant (consists of Meal)")
+    private List<Meal> menu;
+
+    @Column(name = "registered", nullable = false, columnDefinition = "timestamp default now()", updatable = false)
+    @NotNull
+    @DateTimeFormat(pattern = DateTimeUtil.DATE_TIME_PATTERN)
+    @Schema(description = "Date of registered")
+    private LocalDateTime registered = LocalDateTime.now();
+
+
+    public Restaurant() {
+    }
+
+    public Restaurant(Integer id, String name, List<Meal> menu, LocalDateTime registered) {
+        super(id, name);
+        this.menu = menu;
+        this.registered = registered;
+    }
+
+    @Override
+    public String toString() {
+        return "Restaurant{" +
+                "menu=" + menu +
+                ", registered=" + registered +
+                ", name='" + name + '\'' +
+                ", id=" + id +
+                '}';
+    }
+}

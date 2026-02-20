@@ -1,0 +1,72 @@
+package com.github.denisdementevgithub.voteproject.app.config;
+
+
+import jakarta.servlet.http.HttpServletRequest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import com.github.denisdementevgithub.voteproject.common.error.ErrorInfo;
+import com.github.denisdementevgithub.voteproject.common.error.ErrorType;
+import com.github.denisdementevgithub.voteproject.common.error.IllegalRequestDataException;
+import com.github.denisdementevgithub.voteproject.common.error.NotFoundException;
+import com.github.denisdementevgithub.voteproject.common.validation.ValidationUtil;
+
+import static com.github.denisdementevgithub.voteproject.common.error.ErrorType.*;
+
+
+@RestControllerAdvice(annotations = RestController.class)
+@Order(Ordered.HIGHEST_PRECEDENCE + 5)
+public class RestExceptionInfoHandler {
+    private static final Logger log = LoggerFactory.getLogger(RestExceptionInfoHandler.class);
+
+    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
+    @ExceptionHandler(NotFoundException.class)
+    public ErrorInfo notFoundError(HttpServletRequest req, NotFoundException e) {
+
+        return logAndGetErrorInfo(req, e, false, DATA_NOT_FOUND);
+    }
+
+    @ResponseStatus(HttpStatus.CONFLICT)  // 409
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ErrorInfo conflict(HttpServletRequest req, DataIntegrityViolationException e) {
+        ErrorInfo errorInfo = logAndGetErrorInfo(req, e, true, DATA_ERROR);
+        errorInfo.setDetail("Пользователь с такой почтой уже есть в приложении");
+        return errorInfo;
+    }
+
+    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)  // 422
+    @ExceptionHandler({IllegalArgumentException.class, IllegalRequestDataException.class, MethodArgumentNotValidException.class, MethodArgumentTypeMismatchException.class, HttpMessageNotReadableException.class})
+    public ErrorInfo validationError(HttpServletRequest req, Exception e) {
+        String errorDetails = e.getMessage();
+        System.out.println(errorDetails);
+        ErrorInfo errorInfo = logAndGetErrorInfo(req, e, true, VALIDATION_ERROR);
+        errorInfo.setDetail(errorDetails);
+        return errorInfo;
+    }
+
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler(Exception.class)
+    public ErrorInfo internalError(HttpServletRequest req, Exception e) {
+        return logAndGetErrorInfo(req, e, true, APP_ERROR);
+    }
+
+    private static ErrorInfo logAndGetErrorInfo(HttpServletRequest req, Exception e, boolean logException, ErrorType errorType) {
+        Throwable rootCause = ValidationUtil.getRootCause(e);
+        if (logException) {
+            log.error(errorType + " at request " + req.getRequestURL(), rootCause);
+        } else {
+            log.warn("{} at request  {}: {}", errorType, req.getRequestURL(), rootCause.toString());
+        }
+        return new ErrorInfo(req.getRequestURL(), errorType, rootCause.toString());
+    }
+}

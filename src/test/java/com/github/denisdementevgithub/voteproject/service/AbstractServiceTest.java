@@ -1,0 +1,38 @@
+package com.github.denisdementevgithub.voteproject.service;
+
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.jdbc.Sql;
+import org.springframework.test.context.jdbc.SqlConfig;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType;
+/*
+@SpringJUnitConfig(locations = {
+        "classpath:spring/spring-app.xml",
+        "classpath:spring/spring-db.xml"
+})
+
+ */
+
+
+//@ExtendWith(SpringExtension.class)
+
+//@Sql(scripts = "classpath:db/populateDB.sql", config = @SqlConfig(encoding = "UTF-8"), executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
+@Sql(scripts = "classpath:data.sql", config = @SqlConfig(encoding = "UTF-8"), executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
+@SpringBootTest
+@AutoConfigureMockMvc
+@ActiveProfiles("test")
+public abstract class AbstractServiceTest {
+
+    //  Check root cause with AssertJ: https://github.com/junit-team/junit-framework/issues/2129#issuecomment-565712630
+    //  Check root cause in JUnit: https://github.com/junit-team/junit4/pull/778
+    protected <T extends Throwable> void validateRootCause(Class<T> rootExceptionClass, Runnable runnable) {
+        assertThatExceptionOfType(Throwable.class)
+                .isThrownBy(runnable::run)
+                .satisfiesAnyOf(
+                        ex -> assertThat(ex).isInstanceOf(rootExceptionClass),
+                        ex -> assertThat(ex).hasRootCauseInstanceOf(rootExceptionClass));
+    }
+}
