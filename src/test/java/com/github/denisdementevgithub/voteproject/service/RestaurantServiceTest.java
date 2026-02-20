@@ -66,7 +66,7 @@ public class RestaurantServiceTest extends AbstractServiceTest {
     }
 
     @Test
-    void createWithException() throws Exception {
+    void createWithException() {
         validateRootCause(ConstraintViolationException.class, () -> service.create(new Restaurant(null, null, List.of(), LocalDateTime.of(2020, Month.JANUARY, 30, 13, 0))));
         validateRootCause(ConstraintViolationException.class, () -> service.create(new Restaurant(null, "расторан", List.of(), null)));
     }

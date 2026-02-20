@@ -12,8 +12,12 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
+import static com.github.denisdementevgithub.voteproject.TestUtil.userHttpBasic;
 import static com.github.denisdementevgithub.voteproject.UserTestData.*;
+import static com.github.denisdementevgithub.voteproject.common.error.ErrorType.DATA_ERROR;
 import static com.github.denisdementevgithub.voteproject.common.error.ErrorType.VALIDATION_ERROR;
 import static com.github.denisdementevgithub.voteproject.user.web.user.ProfileRestController.REST_URL;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -104,20 +108,16 @@ class ProfileRestControllerTest extends AbstractControllerTest {
                 .andExpect(status().isUnprocessableEntity())
                 .andExpect(errorType(VALIDATION_ERROR));
     }
-/*
+
     @Test
     @Transactional(propagation = Propagation.NEVER)
     void updateDuplicate() throws Exception {
         UserTo updatedTo = new UserTo(null, "newName", "admin@gmail.com", "newPassword");
-
         perform(MockMvcRequestBuilders.put(REST_URL).contentType(MediaType.APPLICATION_JSON)
                 .with(userHttpBasic(user))
                 .content(JsonUtil.writeValue(updatedTo)))
                 .andDo(print())
-                .andExpect(status().isUnprocessableEntity())
-                .andExpect(errorType(VALIDATION_ERROR))
-                .andExpect(detailMessage(EXCEPTION_DUPLICATE_EMAIL));
+                .andExpect(status().isConflict())
+                .andExpect(errorType(DATA_ERROR));
     }
-
- */
 }

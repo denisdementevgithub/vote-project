@@ -5,5 +5,5 @@ public enum ErrorType {
     DATA_NOT_FOUND,
     DATA_ERROR,
     VALIDATION_ERROR,
-    UNAUTHORIZED;
+    UNAUTHORIZED
 }

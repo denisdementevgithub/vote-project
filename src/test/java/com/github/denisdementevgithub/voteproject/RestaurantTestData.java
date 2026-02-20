@@ -16,11 +16,11 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class RestaurantTestData {
 
-    public static MatcherFactory.Matcher<Restaurant> RESTAURANT_MATCHER =
+    public static final MatcherFactory.Matcher<Restaurant> RESTAURANT_MATCHER =
             MatcherFactory.usingAssertions(Restaurant.class,
                     (a, e) -> assertThat(a).usingRecursiveComparison().ignoringFields("registered", "menu").isEqualTo(e),
                     (a, e) -> assertThat(a).usingRecursiveComparison().ignoringFields("registered", "menu").isEqualTo(e));
-    public static MatcherFactory.Matcher<RestaurantTo> TO_MATCHER =
+    public static final MatcherFactory.Matcher<RestaurantTo> TO_MATCHER =
             MatcherFactory.usingAssertions(RestaurantTo.class,
                     (a, e) -> assertThat(a).usingRecursiveComparison().ignoringFields("registered", "menu").isEqualTo(e),
                     (a, e) -> assertThat(a).usingRecursiveComparison().ignoringFields("registered", "menu").isEqualTo(e));
@@ -54,22 +54,6 @@ public class RestaurantTestData {
 
     public static final List<RestaurantTo> restaurantTosForToday = List.of(restaurantTo7,
             restaurantTo6, restaurantTo2, restaurantTo1);
-
-    public static List<RestaurantTo> getTosFromRest(List<Restaurant> restaurants) {
-        List<RestaurantTo> restaurantTos = new ArrayList<>();
-        int counter = 0;
-        for (Restaurant currentRestaurant : restaurants) {
-            for (Vote vote : VoteTestData.VOTE_LIST) {
-                if (vote.getRestaurant().getId() == currentRestaurant.getId()) {
-                    counter++;
-                }
-            }
-            RestaurantTo restaurantTo = getTo(currentRestaurant, counter);
-            restaurantTos.add(restaurantTo);
-            counter = 0;
-        }
-        return restaurantTos;
-    }
 
     public static Restaurant getNew() {
         return new Restaurant(null, "ресторан0", List.of(new Meal(100037, "суп харчо", 0), new Meal(100038, "плов", 0), new Meal(100039, "сок", 0)), LocalDateTime.of(2020, Month.JANUARY, 30, 13, 0));

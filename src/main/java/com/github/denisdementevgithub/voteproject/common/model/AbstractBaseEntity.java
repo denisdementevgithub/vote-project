@@ -1,12 +1,9 @@
 package com.github.denisdementevgithub.voteproject.common.model;
 
 
-import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.persistence.Access;
-import jakarta.persistence.AccessType;
-import jakarta.persistence.*;
-import jakarta.persistence.MappedSuperclass;
 import com.github.denisdementevgithub.voteproject.common.HasId;
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.persistence.*;
 
 import static com.github.denisdementevgithub.voteproject.user.util.HibernateProxyHelper.getClassWithoutInitializingProxy;
 

@@ -122,7 +122,7 @@ class RestaurantAdminRestControllerTest extends AbstractControllerTest {
                 .andExpect(status().isUnprocessableEntity());
     }
 
-    RestaurantTo getRestaurantToAfterVoting() throws Exception {
+    RestaurantTo getRestaurantToAfterVoting() {
         return restaurantService.getAll().stream()
                 .filter(rest -> rest.getId() == RESTAURANT1_ID)
                 .map(rest -> RestaurantUtils.restaurantToRestaurantTo(rest, restaurantService.getVotes().get(RESTAURANT1_ID)))

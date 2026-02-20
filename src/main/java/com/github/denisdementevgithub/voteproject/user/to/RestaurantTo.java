@@ -1,6 +1,7 @@
 package com.github.denisdementevgithub.voteproject.user.to;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Getter;
 import lombok.Setter;
 import com.github.denisdementevgithub.voteproject.common.to.BaseTo;
 import com.github.denisdementevgithub.voteproject.user.model.Meal;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+@Getter
 @Setter
 @Schema(description = "Restaurant DTO (consists of Restaurant and sum of votes)")
 public class RestaurantTo extends BaseTo {
@@ -22,7 +24,7 @@ public class RestaurantTo extends BaseTo {
     private LocalDateTime registered;
 
     @Schema(description = "Menu of the restaurant (consists of Meal)")
-    private List<Meal> menu = new ArrayList<>();
+    private List<Meal> menu;
 
     @Schema(description = "Sum of votes for a restaurant")
     private int sumOfVotes;
@@ -34,22 +36,6 @@ public class RestaurantTo extends BaseTo {
         this.menu = menu;
         this.sumOfVotes = sumOfVotes;
         this.registered = registered;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public LocalDateTime getRegistered() {
-        return registered;
-    }
-
-    public List<Meal> getMenu() {
-        return menu;
-    }
-
-    public long getSumOfVotes() {
-        return sumOfVotes;
     }
 
     @Override

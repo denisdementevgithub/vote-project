@@ -1,25 +1,24 @@
 package com.github.denisdementevgithub.voteproject.web.restaurant;
 
 
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
-import org.springframework.security.test.context.support.WithUserDetails;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import com.github.denisdementevgithub.voteproject.common.TimeUtil;
 import com.github.denisdementevgithub.voteproject.user.service.RestaurantService;
 import com.github.denisdementevgithub.voteproject.user.to.RestaurantTo;
 import com.github.denisdementevgithub.voteproject.user.web.converter.RestaurantUtils;
 import com.github.denisdementevgithub.voteproject.user.web.restaurant.RestaurantUserRestController;
 import com.github.denisdementevgithub.voteproject.web.AbstractControllerTest;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithUserDetails;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import java.time.*;
+import java.time.ZoneId;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static com.github.denisdementevgithub.voteproject.RestaurantTestData.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static com.github.denisdementevgithub.voteproject.RestaurantTestData.*;
 
 class RestaurantUserRestControllerTest extends AbstractControllerTest {
     private static final String REST_URL = RestaurantUserRestController.REST_URL;
@@ -48,7 +47,7 @@ class RestaurantUserRestControllerTest extends AbstractControllerTest {
                 .andExpect(status().isUnprocessableEntity());
     }
 
-    RestaurantTo getRestaurantToAfterVoting() throws Exception {
+    RestaurantTo getRestaurantToAfterVoting() {
         return restaurantService.getAll().stream()
                 .filter(rest -> rest.getId() == RESTAURANT1_ID)
                 .map(rest -> RestaurantUtils.restaurantToRestaurantTo(rest, restaurantService.getVotes().get(RESTAURANT1_ID)))

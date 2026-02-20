@@ -6,8 +6,12 @@ import jakarta.persistence.MappedSuperclass;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
+import lombok.Getter;
+import lombok.Setter;
 
 @MappedSuperclass
+@Getter
+@Setter
 public abstract class AbstractNamedEntity extends AbstractBaseEntity {
 
     @NotBlank
@@ -22,14 +26,6 @@ public abstract class AbstractNamedEntity extends AbstractBaseEntity {
     protected AbstractNamedEntity(Integer id, String name) {
         super(id);
         this.name = name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getName() {
-        return this.name;
     }
 
     @Override

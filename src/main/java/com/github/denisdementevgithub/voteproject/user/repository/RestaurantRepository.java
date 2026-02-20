@@ -53,8 +53,4 @@ public interface RestaurantRepository extends JpaRepository<Restaurant, Integer>
     @Transactional
     @Query(value = "DELETE FROM restaurant_user_vote ru WHERE ru.user_id =?1 AND ru.voting_date =?2", nativeQuery = true)
     int deleteVote(int userId, LocalDate votingDate);
-
-    default Restaurant getExisted(int id) {
-        return findById(id).orElseThrow(() -> new NotFoundException("Entity with id=" + id + " not found"));
-    }
 }

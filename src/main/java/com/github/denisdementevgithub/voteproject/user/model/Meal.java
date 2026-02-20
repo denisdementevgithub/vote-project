@@ -29,12 +29,6 @@ public class Meal extends AbstractNamedEntity {
     public Meal() {
     }
 
-    public Meal(int id, String name, int price, Restaurant restaurant) {
-        super(id, name);
-        this.price = price;
-        this.restaurant = restaurant;
-    }
-
     @Override
     public String toString() {
         return "Meal{" +

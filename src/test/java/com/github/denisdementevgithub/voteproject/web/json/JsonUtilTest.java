@@ -45,6 +45,6 @@ class JsonUtilTest {
         String jsonWithPass = jsonWithPassword(UserTestData.user, "newPass");
         System.out.println(jsonWithPass);
         User user = JsonUtil.readValue(jsonWithPass, User.class);
-        assertEquals(user.getPassword(), "newPass");
+        assertEquals("newPass",user.getPassword());
     }
 }

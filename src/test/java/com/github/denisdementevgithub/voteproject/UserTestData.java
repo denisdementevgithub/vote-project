@@ -7,7 +7,6 @@ import com.github.denisdementevgithub.voteproject.user.web.json.JsonUtil;
 import java.util.Collections;
 import java.util.Date;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static com.github.denisdementevgithub.voteproject.common.model.AbstractBaseEntity.START_SEQ;
 
 public class UserTestData {
@@ -17,7 +16,7 @@ public class UserTestData {
     public static final int USER_ID0 = START_SEQ;
     public static final int ADMIN_ID = START_SEQ + 1;
     public static final int USER_ID1 = START_SEQ + 2;
-    public static final int USER_ID2 = START_SEQ + 3;;
+    public static final int USER_ID2 = START_SEQ + 3;
     public static final int USER_NOT_FOUND = 10;
 
     public static final User user = new User(USER_ID0, "User Anton", "user@yandex.ru", "password", Role.USER);
