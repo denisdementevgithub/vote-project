@@ -14,7 +14,7 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import com.github.denisdementevgithub.voteproject.user.model.Role;
-import com.github.denisdementevgithub.voteproject.user.repository.datajpa.UserRepository;
+import com.github.denisdementevgithub.voteproject.user.repository.UserRepository;
 import com.github.denisdementevgithub.voteproject.user.service.UserService;
 
 
@@ -34,21 +34,6 @@ public class SecurityConfig {
         return PASSWORD_ENCODER;
     }
 
-    /*
-    @Bean
-    UserDetailsService userDetailsService() {
-        return email -> {
-            log.debug("Authenticating '{}'", email);
-            User optionalUser = userRepository.getByEmail(email);
-            return new AuthorizedUser(optionalUser);
-        };
-    }
-
-     */
-
-
-
-    //https://stackoverflow.com/a/76538979/548473
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.securityMatcher("/api/**").authorizeHttpRequests(authz ->

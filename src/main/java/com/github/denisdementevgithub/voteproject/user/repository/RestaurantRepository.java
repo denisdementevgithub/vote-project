@@ -1,4 +1,4 @@
-package com.github.denisdementevgithub.voteproject.user.repository.datajpa;
+package com.github.denisdementevgithub.voteproject.user.repository;
 
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;

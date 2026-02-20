@@ -8,8 +8,8 @@ import org.springframework.util.Assert;
 import com.github.denisdementevgithub.voteproject.common.error.IllegalRequestDataException;
 import com.github.denisdementevgithub.voteproject.user.model.Meal;
 import com.github.denisdementevgithub.voteproject.user.model.Restaurant;
-import com.github.denisdementevgithub.voteproject.user.repository.datajpa.MealRepository;
-import com.github.denisdementevgithub.voteproject.user.repository.datajpa.RestaurantRepository;
+import com.github.denisdementevgithub.voteproject.user.repository.MealRepository;
+import com.github.denisdementevgithub.voteproject.user.repository.RestaurantRepository;
 
 
 import java.time.Clock;
@@ -28,7 +28,6 @@ public class RestaurantService {
     private final RestaurantRepository crudRestaurantRepository;
     private final MealRepository crudMealRepository;
     private Clock clock;
-
 
     public RestaurantService(Clock clock, RestaurantRepository crudRestaurantRepository, MealRepository crudMealRepository) {
         this.crudRestaurantRepository = crudRestaurantRepository;
@@ -59,17 +58,6 @@ public class RestaurantService {
     }
 
     public List<Restaurant> getAll() {
-        /*List<RestaurantTo> restaurantsWithoutMenu =
-                convertFromObjectsToRestaurantTos(crudRestaurantRepository.getAll());
-        System.out.println(restaurantsWithoutMenu);
-        for (RestaurantTo restaurantTo : restaurantsWithoutMenu) {
-            List<Meal> menu = crudMealRepository.getAllForRestaurant(restaurantTo.id());
-            restaurantTo.setMenu(menu);
-        }
-        System.out.println(restaurantsWithoutMenu);
-        return restaurantsWithoutMenu;
-
-         */
         return crudRestaurantRepository.getAll();
     }
 
@@ -114,5 +102,4 @@ public class RestaurantService {
     public Restaurant getWithMenu(int id) {
         return crudRestaurantRepository.getWithMenu(id);
     }
-
 }

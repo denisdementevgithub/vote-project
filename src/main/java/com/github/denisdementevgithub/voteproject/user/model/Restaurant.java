@@ -21,11 +21,6 @@ import java.util.List;
 @Setter
 @Schema(description = "Restaurant entity")
 public class Restaurant extends AbstractNamedEntity {
-    //@Column(name = "menu", nullable = false)
-    //@NotBlank
-    //@Size(min = 2, max = 120)
-    //@JdbcTypeCode(SqlTypes.JSON)
-    //@Column(name = "menu", nullable = false, columnDefinition = "json")
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "restaurant")
     @BatchSize(size = 30)

@@ -1,7 +1,7 @@
 package com.github.denisdementevgithub.voteproject.user.web.menu;
 
 import org.springframework.web.bind.annotation.RestController;
-import com.github.denisdementevgithub.voteproject.user.repository.datajpa.RestaurantRepository;
+import com.github.denisdementevgithub.voteproject.user.repository.RestaurantRepository;
 
 @RestController
 public class MealAdminRestController extends AbstractMealController {

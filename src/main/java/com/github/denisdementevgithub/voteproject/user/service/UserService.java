@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import com.github.denisdementevgithub.voteproject.app.AuthorizedUser;
 import com.github.denisdementevgithub.voteproject.user.model.User;
-import com.github.denisdementevgithub.voteproject.user.repository.datajpa.UserRepository;
+import com.github.denisdementevgithub.voteproject.user.repository.UserRepository;
 import com.github.denisdementevgithub.voteproject.user.to.UserTo;
 import com.github.denisdementevgithub.voteproject.user.util.UsersUtil;
 
@@ -24,7 +24,6 @@ import static com.github.denisdementevgithub.voteproject.common.validation.Valid
 @Service("userService")
 @Scope(proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class UserService implements UserDetailsService {
-
     private final UserRepository repository;
     private final PasswordEncoder passwordEncoder;
 
@@ -64,7 +63,6 @@ public class UserService implements UserDetailsService {
         Assert.notNull(user, "user must not be null");
         prepareAndSave(user);
     }
-
 
     @CacheEvict(value = "users", allEntries = true)
     @Transactional

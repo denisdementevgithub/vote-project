@@ -11,7 +11,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-//https://sabljakovich.medium.com/adding-basic-auth-authorization-option-to-openapi-swagger-documentation-java-spring-95abbede27e9
 @SecurityScheme(
         name = "basicAuth",
         type = SecuritySchemeType.HTTP,
@@ -28,7 +27,7 @@ import org.springframework.context.annotation.Configuration;
                         - admin@gmail.com / admin<br>
                         - guestSergey@gmail.com / password</p>
                         """,
-                contact = @Contact(name = "Dementiev Denis", email = "deniska170792@rambler.ru")
+                contact = @Contact(name = "Dementev Denis", email = "deniska170792@rambler.ru")
         ),
         security = @SecurityRequirement(name = "basicAuth")
 )

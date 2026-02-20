@@ -13,6 +13,7 @@ import com.github.denisdementevgithub.voteproject.user.to.UserTo;
 //import springfox.documentation.annotations.ApiIgnore;
 
 import jakarta.validation.Valid;
+
 import java.net.URI;
 
 import static com.github.denisdementevgithub.voteproject.user.web.SecurityUtil.authUserId;
@@ -54,10 +55,8 @@ public class ProfileRestController extends AbstractUserController {
     }
 
     @GetMapping("/text")
-    @Operation(hidden = true
-    )
+    @Operation(hidden = true)
     public String testUTF() {
         return "Русский текст";
     }
-
 }

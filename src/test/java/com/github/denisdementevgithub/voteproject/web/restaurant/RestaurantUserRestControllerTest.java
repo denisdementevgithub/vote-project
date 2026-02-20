@@ -55,8 +55,6 @@ class RestaurantUserRestControllerTest extends AbstractControllerTest {
                 .toList().getFirst();
     }
 
-
-
     public static final String USER_MAIL = "user@yandex.ru";
     @Test
     @WithUserDetails(value = USER_MAIL)
@@ -67,5 +65,4 @@ class RestaurantUserRestControllerTest extends AbstractControllerTest {
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(TO_MATCHER.contentJson(restaurantTosForToday));
     }
-
 }

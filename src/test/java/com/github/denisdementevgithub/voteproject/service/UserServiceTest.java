@@ -16,7 +16,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 import static com.github.denisdementevgithub.voteproject.UserTestData.*;
 
-public abstract class AbstractUserServiceTest extends AbstractServiceTest {
+public class UserServiceTest extends AbstractServiceTest {
 
     @Autowired
     protected UserService service;
@@ -82,8 +82,6 @@ public abstract class AbstractUserServiceTest extends AbstractServiceTest {
     void createWithException() throws Exception {
         validateRootCause(ConstraintViolationException.class, () -> service.create(new User(null, " ", "mail@yandex.ru", "password", Role.USER)));
         validateRootCause(ConstraintViolationException.class, () -> service.create(new User(null, "User", " ", "password", true, new Date(), List.of(Role.USER))));
-        //validateRootCause(ConstraintViolationException.class, () -> service.create(new User(null, "", "mail@yandex.ru", "password", true, new Date(), List.of(Role.USER))));
-
     }
 
     @Test

@@ -36,11 +36,6 @@ public class RestaurantTo extends BaseTo {
         this.registered = registered;
     }
 
-
-
-
-
-
     public String getName() {
         return name;
     }
@@ -56,8 +51,6 @@ public class RestaurantTo extends BaseTo {
     public long getSumOfVotes() {
         return sumOfVotes;
     }
-
-
 
     @Override
     public boolean equals(Object o) {

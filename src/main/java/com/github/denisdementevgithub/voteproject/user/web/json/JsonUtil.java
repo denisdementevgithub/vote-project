@@ -1,9 +1,6 @@
 package com.github.denisdementevgithub.voteproject.user.web.json;
 
 
-
-
-
 import tools.jackson.core.JacksonException;
 import tools.jackson.core.type.TypeReference;
 import tools.jackson.databind.ObjectMapper;
@@ -11,7 +8,6 @@ import tools.jackson.databind.ObjectReader;
 
 import java.util.List;
 import java.util.Map;
-
 
 
 public class JsonUtil {

@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import com.github.denisdementevgithub.voteproject.user.model.Meal;
 import com.github.denisdementevgithub.voteproject.user.model.Restaurant;
-import com.github.denisdementevgithub.voteproject.user.repository.datajpa.MealRepository;
+import com.github.denisdementevgithub.voteproject.user.repository.MealRepository;
 
 import java.util.List;
 
@@ -15,14 +15,12 @@ import static com.github.denisdementevgithub.voteproject.common.validation.Valid
 
 @Service
 public class MealService {
-
     private final MealRepository mealRepository;
 
     public MealService(MealRepository mealRepository) {
         this.mealRepository = mealRepository;
     }
 
-    //@CacheEvict(value = "users", allEntries = true)
     public List<Meal> create(List<Meal> menu) {
         Assert.notNull(menu, "menu must not be null");
         return mealRepository.saveAll(menu);
@@ -33,9 +31,6 @@ public class MealService {
         return mealRepository.save(menu);
     }
 
-
-
-    //@CacheEvict(value = "users", allEntries = true)
     public void delete(Restaurant restaurant) {
         getByRestaurant(restaurant);
         mealRepository.delete(restaurant);
@@ -54,7 +49,6 @@ public class MealService {
         return checkNotFoundForMenu(mealRepository.getByRestaurant(restaurant), restaurant);
     }
 
-
     @Cacheable("users")
     public List<Meal> getAll() {
         return mealRepository.getAll();
@@ -65,6 +59,4 @@ public class MealService {
         Assert.notNull(meal, "user must not be null");
         mealRepository.save(meal);
     }
-
-
 }

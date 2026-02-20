@@ -1,4 +1,4 @@
-package com.github.denisdementevgithub.voteproject.user.repository.datajpa;
+package com.github.denisdementevgithub.voteproject.user.repository;
 
 import org.springframework.data.jpa.repository.*;
 import org.springframework.data.repository.query.Param;
@@ -8,7 +8,6 @@ import com.github.denisdementevgithub.voteproject.user.model.User;
 import java.util.List;
 
 import static com.github.denisdementevgithub.voteproject.app.config.SecurityConfig.PASSWORD_ENCODER;
-
 
 @Transactional(readOnly = true)
 public interface UserRepository extends JpaRepository<User, Integer> {
@@ -32,10 +31,4 @@ public interface UserRepository extends JpaRepository<User, Integer> {
         user.setEmail(user.getEmail().toLowerCase());
         return save(user);
     }
-/*
-    default User getExistedByEmail(String email) {
-        return getByEmail(email).orElseThrow(() -> new NotFoundException("User with email=" + email + " not found"));
-    }
-
- */
 }

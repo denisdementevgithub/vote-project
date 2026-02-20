@@ -1,4 +1,4 @@
-package com.github.denisdementevgithub.voteproject.user.repository.datajpa;
+package com.github.denisdementevgithub.voteproject.user.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -12,11 +12,6 @@ import java.util.List;
 
 @Transactional(readOnly = true)
 public interface MealRepository extends JpaRepository<Meal, Integer> {
-
-    /*
-    @Query("SELECT m FROM Meal m WHERE m.restaurant.id = :restaurantId order by m.id ASC")
-    List<Meal> getAllForRestaurant(@Param("restaurantId") int id);
-*/
 
     @Transactional
     @Modifying

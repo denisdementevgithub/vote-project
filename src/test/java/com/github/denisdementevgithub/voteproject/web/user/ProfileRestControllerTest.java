@@ -1,27 +1,25 @@
 package com.github.denisdementevgithub.voteproject.web.user;
 
+import com.github.denisdementevgithub.voteproject.user.model.User;
+import com.github.denisdementevgithub.voteproject.user.service.UserService;
+import com.github.denisdementevgithub.voteproject.user.to.UserTo;
+import com.github.denisdementevgithub.voteproject.user.util.UsersUtil;
+import com.github.denisdementevgithub.voteproject.user.web.json.JsonUtil;
+import com.github.denisdementevgithub.voteproject.web.AbstractControllerTest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import com.github.denisdementevgithub.voteproject.user.model.User;
-import com.github.denisdementevgithub.voteproject.user.service.UserService;
-import com.github.denisdementevgithub.voteproject.user.to.UserTo;
-import com.github.denisdementevgithub.voteproject.user.util.UsersUtil;
-import com.github.denisdementevgithub.voteproject.web.AbstractControllerTest;
-import com.github.denisdementevgithub.voteproject.user.web.json.JsonUtil;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static com.github.denisdementevgithub.voteproject.UserTestData.*;
 import static com.github.denisdementevgithub.voteproject.common.error.ErrorType.VALIDATION_ERROR;
 import static com.github.denisdementevgithub.voteproject.user.web.user.ProfileRestController.REST_URL;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-//@ExtendWith(TimingExtension.class)
 class ProfileRestControllerTest extends AbstractControllerTest {
 
     @Autowired
@@ -43,6 +41,7 @@ class ProfileRestControllerTest extends AbstractControllerTest {
     }
 
     public static final String USER_MAIL = "user@yandex.ru";
+
     @Test
     @WithUserDetails(value = USER_MAIL)
     void delete() throws Exception {
@@ -50,7 +49,6 @@ class ProfileRestControllerTest extends AbstractControllerTest {
                 .andExpect(status().isNoContent());
         USER_MATCHER.assertMatch(userService.getAll(), admin, user1, user2);
     }
-
 
 
     @Test

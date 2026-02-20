@@ -36,7 +36,6 @@ class RestaurantAdminRestControllerTest extends AbstractControllerTest {
     @Autowired
     private RestaurantService restaurantService;
 
-
     @Test
     @WithUserDetails(value = ADMIN_MAIL)
     void get() throws Exception {
@@ -75,7 +74,6 @@ class RestaurantAdminRestControllerTest extends AbstractControllerTest {
         perform(MockMvcRequestBuilders.delete(REST_ADMIN_URL + "/" + RESTAURANT_NOT_FOUND))
                 .andDo(print())
                 .andExpect(status().isUnprocessableEntity());
-
     }
 
     @Test
@@ -83,10 +81,8 @@ class RestaurantAdminRestControllerTest extends AbstractControllerTest {
     void update() throws Exception {
         Restaurant updated = RestaurantTestData.getUpdated();
         perform(MockMvcRequestBuilders.put(REST_ADMIN_URL + "/" + RESTAURANT1_ID).contentType(MediaType.APPLICATION_JSON)
-
                 .content(JsonUtil.writeValue(updated)))
                 .andExpect(status().isNoContent());
-
         RESTAURANT_MATCHER.assertMatch(restaurantService.get(RESTAURANT1_ID), updated);
     }
 
@@ -98,7 +94,6 @@ class RestaurantAdminRestControllerTest extends AbstractControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(newRestaurant)))
                 .andExpect(status().isCreated());
-
         Restaurant created = RESTAURANT_MATCHER.readFromJson(action);
         int newId = created.id();
         newRestaurant.setId(newId);
@@ -134,7 +129,6 @@ class RestaurantAdminRestControllerTest extends AbstractControllerTest {
                 .toList().getFirst();
     }
 
-
     public static final String ADMIN_MAIL = "admin@gmail.com";
 
     @Test
@@ -147,7 +141,6 @@ class RestaurantAdminRestControllerTest extends AbstractControllerTest {
                 .andExpect(TO_MATCHER.contentJson(restaurantTos));
     }
 
-
     @Test
     @WithUserDetails(value = ADMIN_MAIL)
     void createInvalid() throws Exception {
@@ -159,8 +152,6 @@ class RestaurantAdminRestControllerTest extends AbstractControllerTest {
                 .andExpect(status().isUnprocessableEntity())
                 .andExpect(errorType(VALIDATION_ERROR));
     }
-
-
 
     @Test
     void updateInvalid() throws Exception {

@@ -86,6 +86,4 @@ public class RestaurantAdminRestController extends AbstractRestaurantController 
     public void setMenu(@PathVariable @Parameter(example = "100009") int id, @RequestBody List<Meal> menu) {
         super.setMenu(menu, id);
     }
-
-
 }

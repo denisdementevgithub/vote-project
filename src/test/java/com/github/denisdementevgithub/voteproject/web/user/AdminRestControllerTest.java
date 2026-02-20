@@ -12,7 +12,10 @@ import com.github.denisdementevgithub.voteproject.common.error.NotFoundException
 import com.github.denisdementevgithub.voteproject.user.service.UserService;
 import com.github.denisdementevgithub.voteproject.user.web.user.AdminRestController;
 import com.github.denisdementevgithub.voteproject.web.AbstractControllerTest;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
+import static com.github.denisdementevgithub.voteproject.common.error.ErrorType.DATA_ERROR;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -24,7 +27,6 @@ import static com.github.denisdementevgithub.voteproject.common.error.ErrorType.
 
 
 class AdminRestControllerTest extends AbstractControllerTest {
-
     private static final String REST_URL = AdminRestController.REST_URL;
 
     @Autowired
@@ -37,7 +39,6 @@ class AdminRestControllerTest extends AbstractControllerTest {
         perform(MockMvcRequestBuilders.get(REST_URL + "/" + ADMIN_ID))
                 .andExpect(status().isOk())
                 .andDo(print())
-                // https://jira.spring.io/browse/SPR-14472
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(USER_MATCHER.contentJson(admin));
     }
@@ -101,7 +102,6 @@ class AdminRestControllerTest extends AbstractControllerTest {
                 .with(userHttpBasic(admin))
                 .content(jsonWithPassword(updated, updated.getPassword())))
                 .andExpect(status().isNoContent());
-
         USER_MATCHER.assertMatch(userService.get(USER_ID0), getUpdated());
     }
 
@@ -113,7 +113,6 @@ class AdminRestControllerTest extends AbstractControllerTest {
                 .with(userHttpBasic(admin))
                 .content(jsonWithPassword(newUser, newUser.getPassword())))
                 .andExpect(status().isCreated());
-
         User created = USER_MATCHER.readFromJson(action);
         int newId = created.id();
         newUser.setId(newId);
@@ -167,12 +166,12 @@ class AdminRestControllerTest extends AbstractControllerTest {
                 .andExpect(status().isUnprocessableEntity())
                 .andExpect(errorType(VALIDATION_ERROR));
     }
-/*
+
     @Test
     void updateHtmlUnsafe() throws Exception {
         User updated = new User(user);
         updated.setName("<script>alert(123)</script>");
-        perform(MockMvcRequestBuilders.put(REST_URL + USER_ID0)
+        perform(MockMvcRequestBuilders.put(REST_URL + "/" + USER_ID0)
                 .contentType(MediaType.APPLICATION_JSON)
                 .with(userHttpBasic(admin))
                 .content(jsonWithPassword(updated, "password")))
@@ -181,22 +180,19 @@ class AdminRestControllerTest extends AbstractControllerTest {
                 .andExpect(errorType(VALIDATION_ERROR));
     }
 
- */
-/*
     @Test
     @Transactional(propagation = Propagation.NEVER)
     void updateDuplicate() throws Exception {
         User updated = new User(user);
         updated.setId(null);
         updated.setEmail("admin@gmail.com");
-        perform(MockMvcRequestBuilders.put(REST_URL + USER_ID0)
+        perform(MockMvcRequestBuilders.put(REST_URL + "/" + USER_ID0)
                 .contentType(MediaType.APPLICATION_JSON)
                 .with(userHttpBasic(admin))
                 .content(jsonWithPassword(updated, "password")))
                 .andDo(print())
-                .andExpect(status().isUnprocessableEntity())
-                .andExpect(errorType(VALIDATION_ERROR))
-                .andExpect(detailMessage(EXCEPTION_DUPLICATE_EMAIL));
+                .andExpect(status().isConflict())
+                .andExpect(errorType(DATA_ERROR));
     }
 
     @Test
@@ -208,10 +204,7 @@ class AdminRestControllerTest extends AbstractControllerTest {
                 .with(userHttpBasic(admin))
                 .content(jsonWithPassword(expected, "newPass")))
                 .andDo(print())
-                .andExpect(status().isUnprocessableEntity())
-                .andExpect(errorType(VALIDATION_ERROR))
-                .andExpect(detailMessage(EXCEPTION_DUPLICATE_EMAIL));
+                .andExpect(status().isConflict())
+                .andExpect(errorType(DATA_ERROR));
     }
-
- */
 }

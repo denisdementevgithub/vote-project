@@ -66,7 +66,6 @@ public class UserTo extends BaseTo implements HasIdAndEmail, Serializable {
         this.email = email;
     }
 
-
     @Override
     public String toString() {
         return "UserTo{" +
