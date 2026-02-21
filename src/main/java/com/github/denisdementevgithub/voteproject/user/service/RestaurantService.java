@@ -93,15 +93,17 @@ public class RestaurantService {
     }
 
     public void setMenu(List<Meal> menu, int id) {
-        Restaurant restaurant = crudRestaurantRepository.get(id);
+        Restaurant restaurant = new Restaurant();
+        restaurant.setId(id);
         for (Meal meal : menu) {
             meal.setRestaurant(restaurant);
         }
-        crudMealRepository.delete(restaurant);
+        crudMealRepository.deleteByRestaurant(restaurant);
         crudMealRepository.saveAll(menu);
     }
 
     public Restaurant getWithMenu(int id) {
         return crudRestaurantRepository.getWithMenu(id);
     }
+
 }

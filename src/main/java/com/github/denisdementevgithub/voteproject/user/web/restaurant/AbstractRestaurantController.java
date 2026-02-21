@@ -61,12 +61,10 @@ public abstract class AbstractRestaurantController {
     }
 
     public void setMenu(List<Meal> menu, int id) {
-        int userId = SecurityUtil.authUserId();
         log.info("setMenu menu {}", id);
         service.setMenu(menu, id);
     }
     public Restaurant getWithMenu(int id) {
-        int userId = SecurityUtil.authUserId();
         log.info("getWithMenu {}", id);
         return service.getWithMenu(id);
     }

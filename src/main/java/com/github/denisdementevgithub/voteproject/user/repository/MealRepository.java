@@ -16,18 +16,18 @@ public interface MealRepository extends JpaRepository<Meal, Integer> {
     @Transactional
     @Modifying
     @Query("DELETE FROM Meal m WHERE m.restaurant=:restaurant")
-    int delete(@Param("restaurant") Restaurant restaurant);
+    int deleteByRestaurant(@Param("restaurant") Restaurant restaurant);
 
     @Transactional
     @Modifying
     @Query("DELETE FROM Meal m WHERE m.id=:id")
-    int delete(@Param("id") int id);
+    int deleteById(@Param("id") int id);
 
     @Query("SELECT m FROM Meal m WHERE m.restaurant = :restaurant")
     List<Meal> getByRestaurant(@Param("restaurant") Restaurant restaurant);
 
     @Query("SELECT m FROM Meal m WHERE m.id = :id")
-    Meal get(@Param("id") int id);
+    Meal getById(@Param("id") int id);
 
     @Query("SELECT m FROM Meal m order by m.id DESC")
     List<Meal> getAll();

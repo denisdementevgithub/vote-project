@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import com.github.denisdementevgithub.voteproject.common.model.AbstractNamedEntity;
+import org.hibernate.validator.constraints.Range;
 
 @Entity
 @Getter
@@ -14,6 +15,7 @@ import com.github.denisdementevgithub.voteproject.common.model.AbstractNamedEnti
 @Table(name = "restaurant_meal")
 public class Meal extends AbstractNamedEntity {
     @Schema(description = "Price of meal")
+    @Range(min = 1, max = 5000)
     public int price;
 
     @ManyToOne(fetch = FetchType.LAZY)
