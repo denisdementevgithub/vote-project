@@ -1,6 +1,6 @@
 DROP TABLE IF EXISTS user_role cascade;
-DROP TABLE IF EXISTS restaurant_meal cascade;
-DROP TABLE IF EXISTS restaurant_user_vote cascade;
+DROP TABLE IF EXISTS meal cascade;
+DROP TABLE IF EXISTS vote cascade;
 DROP TABLE IF EXISTS restaurant cascade;
 DROP TABLE IF EXISTS users cascade;
 DROP SEQUENCE IF EXISTS global_seq;
@@ -11,7 +11,6 @@ CREATE TABLE restaurant
 (
     id         INTEGER   DEFAULT NEXT VALUE FOR GLOBAL_SEQ PRIMARY KEY,
     name       VARCHAR(255)            NOT NULL,
-
     registered TIMESTAMP DEFAULT now() NOT NULL
 );
 
@@ -25,7 +24,7 @@ CREATE TABLE users
     enabled    BOOLEAN   DEFAULT TRUE NOT NULL
 );
 
-CREATE TABLE restaurant_user_vote
+CREATE TABLE vote
 (
     id            INTEGER DEFAULT NEXT VALUE FOR GLOBAL_SEQ PRIMARY KEY,
     restaurant_id INTEGER NOT NULL,
@@ -46,7 +45,7 @@ CREATE TABLE user_role
     FOREIGN KEY (user_id) REFERENCES USERS (id) ON DELETE CASCADE
 );
 
-CREATE TABLE restaurant_meal
+CREATE TABLE meal
 (
     id            INTEGER DEFAULT NEXT VALUE FOR GLOBAL_SEQ PRIMARY KEY,
     restaurant_id INTEGER      NOT NULL,

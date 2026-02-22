@@ -19,14 +19,14 @@ public class MealService {
         this.repository = repository;
     }
 
-    public List<Meal> createAll(List<Meal> menu) {
-        Assert.notNull(menu, "list of menu must not be null");
-        return repository.saveAll(menu);
+    public List<Meal> createAll(List<Meal> meals) {
+        Assert.notNull(meals, "list of menu must not be null");
+        return repository.saveAll(meals);
     }
 
-    public Meal create(Meal menu) {
-        Assert.notNull(menu, "menu must not be null");
-        return repository.save(menu);
+    public Meal create(Meal meals) {
+        Assert.notNull(meals, "menu must not be null");
+        return repository.save(meals);
     }
 
     public void deleteByRestaurant(Restaurant restaurant) {

@@ -8,7 +8,7 @@ import jakarta.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "restaurant_user_vote")
+@Table(name = "vote")
 @Getter
 @Setter
 public class Vote extends AbstractBaseEntity {

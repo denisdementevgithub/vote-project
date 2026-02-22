@@ -37,7 +37,7 @@ public class RestaurantAdminRestController extends AbstractRestaurantController 
     }
 
     @Override
-    @GetMapping("/{id}/with-menu")
+    @GetMapping("/{id}/with-meals")
     @Operation(summary = "Get a restaurant with menu")
     public Restaurant getWithMenu(@PathVariable @Parameter(example = "100009") int id) {
         return super.getWithMenu(id);

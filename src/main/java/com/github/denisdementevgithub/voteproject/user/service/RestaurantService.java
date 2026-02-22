@@ -48,10 +48,11 @@ public class RestaurantService {
     @CacheEvict(value = "restaurantTosForToday", allEntries = true)
     public int vote(int id, int userId) {
         LocalDate dateToday = LocalDate.now();
-        if ((crudRestaurantRepository.get(id).getRegistered().toLocalDate()).equals(dateToday) &&
+        Restaurant restaurant = crudRestaurantRepository.get(id);
+        if ((restaurant.getRegistered().toLocalDate()).equals(dateToday) &&
                 (LocalTime.now(clock).isBefore(LocalTime.of(11,0)))) {
-            crudRestaurantRepository.deleteVote(userId, dateToday);
-            return crudRestaurantRepository.vote(id, userId);
+            crudMealRepository.deleteVote(userId, dateToday);
+            return crudMealRepository.vote(id, userId);
         } else {
             throw new IllegalRequestDataException("Голосование для данной даты закрыто");
         }
@@ -103,7 +104,7 @@ public class RestaurantService {
     }
 
     public Restaurant getWithMenu(int id) {
-        return crudRestaurantRepository.getWithMenu(id);
+        return crudRestaurantRepository.getWithMeals(id);
     }
 
 }

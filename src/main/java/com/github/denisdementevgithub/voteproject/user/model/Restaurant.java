@@ -26,7 +26,7 @@ public class Restaurant extends AbstractNamedEntity {
     @BatchSize(size = 30)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @Schema(description = "Menu of the restaurant (consists of Meal)")
-    private List<Meal> menu;
+    private List<Meal> meals;
 
     @Column(name = "registered", nullable = false, columnDefinition = "timestamp default now()", updatable = false)
     @NotNull
@@ -38,16 +38,16 @@ public class Restaurant extends AbstractNamedEntity {
     public Restaurant() {
     }
 
-    public Restaurant(Integer id, String name, List<Meal> menu, LocalDateTime registered) {
+    public Restaurant(Integer id, String name, List<Meal> meals, LocalDateTime registered) {
         super(id, name);
-        this.menu = menu;
+        this.meals = meals;
         this.registered = registered;
     }
 
     @Override
     public String toString() {
         return "Restaurant{" +
-                "menu=" + menu +
+                "meals=" + meals +
                 ", registered=" + registered +
                 ", name='" + name + '\'' +
                 ", id=" + id +

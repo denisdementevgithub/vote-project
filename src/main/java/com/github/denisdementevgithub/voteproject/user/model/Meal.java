@@ -8,11 +8,13 @@ import lombok.Setter;
 import com.github.denisdementevgithub.voteproject.common.model.AbstractNamedEntity;
 import org.hibernate.validator.constraints.Range;
 
+import java.time.LocalDate;
+
 @Entity
 @Getter
 @Setter
 @Schema(description = "Meal entity")
-@Table(name = "restaurant_meal")
+@Table(name = "meal")
 public class Meal extends AbstractNamedEntity {
     @Schema(description = "Price of meal")
     @Range(min = 1, max = 5000)

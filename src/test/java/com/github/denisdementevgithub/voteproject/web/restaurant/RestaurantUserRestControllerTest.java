@@ -40,7 +40,7 @@ class RestaurantUserRestControllerTest extends AbstractControllerTest {
     @Test
     @WithUserDetails(value = USER_MAIL)
     void voteNotSuccessful() throws Exception {
-        restaurantService.setClock(TimeUtil.getClock(11, 0, ZoneId.systemDefault()));
+        restaurantService.setClock(TimeUtil.getClock(15, 0, ZoneId.systemDefault()));
         perform(MockMvcRequestBuilders.post(REST_URL + "/" + RESTAURANT1_ID + "/vote")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())

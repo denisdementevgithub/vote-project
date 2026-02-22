@@ -17,6 +17,6 @@ public class RestaurantUtils {
     }
 
     public static RestaurantTo restaurantToRestaurantTo(Restaurant restaurant, int numberOfVotes) {
-        return new RestaurantTo(restaurant.getId(), restaurant.getName(), restaurant.getMenu(), numberOfVotes,restaurant.getRegistered());
+        return new RestaurantTo(restaurant.getId(), restaurant.getName(), restaurant.getMeals(), numberOfVotes,restaurant.getRegistered());
     }
 }

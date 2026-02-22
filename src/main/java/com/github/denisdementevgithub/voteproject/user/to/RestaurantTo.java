@@ -9,7 +9,6 @@ import com.github.denisdementevgithub.voteproject.user.model.Meal;
 
 import java.beans.ConstructorProperties;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -24,16 +23,16 @@ public class RestaurantTo extends BaseTo {
     private LocalDateTime registered;
 
     @Schema(description = "Menu of the restaurant (consists of Meal)")
-    private List<Meal> menu;
+    private List<Meal> meals;
 
     @Schema(description = "Sum of votes for a restaurant")
     private int sumOfVotes;
 
     @ConstructorProperties({"id", "name", "menu", "sumOfVotes", "registered"})
-    public RestaurantTo(Integer id, String name, List<Meal> menu, Integer sumOfVotes, LocalDateTime registered) {
+    public RestaurantTo(Integer id, String name, List<Meal> meals, Integer sumOfVotes, LocalDateTime registered) {
         super(id);
         this.name = name;
-        this.menu = menu;
+        this.meals = meals;
         this.sumOfVotes = sumOfVotes;
         this.registered = registered;
     }
@@ -46,12 +45,12 @@ public class RestaurantTo extends BaseTo {
         return sumOfVotes == restaurantTo.sumOfVotes &&
                 Objects.equals(id, restaurantTo.id) &&
                 Objects.equals(registered, restaurantTo.registered) &&
-                Objects.equals(menu, restaurantTo.menu);
+                Objects.equals(meals, restaurantTo.meals);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, registered, menu, sumOfVotes);
+        return Objects.hash(id, registered, meals, sumOfVotes);
     }
 
     @Override
@@ -60,7 +59,7 @@ public class RestaurantTo extends BaseTo {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", registered=" + registered +
-                ", menu=" + menu +
+                ", meals=" + meals +
                 ", sumOfVotes=" + sumOfVotes +
                 '}';
     }

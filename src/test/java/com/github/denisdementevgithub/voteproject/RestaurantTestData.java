@@ -2,13 +2,11 @@ package com.github.denisdementevgithub.voteproject;
 
 import com.github.denisdementevgithub.voteproject.user.model.Meal;
 import com.github.denisdementevgithub.voteproject.user.model.Restaurant;
-import com.github.denisdementevgithub.voteproject.user.model.Vote;
 import com.github.denisdementevgithub.voteproject.user.to.RestaurantTo;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
-import java.util.ArrayList;
 import java.util.List;
 
 import static com.github.denisdementevgithub.voteproject.common.model.AbstractBaseEntity.START_SEQ;
@@ -18,12 +16,12 @@ public class RestaurantTestData {
 
     public static final MatcherFactory.Matcher<Restaurant> RESTAURANT_MATCHER =
             MatcherFactory.usingAssertions(Restaurant.class,
-                    (a, e) -> assertThat(a).usingRecursiveComparison().ignoringFields("registered", "menu").isEqualTo(e),
-                    (a, e) -> assertThat(a).usingRecursiveComparison().ignoringFields("registered", "menu").isEqualTo(e));
+                    (a, e) -> assertThat(a).usingRecursiveComparison().ignoringFields("registered", "meals").isEqualTo(e),
+                    (a, e) -> assertThat(a).usingRecursiveComparison().ignoringFields("registered", "meals").isEqualTo(e));
     public static final MatcherFactory.Matcher<RestaurantTo> TO_MATCHER =
             MatcherFactory.usingAssertions(RestaurantTo.class,
-                    (a, e) -> assertThat(a).usingRecursiveComparison().ignoringFields("registered", "menu").isEqualTo(e),
-                    (a, e) -> assertThat(a).usingRecursiveComparison().ignoringFields("registered", "menu").isEqualTo(e));
+                    (a, e) -> assertThat(a).usingRecursiveComparison().ignoringFields("registered", "meals").isEqualTo(e),
+                    (a, e) -> assertThat(a).usingRecursiveComparison().ignoringFields("registered", "meals").isEqualTo(e));
 
     public static final int RESTAURANT1_ID = START_SEQ + 4;
     public static final int RESTAURANT2_ID = START_SEQ + 5;
@@ -64,6 +62,6 @@ public class RestaurantTestData {
     }
 
     public static RestaurantTo getTo(Restaurant restaurant, int sumOfVotes) {
-        return new RestaurantTo(restaurant.getId(), restaurant.getName(), restaurant.getMenu(), sumOfVotes, restaurant.getRegistered());
+        return new RestaurantTo(restaurant.getId(), restaurant.getName(), restaurant.getMeals(), sumOfVotes, restaurant.getRegistered());
     }
 }
