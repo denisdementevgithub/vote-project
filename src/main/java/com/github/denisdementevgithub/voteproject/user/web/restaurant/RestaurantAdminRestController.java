@@ -23,10 +23,17 @@ public class RestaurantAdminRestController extends AbstractRestaurantController 
     public static final String REST_ADMIN_URL = "/api/admin/restaurants";
 
     @Override
-    @GetMapping
+    @GetMapping("/all")
     @Operation(summary = "Get all restaurants")
-    public List<RestaurantTo> getAll() {
+    public List<Restaurant> getAll() {
         return super.getAll();
+    }
+
+    @Override
+    @GetMapping
+    @Operation(summary = "Get all restaurants for today")
+    public List<RestaurantTo> getAllForTodayWithMenu() {
+        return super.getAllForTodayWithMenu();
     }
 
     @Override
@@ -37,27 +44,10 @@ public class RestaurantAdminRestController extends AbstractRestaurantController 
     }
 
     @Override
-    @GetMapping("/{id}/with-meals")
+    @GetMapping("/{id}/with-menu")
     @Operation(summary = "Get a restaurant with menu")
     public Restaurant getWithMenu(@PathVariable @Parameter(example = "100009") int id) {
         return super.getWithMenu(id);
-    }
-
-    @Override
-    @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    @Operation(summary = "Delete a restaurant")
-    public void delete(@PathVariable @Parameter(example = "100010") int id) {
-        super.delete(id);
-    }
-
-
-    @Override
-    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    @Operation(summary = "Update description of a restaurant")
-    public void update(@Valid @RequestBody Restaurant restaurant, @PathVariable @Parameter(example = "100009") int id) {
-        super.update(restaurant, id);
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -73,17 +63,51 @@ public class RestaurantAdminRestController extends AbstractRestaurantController 
     }
 
     @Override
+    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @Operation(summary = "Update description of a restaurant")
+    public void update(@Valid @RequestBody Restaurant restaurant, @PathVariable @Parameter(example = "100009") int id) {
+        super.update(restaurant, id);
+    }
+
+    @Override
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @Operation(summary = "Delete a restaurant")
+    public void delete(@PathVariable @Parameter(example = "100010") int id) {
+        super.delete(id);
+    }
+
+
+
+
+    @Override
     @PostMapping("/{id}/vote")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @Operation(summary = "Vote for an existing restaurant")
-    public void vote(@PathVariable @Parameter(example = "100009") int id) {
+    public void vote(@PathVariable("id") @Parameter(example = "100009") int id) {
         super.vote(id);
     }
 
+    @Override
+    @PutMapping("/{id}/vote")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @Operation(summary = "Revote for an existing restaurant")
+    public void revote(@PathVariable("id") @Parameter(example = "100009") int id) {
+        super.revote(id);
+    }
+
+
+
+
+
+    /*
     @PostMapping("/{id}/menu")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @Operation(summary = "Add menu to existing restaurant description")
     public void setMenu(@PathVariable @Parameter(example = "100009") int id, @RequestBody List<Meal> menu) {
         super.setMenu(menu, id);
     }
+
+ */
 }

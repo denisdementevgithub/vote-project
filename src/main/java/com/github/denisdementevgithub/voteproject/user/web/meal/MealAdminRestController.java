@@ -1,13 +1,9 @@
 package com.github.denisdementevgithub.voteproject.user.web.meal;
 
 import com.github.denisdementevgithub.voteproject.user.model.Meal;
-import com.github.denisdementevgithub.voteproject.user.model.Restaurant;
 import com.github.denisdementevgithub.voteproject.user.service.MealService;
-import com.github.denisdementevgithub.voteproject.user.service.RestaurantService;
 import com.github.denisdementevgithub.voteproject.user.to.MealTo;
-import com.github.denisdementevgithub.voteproject.user.to.RestaurantTo;
 import com.github.denisdementevgithub.voteproject.user.web.converter.MealUtils;
-import com.github.denisdementevgithub.voteproject.user.web.restaurant.RestaurantAdminRestController;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -29,51 +25,32 @@ import static com.github.denisdementevgithub.voteproject.common.validation.Valid
 @RestController
 @RequestMapping(value = MealAdminRestController.MEAL_ADMIN_REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 @Tag(name = "MealAdminRestController", description = "Use to interact with the Meal entities as an ADMIN")
-public class MealAdminRestController {
+public class MealAdminRestController extends AbstractMealController {
     private final Logger log = LoggerFactory.getLogger(getClass());
     public static final String MEAL_ADMIN_REST_URL = "/api/admin/meals";
 
     @Autowired
     private MealService service;
 
-    @GetMapping
+    @GetMapping("/all")
     @Operation(summary = "Get all meals")
     public List<Meal> getAll() {
         log.info("getAll");
         return service.getAll();
     }
 
+    @GetMapping()
+    @Operation(summary = "Get a meal by id")
+    public List<Meal> getAllForToday() {
+        log.info("getAllForToday");
+        return super.getAllForToday();
+    }
+
     @GetMapping("/{id}")
     @Operation(summary = "Get a meal by id")
-    public Meal getById(@PathVariable @Parameter(example = "100034") int id) {
+    public Meal get(@PathVariable @Parameter(example = "100034") int id) {
         log.info("get meal by id {}", id);
-        return service.getById(id);
-    }
-
-    @GetMapping("/searchByRestaurantId/{id}")
-    @Operation(summary = "Get a meal by id")
-    public List<Meal> getByRestaurant(@PathVariable @Parameter(example = "100009") int id) {
-        log.info("get meal by restaurant with id {}", id);
-        Restaurant restaurant = new Restaurant();
-        restaurant.setId(id);
-        return service.getByRestaurant(restaurant);
-    }
-
-    @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    @Operation(summary = "Delete a meal")
-    public void delete(@PathVariable @Parameter(example = "100034") int id) {
-        service.deleteById(id);
-    }
-
-    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    @Operation(summary = "Update description of a meal")
-    public void update(@Valid @RequestBody MealTo mealTo, @PathVariable @Parameter(example = "100034") int id) {
-        log.info("update {}", mealTo);
-        Meal meal = MealUtils.MealToToMeal(mealTo);
-        assureIdConsistent(meal, id);
-        service.update(meal);
+        return service.get(id);
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -90,7 +67,47 @@ public class MealAdminRestController {
         return ResponseEntity.created(uriOfNewResource).body(created);
     }
 
+    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @Operation(summary = "Update description of a meal")
+    public void update(@Valid @RequestBody MealTo mealTo, @PathVariable @Parameter(example = "100034") int id) {
+        log.info("update {}", mealTo);
+        Meal meal = MealUtils.MealToToMeal(mealTo);
+        assureIdConsistent(meal, id);
+        service.update(meal);
+    }
 
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @Operation(summary = "Delete a meal")
+    public void delete(@PathVariable @Parameter(example = "100034") int id) {
+        service.delete(id);
+    }
+
+    /*
+    @Override
+    @PostMapping("/{id}/vote")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @Operation(summary = "Vote for an existing meal")
+    public void vote(@PathVariable @Parameter(example = "100020") int id) {
+
+        super.vote(id);
+    }
+
+     */
+
+
+
+    /*
+    @GetMapping("/searchByRestaurantId/{id}")
+    @Operation(summary = "Get a meal by id")
+    public List<Meal> getByRestaurant(@PathVariable @Parameter(example = "100009") int id) {
+        log.info("get meal by restaurant with id {}", id);
+        Restaurant restaurant = new Restaurant();
+        restaurant.setId(id);
+        return service.getByRestaurant(restaurant);
+    }
+*/
 
 
 

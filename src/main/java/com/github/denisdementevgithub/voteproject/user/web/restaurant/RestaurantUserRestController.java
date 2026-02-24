@@ -23,14 +23,15 @@ public class RestaurantUserRestController extends AbstractRestaurantController {
     public Restaurant get(@PathVariable @Parameter(example = "100009") int id) {
         return super.get(id);
     }
-
+/*
     @Override
     @GetMapping
     @Operation(summary = "Get all voting restaurants for today")
     public List<RestaurantTo> getAllForToday() {
         return super.getAllForToday();
     }
-
+*/
+    /*
     @Override
     @PostMapping("/{id}/vote")
     @ResponseStatus(HttpStatus.NO_CONTENT)
@@ -38,4 +39,8 @@ public class RestaurantUserRestController extends AbstractRestaurantController {
     public void vote(@PathVariable @Parameter(example = "100009") int id) {
         super.vote(id);
     }
+
+     */
+
+
 }

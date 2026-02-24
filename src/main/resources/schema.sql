@@ -24,16 +24,6 @@ CREATE TABLE users
     enabled    BOOLEAN   DEFAULT TRUE NOT NULL
 );
 
-CREATE TABLE vote
-(
-    id            INTEGER DEFAULT NEXT VALUE FOR GLOBAL_SEQ PRIMARY KEY,
-    restaurant_id INTEGER NOT NULL,
-    user_id       INTEGER NOT NULL,
-    voting_date   DATE    DEFAULT CURRENT_DATE,
-    FOREIGN KEY (user_id) REFERENCES USERS (id) ON DELETE CASCADE,
-    FOREIGN KEY (restaurant_id) REFERENCES RESTAURANT (id) ON DELETE CASCADE
-);
-
 CREATE UNIQUE INDEX users_unique_email_idx
     ON USERS (email);
 
@@ -51,5 +41,16 @@ CREATE TABLE meal
     restaurant_id INTEGER      NOT NULL,
     name          VARCHAR(255) NOT NULL,
     price         INTEGER      NOT NULL,
+    registered TIMESTAMP DEFAULT now() NOT NULL,
+    FOREIGN KEY (restaurant_id) REFERENCES restaurant (id) ON DELETE CASCADE
+);
+
+CREATE TABLE vote
+(
+    id            INTEGER DEFAULT NEXT VALUE FOR GLOBAL_SEQ PRIMARY KEY,
+    restaurant_id INTEGER NOT NULL,
+    user_id       INTEGER NOT NULL,
+    voting_date   DATE    DEFAULT CURRENT_DATE,
+    FOREIGN KEY (user_id) REFERENCES USERS (id) ON DELETE CASCADE,
     FOREIGN KEY (restaurant_id) REFERENCES restaurant (id) ON DELETE CASCADE
 );

@@ -1,5 +1,6 @@
 package com.github.denisdementevgithub.voteproject.user.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
@@ -32,25 +33,24 @@ public class Restaurant extends AbstractNamedEntity {
     @NotNull
     @DateTimeFormat(pattern = DateTimeUtil.DATE_TIME_PATTERN)
     @Schema(description = "Date of registered")
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private LocalDateTime registered = LocalDateTime.now();
-
 
     public Restaurant() {
     }
 
-    public Restaurant(Integer id, String name, List<Meal> meals, LocalDateTime registered) {
+    public Restaurant(Integer id, String name, List<Meal> meals) {
         super(id, name);
         this.meals = meals;
-        this.registered = registered;
     }
 
     @Override
     public String toString() {
         return "Restaurant{" +
-                "meals=" + meals +
-                ", registered=" + registered +
+                "id=" + id +
                 ", name='" + name + '\'' +
-                ", id=" + id +
+                ", meals=" + meals +
+                ", registered=" + registered +
                 '}';
     }
 }

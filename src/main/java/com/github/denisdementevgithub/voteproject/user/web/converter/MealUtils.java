@@ -4,7 +4,9 @@ import com.github.denisdementevgithub.voteproject.user.model.Meal;
 import com.github.denisdementevgithub.voteproject.user.model.Restaurant;
 import com.github.denisdementevgithub.voteproject.user.to.MealTo;
 
-import javax.swing.text.html.Option;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public class MealUtils {
@@ -21,5 +23,17 @@ public class MealUtils {
         restaurant.setId(mealTo.getRestaurant_id());
         meal.setRestaurant(restaurant);
         return meal;
+    }
+
+    public static MealTo mealToMealTo(Meal meal, int numberOfVotes) {
+        return new MealTo(meal.getId(), meal.getName(), meal.getPrice(), meal.getRestaurant().getId(), meal.getRestaurant().getName(), numberOfVotes, meal.getRegistered());
+    }
+
+    public static List<MealTo> listOfMealsToListOfMealTos(List<Meal> meals, Map<Integer, Integer> mapOfVotes) {
+        List<MealTo> listOfMealTo = new ArrayList<>();
+        for (Meal meal:meals) {
+            listOfMealTo.add(mealToMealTo(meal, mapOfVotes.get(meal.getId())));
+        }
+        return listOfMealTo;
     }
 }

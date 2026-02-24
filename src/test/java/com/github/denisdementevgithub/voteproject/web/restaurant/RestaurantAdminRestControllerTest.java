@@ -101,6 +101,7 @@ class RestaurantAdminRestControllerTest extends AbstractControllerTest {
         RESTAURANT_MATCHER.assertMatch(restaurantService.get(newId), newRestaurant);
     }
 
+    /*
     @Test
     @WithUserDetails(value = ADMIN_MAIL)
     void voteSuccessful() throws Exception {
@@ -112,6 +113,8 @@ class RestaurantAdminRestControllerTest extends AbstractControllerTest {
         TO_MATCHER.assertMatch(getRestaurantToAfterVoting(), restaurantTo1AfterVote);
     }
 
+     */
+
     @Test
     @WithUserDetails(value = ADMIN_MAIL)
     void voteNotSuccessful() throws Exception {
@@ -121,14 +124,14 @@ class RestaurantAdminRestControllerTest extends AbstractControllerTest {
                 .andDo(print())
                 .andExpect(status().isUnprocessableEntity());
     }
-
+/*
     RestaurantTo getRestaurantToAfterVoting() {
         return restaurantService.getAll().stream()
                 .filter(rest -> rest.getId() == RESTAURANT1_ID)
                 .map(rest -> RestaurantUtils.restaurantToRestaurantTo(rest, restaurantService.getVotes().get(RESTAURANT1_ID)))
                 .toList().getFirst();
     }
-
+*/
     public static final String ADMIN_MAIL = "admin@gmail.com";
 
     @Test

@@ -1,5 +1,8 @@
 package com.github.denisdementevgithub.voteproject.user.web.restaurant;
 
+import com.github.denisdementevgithub.voteproject.user.model.Vote;
+import com.github.denisdementevgithub.voteproject.user.service.MealService;
+import com.github.denisdementevgithub.voteproject.user.service.VoteService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,25 +24,30 @@ public abstract class AbstractRestaurantController {
     @Autowired
     private RestaurantService service;
 
+    @Autowired
+    private MealService mealService;
+
+    @Autowired
+    private VoteService voteService;
+
+    public List<Restaurant> getAll() {
+        log.info("getAll");
+        return service.getAll();
+    }
+
+    public List<RestaurantTo> getAllForTodayWithMenu() {
+        log.info("getAllForTodayWithMenu");
+        return RestaurantUtils.listOfRestaurantsToRestaurantTos(service.getAllForTodayWithMenu(), voteService.getVotesForToday());
+    }
+
     public Restaurant get(int id) {
-        log.info("get restaurant {}", id);
+        log.info("get {}", id);
         return service.get(id);
     }
 
-    public void delete(int id) {
-        log.info("delete restaurant {}", id);
-        service.delete(id);
-    }
-
-    public List<RestaurantTo> getAll() {
-        log.info("getAll");
-        return RestaurantUtils.listOfRestaurantsToRestaurantTos(service.getAll(), service.getVotes());
-    }
-
-    public List<RestaurantTo> getAllForToday() {
-        log.info("getAllForToday");
-        return RestaurantUtils.listOfRestaurantsToRestaurantTos(service.getAllForToday(), service.getVotes());
-
+    public Restaurant getWithMenu(int id) {
+        log.info("getWithMenu {}", id);
+        return service.getWithMenu(id);
     }
 
     public Restaurant create(Restaurant restaurant) {
@@ -54,19 +62,44 @@ public abstract class AbstractRestaurantController {
         service.update(restaurant);
     }
 
+    public void delete(int id) {
+        log.info("delete {}", id);
+        service.delete(id);
+    }
+
     public void vote(int id) {
         int userId = SecurityUtil.authUserId();
-        log.info("vote rest {}", id);
+        log.info("vote {}", id);
         service.vote(id, userId);
     }
 
+    public void revote(int id) {
+        int userId = SecurityUtil.authUserId();
+        log.info("revote {}", id);
+        service.revote(id, userId);
+    }
+
+
+/*
+    public List<RestaurantTo> getAllForToday() {
+        log.info("getAllForToday");
+        return RestaurantUtils.listOfRestaurantsToRestaurantTos(service.getAllForToday(), service.getVotes());
+
+    }
+*/
+
+
+
+
+
+
+    /*
     public void setMenu(List<Meal> menu, int id) {
         log.info("setMenu menu {}", id);
         service.setMenu(menu, id);
     }
-    public Restaurant getWithMenu(int id) {
-        log.info("getWithMenu {}", id);
-        return service.getWithMenu(id);
-    }
+
+     */
+
 
 }

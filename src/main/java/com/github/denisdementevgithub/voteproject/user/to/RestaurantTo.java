@@ -20,7 +20,7 @@ public class RestaurantTo extends BaseTo {
     private String name;
 
     @Schema(description = "Date of registered")
-    private LocalDateTime registered;
+    private LocalDateTime registered = LocalDateTime.now();
 
     @Schema(description = "Menu of the restaurant (consists of Meal)")
     private List<Meal> meals;
