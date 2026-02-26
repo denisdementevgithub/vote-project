@@ -21,10 +21,4 @@ public class UsersUtil {
         user.setPassword(userTo.getPassword());
         return user;
     }
-
-    public static User prepareToSave(User user, PasswordEncoder passwordEncoder) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setEmail(user.getEmail().toLowerCase());
-        return user;
-    }
 }

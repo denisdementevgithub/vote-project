@@ -7,8 +7,6 @@ import jakarta.validation.ConstraintViolationException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.time.LocalDateTime;
-import java.time.Month;
 import java.util.List;
 
 import static com.github.denisdementevgithub.voteproject.RestaurantTestData.*;
@@ -28,7 +26,7 @@ public class RestaurantServiceTest extends AbstractServiceTest {
 
     @Test
     void deleteNotFound() {
-        assertThrows(NotFoundException.class, () -> service.delete(RESTAURANT_NOT_FOUND));
+        assertThrows(NotFoundException.class, () -> service.delete(NOT_FOUND));
     }
 
     @Test
@@ -44,12 +42,12 @@ public class RestaurantServiceTest extends AbstractServiceTest {
     @Test
     void get() {
         Restaurant actual = service.get(RESTAURANT1_ID);
-        RESTAURANT_MATCHER.assertMatch(actual, restaurant1);
+        RESTAURANT_MATCHER.assertMatch(actual, restaurant100004);
     }
 
     @Test
     void getNotFound() {
-        assertThrows(NotFoundException.class, () -> service.get(RESTAURANT_NOT_FOUND));
+        assertThrows(NotFoundException.class, () -> service.get(NOT_FOUND));
     }
 
     @Test
@@ -67,8 +65,7 @@ public class RestaurantServiceTest extends AbstractServiceTest {
 
     @Test
     void createWithException() {
-        validateRootCause(ConstraintViolationException.class, () -> service.create(new Restaurant(null, null, List.of(), LocalDateTime.of(2020, Month.JANUARY, 30, 13, 0))));
-        validateRootCause(ConstraintViolationException.class, () -> service.create(new Restaurant(null, "расторан", List.of(), null)));
+        validateRootCause(ConstraintViolationException.class, () -> service.create(new Restaurant(null, null, List.of())));
     }
 
 

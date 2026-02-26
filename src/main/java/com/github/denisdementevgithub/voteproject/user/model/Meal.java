@@ -1,6 +1,7 @@
 package com.github.denisdementevgithub.voteproject.user.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.denisdementevgithub.voteproject.user.util.DateTimeUtil;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
@@ -22,7 +23,7 @@ import java.time.LocalDateTime;
 public class Meal extends AbstractNamedEntity {
     @Schema(description = "Price of meal")
     @Range(min = 1, max = 5000)
-    public int price;
+    public Integer price;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "restaurant_id", nullable = false)
@@ -33,9 +34,10 @@ public class Meal extends AbstractNamedEntity {
     @NotNull
     @DateTimeFormat(pattern = DateTimeUtil.DATE_TIME_PATTERN)
     @Schema(description = "Date of registered (also it is date of voting)")
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private LocalDateTime registered = LocalDateTime.now();
 
-    public Meal(int id, String name, int price, LocalDateTime registered) {
+    public Meal(Integer id, String name, Integer price, LocalDateTime registered) {
         super(id, name);
         this.price = price;
         this.registered = registered;

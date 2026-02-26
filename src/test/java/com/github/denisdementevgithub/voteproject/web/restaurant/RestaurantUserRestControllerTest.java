@@ -1,10 +1,10 @@
 package com.github.denisdementevgithub.voteproject.web.restaurant;
 
 
+import com.github.denisdementevgithub.voteproject.VoteTestData;
 import com.github.denisdementevgithub.voteproject.common.TimeUtil;
 import com.github.denisdementevgithub.voteproject.user.service.RestaurantService;
-import com.github.denisdementevgithub.voteproject.user.to.RestaurantTo;
-import com.github.denisdementevgithub.voteproject.user.web.converter.RestaurantUtils;
+import com.github.denisdementevgithub.voteproject.user.service.VoteService;
 import com.github.denisdementevgithub.voteproject.user.web.restaurant.RestaurantUserRestController;
 import com.github.denisdementevgithub.voteproject.web.AbstractControllerTest;
 import org.junit.jupiter.api.Test;
@@ -22,50 +22,84 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 class RestaurantUserRestControllerTest extends AbstractControllerTest {
     private static final String REST_URL = RestaurantUserRestController.REST_URL;
+    public static final String USER_MAIL = "user@yandex.ru";
 
     @Autowired
     private RestaurantService restaurantService;
-/*
+
+    @Autowired
+    private VoteService voteService;
+
+    @Test
+    @WithUserDetails(value = USER_MAIL)
+    void getAllForTodayWithMenu() throws Exception {
+        perform(MockMvcRequestBuilders.get(REST_URL))
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(RESTAURANT_MATCHER.contentJson(restaurantsForToday));
+    }
+
+
     @Test
     @WithUserDetails(value = USER_MAIL)
     void voteSuccessful() throws Exception {
-        restaurantService.setClock(TimeUtil.getClock(9, 0, ZoneId.systemDefault()));
+        voteService.setClock(TimeUtil.getClock(9, 0, ZoneId.systemDefault()));
         perform(MockMvcRequestBuilders.post(REST_URL + "/" + RESTAURANT1_ID + "/vote")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isNoContent());
-        TO_MATCHER.assertMatch(getRestaurantToAfterVoting(), restaurantTo1AfterVote);
+        perform(MockMvcRequestBuilders.get("/api/votes"))
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(content().json(VoteTestData.afterVoting));
     }
-
- */
 
     @Test
     @WithUserDetails(value = USER_MAIL)
     void voteNotSuccessful() throws Exception {
-        restaurantService.setClock(TimeUtil.getClock(15, 0, ZoneId.systemDefault()));
+        voteService.setClock(TimeUtil.getClock(15, 0, ZoneId.systemDefault()));
+        perform(MockMvcRequestBuilders.post(REST_URL + "/" + RESTAURANT1_ID + "/vote")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isNoContent());
         perform(MockMvcRequestBuilders.post(REST_URL + "/" + RESTAURANT1_ID + "/vote")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isUnprocessableEntity());
     }
-/*
-    RestaurantTo getRestaurantToAfterVoting() {
-        return restaurantService.getAll().stream()
-                .filter(rest -> rest.getId() == RESTAURANT1_ID)
-                .map(rest -> RestaurantUtils.restaurantToRestaurantTo(rest, restaurantService.getVotes().get(RESTAURANT1_ID)))
-                .toList().getFirst();
-    }
 
- */
-
-    public static final String USER_MAIL = "user@yandex.ru";
     @Test
     @WithUserDetails(value = USER_MAIL)
-    void getAllForToday() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_URL))
+    void reVoteSuccessful() throws Exception {
+        voteService.setClock(TimeUtil.getClock(10, 0, ZoneId.systemDefault()));
+        perform(MockMvcRequestBuilders.post(REST_URL + "/" + RESTAURANT1_ID + "/vote")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isNoContent());
+        perform(MockMvcRequestBuilders.put(REST_URL + "/" + (RESTAURANT1_ID + 6) + "/vote")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isNoContent());
+        perform(MockMvcRequestBuilders.get("/api/votes"))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(TO_MATCHER.contentJson(restaurantTosForToday));
+                .andExpect(content().json(VoteTestData.afterReVoting));
+    }
+
+    @Test
+    @WithUserDetails(value = USER_MAIL)
+    void reVoteNotSuccessful() throws Exception {
+        voteService.setClock(TimeUtil.getClock(15, 0, ZoneId.systemDefault()));
+        perform(MockMvcRequestBuilders.post(REST_URL + "/" + RESTAURANT1_ID + "/vote")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isNoContent());
+        perform(MockMvcRequestBuilders.put(REST_URL + "/" + (RESTAURANT1_ID + 6) + "/vote")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isUnprocessableEntity());
     }
 }

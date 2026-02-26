@@ -1,64 +1,70 @@
 package com.github.denisdementevgithub.voteproject.user.service;
 
+import com.github.denisdementevgithub.voteproject.common.error.IllegalRequestDataException;
+import com.github.denisdementevgithub.voteproject.user.model.Restaurant;
+import com.github.denisdementevgithub.voteproject.user.model.User;
 import com.github.denisdementevgithub.voteproject.user.model.Vote;
-import com.github.denisdementevgithub.voteproject.user.repository.MealRepository;
 import com.github.denisdementevgithub.voteproject.user.repository.VoteRepository;
+import lombok.Setter;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.Array;
 import java.time.Clock;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
+@Setter
 public class VoteService {
 
     private final VoteRepository repository;
     private Clock clock;
+    private final LocalTime finalTime = LocalTime.of(11, 0);
 
     public VoteService(VoteRepository repository, Clock clock) {
         this.repository = repository;
         this.clock = clock;
     }
-    public Map<Integer, Integer> getVotesForToday() {
 
-        /*LocalDate today = LocalDate.now();
-        List<Object[]> listOfObject = repository.getAllForDate(today);
-        Map<Integer, Integer> mapOfVotes = new HashMap<>();
-        for (Object[] row: listOfObject) {
-            int id = (Integer) row[0];
-            int count = (Integer) row[1];
-            mapOfVotes.put(id, count);
+    public Map<Integer, Integer> getAllForToday() {
+        return   repository.getAllByLocalDate(LocalDate.now()).stream()
+                .collect(Collectors.groupingBy(
+                        row -> (Integer) row[0],
+                        Collectors.mapping(
+                                row -> (Integer) row[1],
+                                Collectors.toList()
+                        )
+                )).entrySet().stream()
+                .collect(Collectors.toMap(i->i.getKey(), i->i.getValue().size()));
+    }
+
+    public Vote save(Vote vote) {
+        if (repository.getByUserAndLocalDate(getFakeUser(vote.getUser().getId()), LocalDate.now()) != null &&
+                LocalTime.now(clock).isAfter(finalTime)) {
+            throw new IllegalRequestDataException("Вы уже голосовали");
+        } else {
+            return repository.save(vote);
         }
-        return mapOfVotes;*/
-
-        return repository.getAllForDate(LocalDate.now()).stream()
-                .collect(Collectors.toMap(
-                        row->(Integer) row[0],
-                        row->(Integer) row[1]
-                ));
     }
 
-    public List<Vote> getVotesForTodayForUser(int userId) {
-        return repository.getVotesForTodayForUser(userId, LocalDate.now());
+    public Vote update(Vote vote) {
+        Vote voteFromDb = repository.getByUserAndLocalDate(getFakeUser(vote.getUser().getId()), LocalDate.now());
+        vote.setId(voteFromDb.id());
+        vote.setLocalDate(voteFromDb.getLocalDate());
+        if (LocalTime.now(clock).isAfter(finalTime)) {
+            throw new IllegalRequestDataException("Переголосовать можно до " + finalTime);
+        } else {
+            return repository.save(vote);
+        }
     }
 
-    public int vote(int restaurantId, int userId) {
-        LocalDate today = LocalDate.now();
-        LocalDateTime startDateTime = today.atTime(0, 0);
-        LocalDateTime endDateTime = today.atTime(23, 59);
-        return repository.vote(restaurantId, userId);
+    public static User getFakeUser(int id) {
+        User user = new User();
+        user.setId(id);
+        return user;
     }
-    public int revote(int restaurantId, int userId) {
-        LocalDate today = LocalDate.now();
-        LocalDateTime startDateTime = today.atTime(0, 0);
-        LocalDateTime endDateTime = today.atTime(23, 59);
-        repository.deleteVote(userId, today);
-        return repository.vote(restaurantId, userId);
-    }
-
 }

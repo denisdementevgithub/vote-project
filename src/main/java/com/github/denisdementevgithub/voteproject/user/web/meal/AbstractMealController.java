@@ -19,23 +19,15 @@ public abstract class AbstractMealController {
     @Autowired
     private MealService service;
 
-    public List<Meal> getAll() {
+    public List<MealTo> getAll() {
         log.info("getAll");
-        return service.getAll();
+        return MealUtils.listOfMealsToListOfMealTos(service.getAll());
     }
 
-    public List<Meal> getAllForToday() {
+    public List<MealTo> getAllForToday() {
         log.info("getAllForToday");
-        return service.getAllForToday();
+        return MealUtils.listOfMealsToListOfMealTos(service.getAllForToday());
     }
-
-/*
-    public List<MealTo> getMealsForRestaurantForToday(int restaurantId) {
-        log.info("getMealsForRestaurantForToday");
-        return MealUtils.listOfMealsToListOfMealTos(service.getMealsForRestaurantForToday(restaurantId), service.getVotes());
-    }
-
- */
 
     public Meal get(int id) {
         log.info("get {}", id);
@@ -58,17 +50,4 @@ public abstract class AbstractMealController {
         log.info("delete {}", id);
         service.delete(id);
     }
-
-
-
-
-
-
-
-    /*
-    public Restaurant getWithMenu(int id) {
-        log.info("getWithMenu {}", id);
-        return service.getWithMenu(id);
-    }
-*/
 }

@@ -1,5 +1,6 @@
 package com.github.denisdementevgithub.voteproject.user.web.restaurant;
 
+import com.github.denisdementevgithub.voteproject.user.model.Restaurant;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -9,9 +10,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import com.github.denisdementevgithub.voteproject.user.model.Meal;
-import com.github.denisdementevgithub.voteproject.user.model.Restaurant;
-import com.github.denisdementevgithub.voteproject.user.to.RestaurantTo;
 
 import java.net.URI;
 import java.util.List;
@@ -32,7 +30,7 @@ public class RestaurantAdminRestController extends AbstractRestaurantController 
     @Override
     @GetMapping
     @Operation(summary = "Get all restaurants for today")
-    public List<RestaurantTo> getAllForTodayWithMenu() {
+    public List<Restaurant> getAllForTodayWithMenu() {
         return super.getAllForTodayWithMenu();
     }
 
@@ -41,13 +39,6 @@ public class RestaurantAdminRestController extends AbstractRestaurantController 
     @Operation(summary = "Get a restaurant without menu")
     public Restaurant get(@PathVariable @Parameter(example = "100009") int id) {
         return super.get(id);
-    }
-
-    @Override
-    @GetMapping("/{id}/with-menu")
-    @Operation(summary = "Get a restaurant with menu")
-    public Restaurant getWithMenu(@PathVariable @Parameter(example = "100009") int id) {
-        return super.getWithMenu(id);
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -78,9 +69,6 @@ public class RestaurantAdminRestController extends AbstractRestaurantController 
         super.delete(id);
     }
 
-
-
-
     @Override
     @PostMapping("/{id}/vote")
     @ResponseStatus(HttpStatus.NO_CONTENT)
@@ -93,21 +81,7 @@ public class RestaurantAdminRestController extends AbstractRestaurantController 
     @PutMapping("/{id}/vote")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @Operation(summary = "Revote for an existing restaurant")
-    public void revote(@PathVariable("id") @Parameter(example = "100009") int id) {
-        super.revote(id);
+    public void reVote(@PathVariable("id") @Parameter(example = "100009") int id) {
+        super.reVote(id);
     }
-
-
-
-
-
-    /*
-    @PostMapping("/{id}/menu")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    @Operation(summary = "Add menu to existing restaurant description")
-    public void setMenu(@PathVariable @Parameter(example = "100009") int id, @RequestBody List<Meal> menu) {
-        super.setMenu(menu, id);
-    }
-
- */
 }

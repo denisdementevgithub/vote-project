@@ -24,36 +24,28 @@ public class MealTo extends AbstractBaseEntity {
 
     @Schema(description = "Price of meal")
     @Range(min = 1, max = 5000)
-    public int price;
+    public Integer price;
 
     @Schema(description = "Unique restaurant id")
     @Range(min = 100000)
-    private int restaurant_id;
-
-    @Schema(description = "Name of restaurant")
-    //@NotBlank
-    //@Size(min = 2, max = 128)
-    private String restaurant_name;
-
-    @Schema(description = "Sum of votes for a restaurant")
-    private int sumOfVotes;
+    private Integer restaurant_id;
 
     @Schema(description = "Date of registered (also it is date of voting)")
     private LocalDateTime registered;
 
     //@ConstructorProperties({"id", "name", "price", "restaurant_id", "restaurant_name", "sumOfVotes", "registered"})
-    public MealTo(Integer id, String name, int price, int restaurant_id, String restaurant_name, Integer sumOfVotes, LocalDateTime registered) {
+    public MealTo(Integer id, String name, Integer price, Integer restaurant_id, LocalDateTime registered) {
         super(id);
         this.name = name;
         this.price = price;
         this.restaurant_id = restaurant_id;
-        this.restaurant_name = restaurant_name;
-        this.sumOfVotes = sumOfVotes;
+        //this.restaurant_name = restaurant_name;
+        //this.sumOfVotes = sumOfVotes;
         this.registered = registered;
     }
 
     @ConstructorProperties({"id", "name", "price", "restaurant_id"})
-    public MealTo(Integer id, String name, int price, int restaurant_id) {
+    public MealTo(Integer id, String name, Integer price, Integer restaurant_id) {
         super(id);
         this.name = name;
         this.price = price;

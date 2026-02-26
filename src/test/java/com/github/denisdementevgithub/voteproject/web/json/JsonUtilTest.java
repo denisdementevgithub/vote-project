@@ -23,10 +23,10 @@ class JsonUtilTest {
 
     @Test
     void readWriteValue() {
-        String json = JsonUtil.writeValue(restaurant2);
+        String json = JsonUtil.writeValue(restaurant100005);
         log.info(json);
         Restaurant restaurant = JsonUtil.readValue(json, Restaurant.class);
-        RESTAURANT_MATCHER.assertMatch(restaurant, restaurant2);
+        RESTAURANT_MATCHER.assertMatch(restaurant, restaurant100005);
     }
 
     @Test

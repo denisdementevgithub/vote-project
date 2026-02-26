@@ -34,14 +34,14 @@ public class MealAdminRestController extends AbstractMealController {
 
     @GetMapping("/all")
     @Operation(summary = "Get all meals")
-    public List<Meal> getAll() {
+    public List<MealTo> getAll() {
         log.info("getAll");
-        return service.getAll();
+        return super.getAll();
     }
 
     @GetMapping()
     @Operation(summary = "Get a meal by id")
-    public List<Meal> getAllForToday() {
+    public List<MealTo> getAllForToday() {
         log.info("getAllForToday");
         return super.getAllForToday();
     }
@@ -83,32 +83,4 @@ public class MealAdminRestController extends AbstractMealController {
     public void delete(@PathVariable @Parameter(example = "100034") int id) {
         service.delete(id);
     }
-
-    /*
-    @Override
-    @PostMapping("/{id}/vote")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    @Operation(summary = "Vote for an existing meal")
-    public void vote(@PathVariable @Parameter(example = "100020") int id) {
-
-        super.vote(id);
-    }
-
-     */
-
-
-
-    /*
-    @GetMapping("/searchByRestaurantId/{id}")
-    @Operation(summary = "Get a meal by id")
-    public List<Meal> getByRestaurant(@PathVariable @Parameter(example = "100009") int id) {
-        log.info("get meal by restaurant with id {}", id);
-        Restaurant restaurant = new Restaurant();
-        restaurant.setId(id);
-        return service.getByRestaurant(restaurant);
-    }
-*/
-
-
-
 }

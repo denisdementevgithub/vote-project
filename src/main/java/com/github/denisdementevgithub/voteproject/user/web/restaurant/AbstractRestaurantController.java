@@ -1,17 +1,13 @@
 package com.github.denisdementevgithub.voteproject.user.web.restaurant;
 
-import com.github.denisdementevgithub.voteproject.user.model.Vote;
+import com.github.denisdementevgithub.voteproject.user.model.Restaurant;
 import com.github.denisdementevgithub.voteproject.user.service.MealService;
+import com.github.denisdementevgithub.voteproject.user.service.RestaurantService;
 import com.github.denisdementevgithub.voteproject.user.service.VoteService;
+import com.github.denisdementevgithub.voteproject.user.web.SecurityUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import com.github.denisdementevgithub.voteproject.user.model.Meal;
-import com.github.denisdementevgithub.voteproject.user.model.Restaurant;
-import com.github.denisdementevgithub.voteproject.user.service.RestaurantService;
-import com.github.denisdementevgithub.voteproject.user.to.RestaurantTo;
-import com.github.denisdementevgithub.voteproject.user.web.SecurityUtil;
-import com.github.denisdementevgithub.voteproject.user.web.converter.RestaurantUtils;
 
 import java.util.List;
 
@@ -35,19 +31,14 @@ public abstract class AbstractRestaurantController {
         return service.getAll();
     }
 
-    public List<RestaurantTo> getAllForTodayWithMenu() {
+    public List<Restaurant> getAllForTodayWithMenu() {
         log.info("getAllForTodayWithMenu");
-        return RestaurantUtils.listOfRestaurantsToRestaurantTos(service.getAllForTodayWithMenu(), voteService.getVotesForToday());
+        return service.getAllForTodayWithMenu();
     }
 
     public Restaurant get(int id) {
         log.info("get {}", id);
         return service.get(id);
-    }
-
-    public Restaurant getWithMenu(int id) {
-        log.info("getWithMenu {}", id);
-        return service.getWithMenu(id);
     }
 
     public Restaurant create(Restaurant restaurant) {
@@ -73,33 +64,9 @@ public abstract class AbstractRestaurantController {
         service.vote(id, userId);
     }
 
-    public void revote(int id) {
+    public void reVote(int id) {
         int userId = SecurityUtil.authUserId();
-        log.info("revote {}", id);
-        service.revote(id, userId);
+        log.info("reVote {}", id);
+        service.reVote(id, userId);
     }
-
-
-/*
-    public List<RestaurantTo> getAllForToday() {
-        log.info("getAllForToday");
-        return RestaurantUtils.listOfRestaurantsToRestaurantTos(service.getAllForToday(), service.getVotes());
-
-    }
-*/
-
-
-
-
-
-
-    /*
-    public void setMenu(List<Meal> menu, int id) {
-        log.info("setMenu menu {}", id);
-        service.setMenu(menu, id);
-    }
-
-     */
-
-
 }

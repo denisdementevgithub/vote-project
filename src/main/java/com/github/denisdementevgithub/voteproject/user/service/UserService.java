@@ -1,5 +1,10 @@
 package com.github.denisdementevgithub.voteproject.user.service;
 
+import com.github.denisdementevgithub.voteproject.app.AuthorizedUser;
+import com.github.denisdementevgithub.voteproject.user.model.User;
+import com.github.denisdementevgithub.voteproject.user.repository.UserRepository;
+import com.github.denisdementevgithub.voteproject.user.to.UserTo;
+import com.github.denisdementevgithub.voteproject.user.util.UsersUtil;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.Scope;
@@ -10,16 +15,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
-import com.github.denisdementevgithub.voteproject.app.AuthorizedUser;
-import com.github.denisdementevgithub.voteproject.user.model.User;
-import com.github.denisdementevgithub.voteproject.user.repository.UserRepository;
-import com.github.denisdementevgithub.voteproject.user.to.UserTo;
-import com.github.denisdementevgithub.voteproject.user.util.UsersUtil;
 
 import java.util.List;
 
-import static com.github.denisdementevgithub.voteproject.user.util.UsersUtil.prepareToSave;
 import static com.github.denisdementevgithub.voteproject.common.validation.ValidationUtil.checkNotFound;
+
 
 @Service("userService")
 @Scope(proxyMode = ScopedProxyMode.TARGET_CLASS)
@@ -89,5 +89,11 @@ public class UserService implements UserDetailsService {
 
     private User prepareAndSave(User user) {
         return repository.save(prepareToSave(user, passwordEncoder));
+    }
+
+    public static User prepareToSave(User user, PasswordEncoder passwordEncoder) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setEmail(user.getEmail().toLowerCase());
+        return user;
     }
 }

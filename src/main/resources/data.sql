@@ -24,7 +24,7 @@ VALUES ('USER', 100000),
 
 INSERT INTO restaurant (name)
 VALUES ('Столовая'),
-       ('Семейный ресторан '),
+       ('Семейный ресторан'),
        ('Сказка Востока'),
        ('Almond'),
        ('Цзао Ван'),
@@ -81,8 +81,7 @@ SET REGISTERED = '2025-12-11 13:50:49'
 WHERE ID = 100028;
 
 INSERT INTO vote (RESTAURANT_ID, USER_ID, VOTING_DATE)
-VALUES (100004, 100000, CURRENT_DATE),
-       (100005, 100002, Date '2025-12-11'),
+VALUES (100005, 100002, Date '2025-12-11'),
        (100007, 100000, Date '2025-12-11'),
-       (100007, 100002, CURRENT_DATE),
-       (100010, 100001, CURRENT_DATE);
+       (100004, 100002, CURRENT_DATE),
+       (100010, 100003, CURRENT_DATE);

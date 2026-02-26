@@ -6,6 +6,19 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class VoteTestData {
+
+    public static final String beforeVoting = "{\n" +
+            "        \"100004\": 1,\n" +
+            "            \"100010\": 1\n" +
+            "    }";
+    public static final String afterVoting = "{\n" +
+            "        \"100004\": 2,\n" +
+            "            \"100010\": 1\n" +
+            "    }";
+    public static final String afterReVoting = "{\n" +
+            "        \"100004\": 1,\n" +
+            "            \"100010\": 2\n" +
+            "    }";
 /*
     public static final Vote VOTE_1 = new Vote(100011,RestaurantTestData.restaurant2, UserTestData.user, LocalDate.now());
     public static final Vote VOTE_2 = new Vote(100012,RestaurantTestData.restaurant3, UserTestData.user1, LocalDate.now());

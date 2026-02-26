@@ -1,7 +1,9 @@
 package com.github.denisdementevgithub.voteproject.web.user;
 
 import com.github.denisdementevgithub.voteproject.user.model.User;
+import com.github.denisdementevgithub.voteproject.user.service.RestaurantService;
 import com.github.denisdementevgithub.voteproject.user.service.UserService;
+import com.github.denisdementevgithub.voteproject.user.service.VoteService;
 import com.github.denisdementevgithub.voteproject.user.to.UserTo;
 import com.github.denisdementevgithub.voteproject.user.util.UsersUtil;
 import com.github.denisdementevgithub.voteproject.user.web.json.JsonUtil;
@@ -25,12 +27,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 class ProfileRestControllerTest extends AbstractControllerTest {
-
+    public static final String USER_MAIL = "user@yandex.ru";
     @Autowired
     private UserService userService;
 
+
     @Test
-    @WithUserDetails(value = USER_MAIL, userDetailsServiceBeanName = "userService")
+    @WithUserDetails(value = USER_MAIL)
     void get() throws Exception {
         perform(MockMvcRequestBuilders.get(REST_URL))
                 .andExpect(status().isOk())
@@ -43,8 +46,6 @@ class ProfileRestControllerTest extends AbstractControllerTest {
         perform(MockMvcRequestBuilders.get(REST_URL))
                 .andExpect(status().isUnauthorized());
     }
-
-    public static final String USER_MAIL = "user@yandex.ru";
 
     @Test
     @WithUserDetails(value = USER_MAIL)
@@ -75,7 +76,6 @@ class ProfileRestControllerTest extends AbstractControllerTest {
     @Test
     @WithUserDetails(value = USER_MAIL)
     void update() throws Exception {
-        // ValidationUtil.assureIdConsistent called after validation, needs workaround
         UserTo updatedTo = new UserTo(null, "newName", "user@yandex.ru", "newPassword");
         perform(MockMvcRequestBuilders.put(REST_URL).contentType(MediaType.APPLICATION_JSON)
 
@@ -111,10 +111,10 @@ class ProfileRestControllerTest extends AbstractControllerTest {
 
     @Test
     @Transactional(propagation = Propagation.NEVER)
+    @WithUserDetails(value = USER_MAIL)
     void updateDuplicate() throws Exception {
         UserTo updatedTo = new UserTo(null, "newName", "admin@gmail.com", "newPassword");
         perform(MockMvcRequestBuilders.put(REST_URL).contentType(MediaType.APPLICATION_JSON)
-                .with(userHttpBasic(user))
                 .content(JsonUtil.writeValue(updatedTo)))
                 .andDo(print())
                 .andExpect(status().isConflict())

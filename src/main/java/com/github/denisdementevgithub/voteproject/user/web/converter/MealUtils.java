@@ -25,14 +25,14 @@ public class MealUtils {
         return meal;
     }
 
-    public static MealTo mealToMealTo(Meal meal, int numberOfVotes) {
-        return new MealTo(meal.getId(), meal.getName(), meal.getPrice(), meal.getRestaurant().getId(), meal.getRestaurant().getName(), numberOfVotes, meal.getRegistered());
+    public static MealTo mealToMealTo(Meal meal) {
+        return new MealTo(meal.getId(), meal.getName(), meal.getPrice(), meal.getRestaurant().getId(), meal.getRegistered());
     }
 
-    public static List<MealTo> listOfMealsToListOfMealTos(List<Meal> meals, Map<Integer, Integer> mapOfVotes) {
+    public static List<MealTo> listOfMealsToListOfMealTos(List<Meal> meals) {
         List<MealTo> listOfMealTo = new ArrayList<>();
         for (Meal meal:meals) {
-            listOfMealTo.add(mealToMealTo(meal, mapOfVotes.get(meal.getId())));
+            listOfMealTo.add(mealToMealTo(meal));
         }
         return listOfMealTo;
     }
