@@ -1,11 +1,10 @@
 package com.github.denisdementevgithub.voteproject.user.to;
 
+import com.github.denisdementevgithub.voteproject.common.to.BaseTo;
+import com.github.denisdementevgithub.voteproject.user.model.Meal;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
-import com.github.denisdementevgithub.voteproject.common.to.BaseTo;
-import com.github.denisdementevgithub.voteproject.user.model.Meal;
-
 
 import java.beans.ConstructorProperties;
 import java.time.LocalDateTime;

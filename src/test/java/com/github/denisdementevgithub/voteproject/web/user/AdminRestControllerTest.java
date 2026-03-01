@@ -146,7 +146,6 @@ class AdminRestControllerTest extends AbstractControllerTest {
                 .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isNoContent());
-
         assertFalse(userService.get(USER_ID0).isEnabled());
     }
 

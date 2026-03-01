@@ -47,7 +47,6 @@ public class RestExceptionInfoHandler {
     @ExceptionHandler({IllegalArgumentException.class, IllegalRequestDataException.class, MethodArgumentNotValidException.class, MethodArgumentTypeMismatchException.class, HttpMessageNotReadableException.class})
     public ErrorInfo validationError(HttpServletRequest req, Exception e) {
         String errorDetails = e.getMessage();
-        System.out.println(errorDetails);
         ErrorInfo errorInfo = logAndGetErrorInfo(req, e, true, VALIDATION_ERROR);
         errorInfo.setDetail(errorDetails);
         return errorInfo;

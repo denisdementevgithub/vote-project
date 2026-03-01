@@ -132,7 +132,7 @@ class RestaurantAdminRestControllerTest extends AbstractControllerTest {
     @WithUserDetails(value = ADMIN_MAIL)
     void voteSuccessful() throws Exception {
         voteService.setClock(TimeUtil.getClock(9, 0, ZoneId.systemDefault()));
-        perform(MockMvcRequestBuilders.post(REST_ADMIN_URL + "/" + RESTAURANT1_ID + "/vote")
+        perform(MockMvcRequestBuilders.post(RestaurantUserRestControllerTest.REST_URL + "/" + RESTAURANT1_ID + "/vote")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isNoContent());
@@ -147,11 +147,11 @@ class RestaurantAdminRestControllerTest extends AbstractControllerTest {
     @WithUserDetails(value = ADMIN_MAIL)
     void voteNotSuccessful() throws Exception {
         voteService.setClock(TimeUtil.getClock(15, 0, ZoneId.systemDefault()));
-        perform(MockMvcRequestBuilders.post(REST_ADMIN_URL + "/" + RESTAURANT1_ID + "/vote")
+        perform(MockMvcRequestBuilders.post(RestaurantUserRestControllerTest.REST_URL + "/" + RESTAURANT1_ID + "/vote")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isNoContent());
-        perform(MockMvcRequestBuilders.post(REST_ADMIN_URL + "/" + RESTAURANT1_ID + "/vote")
+        perform(MockMvcRequestBuilders.post(RestaurantUserRestControllerTest.REST_URL + "/" + RESTAURANT1_ID + "/vote")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isUnprocessableEntity());
@@ -161,11 +161,11 @@ class RestaurantAdminRestControllerTest extends AbstractControllerTest {
     @WithUserDetails(value = ADMIN_MAIL)
     void reVoteSuccessful() throws Exception {
         voteService.setClock(TimeUtil.getClock(10, 0, ZoneId.systemDefault()));
-        perform(MockMvcRequestBuilders.post(REST_ADMIN_URL + "/" + RESTAURANT1_ID + "/vote")
+        perform(MockMvcRequestBuilders.post(RestaurantUserRestControllerTest.REST_URL + "/" + RESTAURANT1_ID + "/vote")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isNoContent());
-        perform(MockMvcRequestBuilders.put(REST_ADMIN_URL + "/" + (RESTAURANT1_ID + 6) + "/vote")
+        perform(MockMvcRequestBuilders.put(RestaurantUserRestControllerTest.REST_URL + "/" + (RESTAURANT1_ID + 6) + "/vote")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isNoContent());
@@ -180,11 +180,11 @@ class RestaurantAdminRestControllerTest extends AbstractControllerTest {
     @WithUserDetails(value = ADMIN_MAIL)
     void reVoteNotSuccessful() throws Exception {
         voteService.setClock(TimeUtil.getClock(15, 0, ZoneId.systemDefault()));
-        perform(MockMvcRequestBuilders.post(REST_ADMIN_URL + "/" + RESTAURANT1_ID + "/vote")
+        perform(MockMvcRequestBuilders.post(RestaurantUserRestControllerTest.REST_URL + "/" + RESTAURANT1_ID + "/vote")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isNoContent());
-        perform(MockMvcRequestBuilders.put(REST_ADMIN_URL + "/" + (RESTAURANT1_ID + 6) + "/vote")
+        perform(MockMvcRequestBuilders.put(RestaurantUserRestControllerTest.REST_URL + "/" + (RESTAURANT1_ID + 6) + "/vote")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isUnprocessableEntity());

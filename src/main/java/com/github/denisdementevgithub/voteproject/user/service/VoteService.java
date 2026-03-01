@@ -1,19 +1,16 @@
 package com.github.denisdementevgithub.voteproject.user.service;
 
 import com.github.denisdementevgithub.voteproject.common.error.IllegalRequestDataException;
-import com.github.denisdementevgithub.voteproject.user.model.Restaurant;
 import com.github.denisdementevgithub.voteproject.user.model.User;
 import com.github.denisdementevgithub.voteproject.user.model.Vote;
 import com.github.denisdementevgithub.voteproject.user.repository.VoteRepository;
 import lombok.Setter;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Clock;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -31,7 +28,7 @@ public class VoteService {
     }
 
     public Map<Integer, Integer> getAllForToday() {
-        return   repository.getAllByLocalDate(LocalDate.now()).stream()
+        return repository.getAllByLocalDate(LocalDate.now()).stream()
                 .collect(Collectors.groupingBy(
                         row -> (Integer) row[0],
                         Collectors.mapping(
@@ -39,9 +36,10 @@ public class VoteService {
                                 Collectors.toList()
                         )
                 )).entrySet().stream()
-                .collect(Collectors.toMap(i->i.getKey(), i->i.getValue().size()));
+                .collect(Collectors.toMap(Map.Entry::getKey, i -> i.getValue().size()));
     }
 
+    @Transactional
     public Vote save(Vote vote) {
         if (repository.getByUserAndLocalDate(getFakeUser(vote.getUser().getId()), LocalDate.now()) != null &&
                 LocalTime.now(clock).isAfter(finalTime)) {
@@ -51,6 +49,7 @@ public class VoteService {
         }
     }
 
+    @Transactional
     public Vote update(Vote vote) {
         Vote voteFromDb = repository.getByUserAndLocalDate(getFakeUser(vote.getUser().getId()), LocalDate.now());
         vote.setId(voteFromDb.id());

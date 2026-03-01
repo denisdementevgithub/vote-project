@@ -6,13 +6,13 @@
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
     <version>4.0.1</version>
-    <relativePath/> <!-- lookup parent from repository -->
+    <relativePath/>
   </parent>
-  <groupId>ru.javaops</groupId>
-  <artifactId>topjava-boot</artifactId>
+  <groupId>com.github.denisdementevgithub.voteproject</groupId>
+  <artifactId>vote-project</artifactId>
   <version>1.0</version>
-  <name>TopJava Boot</name>
-  <description>TopJava Spring Boot migration</description>
+  <name>Vote Project</name>
+  <description>Spring Boot vote application</description>
 
 
   <properties>

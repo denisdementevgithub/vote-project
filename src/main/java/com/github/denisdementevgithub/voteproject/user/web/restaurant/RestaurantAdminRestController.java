@@ -68,20 +68,4 @@ public class RestaurantAdminRestController extends AbstractRestaurantController 
     public void delete(@PathVariable @Parameter(example = "100010") int id) {
         super.delete(id);
     }
-
-    @Override
-    @PostMapping("/{id}/vote")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    @Operation(summary = "Vote for an existing restaurant")
-    public void vote(@PathVariable("id") @Parameter(example = "100009") int id) {
-        super.vote(id);
-    }
-
-    @Override
-    @PutMapping("/{id}/vote")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    @Operation(summary = "Revote for an existing restaurant")
-    public void reVote(@PathVariable("id") @Parameter(example = "100009") int id) {
-        super.reVote(id);
-    }
 }

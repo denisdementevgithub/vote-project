@@ -22,7 +22,6 @@ public class MealTestData {
                     (a, e) -> assertThat(a).usingRecursiveComparison().ignoringFields("registered", "restaurant_id").isEqualTo(e),
                     (a, e) -> assertThat(a).usingRecursiveComparison().ignoringFields("registered", "restaurant_id").isEqualTo(e));
 
-
     public static final Meal meal100011 = new Meal(100011, "борщ", 50, LocalDateTime.now());
     public static final Meal meal100012 = new Meal(100012, "колтета с рисом", 100, LocalDateTime.now());
     public static final Meal meal100013 = new Meal(100013, "компот", 10, LocalDateTime.now());
@@ -71,7 +70,6 @@ public class MealTestData {
     }
 
     public static MealTo getUpdated() {
-        MealTo mealTo = new MealTo(100011, "еда обновленный", 11, 100004);
-        return mealTo;
+        return new MealTo(100011, "еда обновленный", 11, 100004);
     }
 }

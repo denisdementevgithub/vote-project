@@ -15,12 +15,6 @@ import java.util.List;
 @Transactional(readOnly = true)
 public interface VoteRepository extends JpaRepository<Vote, Integer> {
 
-    @Query(value = """
-            SELECT v.restaurant_id, CAST(COUNT(v.id) AS integer) as sumOfVotes FROM Vote v
-            GROUP BY v.restaurant_id ORDER BY v.restaurant_id ASC
-                        """, nativeQuery = true)
-    List<Object[]> getAll();
-
     @Query(value = "SELECT v.restaurant.id, v.user.id FROM Vote v WHERE v.localDate = :date ORDER BY v.id ASC")
     @EntityGraph(attributePaths = {"restaurant", "user"}, type = EntityGraph.EntityGraphType.LOAD)
     List<Object[]> getAllByLocalDate(LocalDate date);

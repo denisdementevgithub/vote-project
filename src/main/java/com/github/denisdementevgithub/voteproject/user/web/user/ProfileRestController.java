@@ -1,18 +1,15 @@
 package com.github.denisdementevgithub.voteproject.user.web.user;
 
+import com.github.denisdementevgithub.voteproject.user.model.User;
+import com.github.denisdementevgithub.voteproject.user.to.UserTo;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
-import com.github.denisdementevgithub.voteproject.user.model.User;
-import com.github.denisdementevgithub.voteproject.user.to.UserTo;
-//import springfox.documentation.annotations.ApiIgnore;
-
-import jakarta.validation.Valid;
 
 import java.net.URI;
 

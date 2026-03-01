@@ -1,16 +1,17 @@
 package com.github.denisdementevgithub.voteproject.user.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
-import lombok.Getter;
-import lombok.Setter;
-import org.hibernate.annotations.*;
-import org.springframework.format.annotation.DateTimeFormat;
 import com.github.denisdementevgithub.voteproject.common.model.AbstractNamedEntity;
 import com.github.denisdementevgithub.voteproject.user.util.DateTimeUtil;
-
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import lombok.Getter;
+import lombok.Setter;
+import org.hibernate.annotations.BatchSize;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 import java.util.List;

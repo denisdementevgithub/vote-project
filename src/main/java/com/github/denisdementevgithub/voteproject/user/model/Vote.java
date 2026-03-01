@@ -1,11 +1,11 @@
 package com.github.denisdementevgithub.voteproject.user.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.github.denisdementevgithub.voteproject.common.model.AbstractBaseEntity;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import com.github.denisdementevgithub.voteproject.common.model.AbstractBaseEntity;
 
-import jakarta.persistence.*;
 import java.time.LocalDate;
 
 @Entity

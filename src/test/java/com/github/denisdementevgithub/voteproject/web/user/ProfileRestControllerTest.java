@@ -1,9 +1,7 @@
 package com.github.denisdementevgithub.voteproject.web.user;
 
 import com.github.denisdementevgithub.voteproject.user.model.User;
-import com.github.denisdementevgithub.voteproject.user.service.RestaurantService;
 import com.github.denisdementevgithub.voteproject.user.service.UserService;
-import com.github.denisdementevgithub.voteproject.user.service.VoteService;
 import com.github.denisdementevgithub.voteproject.user.to.UserTo;
 import com.github.denisdementevgithub.voteproject.user.util.UsersUtil;
 import com.github.denisdementevgithub.voteproject.user.web.json.JsonUtil;
@@ -17,7 +15,6 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import static com.github.denisdementevgithub.voteproject.TestUtil.userHttpBasic;
 import static com.github.denisdementevgithub.voteproject.UserTestData.*;
 import static com.github.denisdementevgithub.voteproject.common.error.ErrorType.DATA_ERROR;
 import static com.github.denisdementevgithub.voteproject.common.error.ErrorType.VALIDATION_ERROR;
@@ -30,7 +27,6 @@ class ProfileRestControllerTest extends AbstractControllerTest {
     public static final String USER_MAIL = "user@yandex.ru";
     @Autowired
     private UserService userService;
-
 
     @Test
     @WithUserDetails(value = USER_MAIL)
@@ -55,7 +51,6 @@ class ProfileRestControllerTest extends AbstractControllerTest {
         USER_MATCHER.assertMatch(userService.getAll(), admin, user1, user2);
     }
 
-
     @Test
     void register() throws Exception {
         UserTo newTo = new UserTo(null, "newName", "newemail@ya.ru", "newPassword");
@@ -65,7 +60,6 @@ class ProfileRestControllerTest extends AbstractControllerTest {
                 .content(JsonUtil.writeValue(newTo)))
                 .andDo(print())
                 .andExpect(status().isCreated());
-
         User created = USER_MATCHER.readFromJson(action);
         int newId = created.id();
         newUser.setId(newId);
@@ -78,11 +72,9 @@ class ProfileRestControllerTest extends AbstractControllerTest {
     void update() throws Exception {
         UserTo updatedTo = new UserTo(null, "newName", "user@yandex.ru", "newPassword");
         perform(MockMvcRequestBuilders.put(REST_URL).contentType(MediaType.APPLICATION_JSON)
-
                 .content(JsonUtil.writeValue(updatedTo)))
                 .andDo(print())
                 .andExpect(status().isNoContent());
-
         USER_MATCHER.assertMatch(userService.get(USER_ID0), UsersUtil.updateFromTo(new User(user), updatedTo));
     }
 

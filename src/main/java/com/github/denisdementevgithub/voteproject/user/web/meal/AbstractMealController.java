@@ -21,7 +21,7 @@ public abstract class AbstractMealController {
 
     public List<MealTo> getAll() {
         log.info("getAll");
-        return MealUtils.listOfMealsToListOfMealTos(service.getAll());
+        return service.getAll();
     }
 
     public List<MealTo> getAllForToday() {

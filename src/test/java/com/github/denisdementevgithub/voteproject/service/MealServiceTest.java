@@ -2,17 +2,13 @@ package com.github.denisdementevgithub.voteproject.service;
 
 import com.github.denisdementevgithub.voteproject.common.error.NotFoundException;
 import com.github.denisdementevgithub.voteproject.user.model.Meal;
-import com.github.denisdementevgithub.voteproject.user.model.Restaurant;
 import com.github.denisdementevgithub.voteproject.user.service.MealService;
-import com.github.denisdementevgithub.voteproject.user.service.RestaurantService;
-import com.github.denisdementevgithub.voteproject.user.to.MealTo;
 import com.github.denisdementevgithub.voteproject.user.web.converter.MealUtils;
 import jakarta.validation.ConstraintViolationException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 import static com.github.denisdementevgithub.voteproject.MealTestData.*;
 import static com.github.denisdementevgithub.voteproject.RestaurantTestData.NOT_FOUND;
@@ -64,7 +60,7 @@ public class MealServiceTest extends AbstractServiceTest {
 
     @Test
     void getAll() {
-        MEAL_MATCHER.assertMatch(service.getAll(), meals);
+        TO_MATCHER.assertMatch(service.getAll(), listOfTestMealsToListOfTestMealTos(meals));
     }
 
     @Test

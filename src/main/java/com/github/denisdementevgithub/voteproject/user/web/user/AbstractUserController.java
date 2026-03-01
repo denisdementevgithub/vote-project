@@ -1,12 +1,12 @@
 package com.github.denisdementevgithub.voteproject.user.web.user;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import com.github.denisdementevgithub.voteproject.user.model.User;
 import com.github.denisdementevgithub.voteproject.user.service.UserService;
 import com.github.denisdementevgithub.voteproject.user.to.UserTo;
 import com.github.denisdementevgithub.voteproject.user.util.UsersUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 

@@ -1,6 +1,5 @@
 package com.github.denisdementevgithub.voteproject.user.util;
 
-import org.springframework.security.crypto.password.PasswordEncoder;
 import com.github.denisdementevgithub.voteproject.user.model.Role;
 import com.github.denisdementevgithub.voteproject.user.model.User;
 import com.github.denisdementevgithub.voteproject.user.to.UserTo;

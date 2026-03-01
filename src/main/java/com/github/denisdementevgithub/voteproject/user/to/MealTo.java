@@ -33,14 +33,12 @@ public class MealTo extends AbstractBaseEntity {
     @Schema(description = "Date of registered (also it is date of voting)")
     private LocalDateTime registered;
 
-    //@ConstructorProperties({"id", "name", "price", "restaurant_id", "restaurant_name", "sumOfVotes", "registered"})
     public MealTo(Integer id, String name, Integer price, Integer restaurant_id, LocalDateTime registered) {
         super(id);
         this.name = name;
         this.price = price;
         this.restaurant_id = restaurant_id;
-        //this.restaurant_name = restaurant_name;
-        //this.sumOfVotes = sumOfVotes;
+
         this.registered = registered;
     }
 

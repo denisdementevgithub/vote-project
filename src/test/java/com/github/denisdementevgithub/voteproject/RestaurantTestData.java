@@ -21,7 +21,6 @@ public class RestaurantTestData {
     public static final int RESTAURANT2_ID = START_SEQ + 5;
     public static final int NOT_FOUND = 10;
 
-
     public static final Restaurant restaurant100004 = new Restaurant(RESTAURANT1_ID, "Столовая", List.of(meal100011, meal100012, meal100013));
     public static final Restaurant restaurant100005 = new Restaurant(RESTAURANT2_ID, "Семейный ресторан", List.of(meal100014, meal100015, meal100016));
     public static final Restaurant restaurant100006 = new Restaurant(RESTAURANT1_ID + 2, "Сказка Востока", List.of(meal100017, meal100018, meal100019));

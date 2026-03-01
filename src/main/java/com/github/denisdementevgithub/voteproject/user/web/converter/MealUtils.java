@@ -6,7 +6,6 @@ import com.github.denisdementevgithub.voteproject.user.to.MealTo;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 public class MealUtils {
@@ -14,9 +13,7 @@ public class MealUtils {
     public static Meal MealToToMeal(MealTo mealTo) {
         Optional<Integer> id = Optional.ofNullable(mealTo.getId());
         Meal meal = new Meal();
-        if (id.isPresent()) {
-            meal.setId(id.get());
-        }
+        id.ifPresent(meal::setId);
         meal.setName(mealTo.getName());
         meal.setPrice(mealTo.getPrice());
         Restaurant restaurant = new Restaurant();
@@ -31,7 +28,7 @@ public class MealUtils {
 
     public static List<MealTo> listOfMealsToListOfMealTos(List<Meal> meals) {
         List<MealTo> listOfMealTo = new ArrayList<>();
-        for (Meal meal:meals) {
+        for (Meal meal : meals) {
             listOfMealTo.add(mealToMealTo(meal));
         }
         return listOfMealTo;

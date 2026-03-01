@@ -16,23 +16,14 @@ spring:
         jdbc.batch_size: 20
   datasource:
     # ImMemory
-    url: jdbc:h2:mem:topjava
-    #    tcp: jdbc:h2:tcp://localhost:9092/mem:topjava
-    # Absolute path
-    #    url: jdbc:h2:C:/projects/bootjava/db/topjava
-    #    tcp: jdbc:h2:tcp://localhost:9092/C:/projects/bootjava/db/topjava
-    # Relative path form current dir
-    #    url: jdbc:h2:./db/topjava
-    # Relative path from home
-    #    url: jdbc:h2:~/topjava
-    #    tcp: jdbc:h2:tcp://localhost:9092/~/topjava
+    url: jdbc:h2:mem:voteproject
     username: sa
     password:
 
   # https://docs.spring.io/spring-boot/docs/current/reference/html/appendix-application-properties.html#common-application-properties-cache
   cache:
-#    cache-names: users
-#    caffeine.spec: maximumSize=5000,expireAfterAccess=60s
+    cache-names: getAllForTodayWithMenu, users
+    caffeine.spec: maximumSize=500,expireAfterAccess=60s
   servlet:
     encoding:
       charset: UTF-8
@@ -42,8 +33,7 @@ spring:
 logging:
   level:
     root: WARN
-    ru.javaops.topjava: DEBUG
+    com.github.denisdementevgithub.voteproject: DEBUG
     org.springframework.security: DEBUG
     org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver: DEBUG
-
 springdoc.swagger-ui.path: /

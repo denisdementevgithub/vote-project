@@ -38,6 +38,7 @@ public class UserService implements UserDetailsService {
         return prepareAndSave(user);
     }
 
+    @Transactional
     @CacheEvict(value = "users", allEntries = true)
     public void delete(int id) {
         get(id);

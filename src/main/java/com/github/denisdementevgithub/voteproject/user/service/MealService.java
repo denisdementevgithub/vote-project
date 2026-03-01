@@ -2,7 +2,11 @@ package com.github.denisdementevgithub.voteproject.user.service;
 
 import com.github.denisdementevgithub.voteproject.user.model.Meal;
 import com.github.denisdementevgithub.voteproject.user.repository.MealRepository;
+import com.github.denisdementevgithub.voteproject.user.to.MealTo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import java.time.LocalDate;
@@ -15,16 +19,18 @@ import static com.github.denisdementevgithub.voteproject.common.validation.Valid
 @Service
 public class MealService {
     private final MealRepository repository;
+    private final Logger log = LoggerFactory.getLogger(getClass());
 
     public MealService(MealRepository repository) {
         this.repository = repository;
     }
 
-    public List<Meal> getAll() {
+    public List<MealTo> getAll() {
         return repository.getAll();
     }
 
     public List<Meal> getAllForToday() {
+        log.info("getAllForToday");
         LocalDate today = LocalDate.now();
         LocalDateTime startDateTime = today.atStartOfDay();
         LocalDateTime endDateTime = today.atTime(LocalTime.MAX);
@@ -45,6 +51,7 @@ public class MealService {
         checkNotFound(repository.save(meal), meal.id());
     }
 
+    @Transactional
     public void delete(int id) {
         get(id);
         repository.delete(id);

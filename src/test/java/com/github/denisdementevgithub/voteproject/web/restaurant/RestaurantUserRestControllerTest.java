@@ -21,11 +21,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 class RestaurantUserRestControllerTest extends AbstractControllerTest {
-    private static final String REST_URL = RestaurantUserRestController.REST_URL;
+    static final String REST_URL = RestaurantUserRestController.REST_URL;
     public static final String USER_MAIL = "user@yandex.ru";
-
-    @Autowired
-    private RestaurantService restaurantService;
 
     @Autowired
     private VoteService voteService;
@@ -39,7 +36,6 @@ class RestaurantUserRestControllerTest extends AbstractControllerTest {
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(RESTAURANT_MATCHER.contentJson(restaurantsForToday));
     }
-
 
     @Test
     @WithUserDetails(value = USER_MAIL)

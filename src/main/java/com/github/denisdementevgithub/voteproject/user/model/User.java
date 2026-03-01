@@ -1,6 +1,8 @@
 package com.github.denisdementevgithub.voteproject.user.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.github.denisdementevgithub.voteproject.common.HasIdAndEmail;
+import com.github.denisdementevgithub.voteproject.common.model.AbstractNamedEntity;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
@@ -10,13 +12,10 @@ import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.*;
 import org.hibernate.annotations.NamedQueries;
 import org.hibernate.annotations.NamedQuery;
+import org.hibernate.annotations.*;
 import org.springframework.util.CollectionUtils;
-import com.github.denisdementevgithub.voteproject.common.HasIdAndEmail;
-import com.github.denisdementevgithub.voteproject.common.model.AbstractNamedEntity;
-
 
 import java.util.*;
 

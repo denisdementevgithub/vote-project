@@ -1,7 +1,6 @@
 package com.github.denisdementevgithub.voteproject.user.repository;
 
 import com.github.denisdementevgithub.voteproject.user.model.Restaurant;
-import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

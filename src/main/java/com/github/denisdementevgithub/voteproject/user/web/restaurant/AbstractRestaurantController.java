@@ -1,9 +1,7 @@
 package com.github.denisdementevgithub.voteproject.user.web.restaurant;
 
 import com.github.denisdementevgithub.voteproject.user.model.Restaurant;
-import com.github.denisdementevgithub.voteproject.user.service.MealService;
 import com.github.denisdementevgithub.voteproject.user.service.RestaurantService;
-import com.github.denisdementevgithub.voteproject.user.service.VoteService;
 import com.github.denisdementevgithub.voteproject.user.web.SecurityUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,12 +17,6 @@ public abstract class AbstractRestaurantController {
 
     @Autowired
     private RestaurantService service;
-
-    @Autowired
-    private MealService mealService;
-
-    @Autowired
-    private VoteService voteService;
 
     public List<Restaurant> getAll() {
         log.info("getAll");
