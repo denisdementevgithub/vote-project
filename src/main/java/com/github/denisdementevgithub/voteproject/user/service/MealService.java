@@ -35,9 +35,9 @@ public class MealService {
         return checkNotFound(repository.get(id), id);
     }
 
-    public Meal create(Meal meals) {
-        Assert.notNull(meals, "menu must not be null");
-        return repository.save(meals);
+    public Meal create(Meal meal) {
+        Assert.notNull(meal, "menu must not be null");
+        return repository.save(meal);
     }
 
     public void update(Meal meal) {

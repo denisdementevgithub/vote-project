@@ -1,9 +1,9 @@
 package com.github.denisdementevgithub.voteproject;
 
+import com.github.denisdementevgithub.voteproject.user.web.json.JsonUtil;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.ResultMatcher;
-import com.github.denisdementevgithub.voteproject.user.web.json.JsonUtil;
 
 import java.io.UnsupportedEncodingException;
 import java.util.List;

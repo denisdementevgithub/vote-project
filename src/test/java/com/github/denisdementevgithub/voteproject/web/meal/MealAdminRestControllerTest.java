@@ -19,8 +19,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.time.LocalDateTime;
 
-import static com.github.denisdementevgithub.voteproject.MealTestData.MEAL_MATCHER;
-import static com.github.denisdementevgithub.voteproject.MealTestData.TO_MATCHER;
+import static com.github.denisdementevgithub.voteproject.MealTestData.*;
 import static com.github.denisdementevgithub.voteproject.RestaurantTestData.*;
 import static com.github.denisdementevgithub.voteproject.common.error.ErrorType.VALIDATION_ERROR;
 import static org.junit.jupiter.api.Assertions.assertThrows;

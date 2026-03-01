@@ -57,7 +57,6 @@ public class RestaurantServiceTest extends AbstractServiceTest {
         RESTAURANT_MATCHER.assertMatch(service.get(RESTAURANT1_ID), getUpdated());
     }
 
-
     @Test
     void getAll() {
         RESTAURANT_MATCHER.assertMatch(service.getAll(), restaurants);
@@ -67,6 +66,4 @@ public class RestaurantServiceTest extends AbstractServiceTest {
     void createWithException() {
         validateRootCause(ConstraintViolationException.class, () -> service.create(new Restaurant(null, null, List.of())));
     }
-
-
 }
