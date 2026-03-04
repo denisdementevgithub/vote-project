@@ -41,7 +41,7 @@ public class RestaurantService {
 
     @Cacheable("getAllForTodayWithMenu")
     public List<Restaurant> getAllForTodayWithMenu() {
-        log.info("getAllForToday");
+        log.info("getAllForTodayWithMenu");
         Map<Restaurant, List<Meal>> map = mealService.getAllForToday().stream()
                 .collect(Collectors.groupingBy(Meal::getRestaurant));
         map.forEach(Restaurant::setMeals);
@@ -52,20 +52,20 @@ public class RestaurantService {
         return checkNotFound(restaurantRepository.get(id), id);
     }
 
-    @CacheEvict(value = "getAllForTodayWithMenu", allEntries = true)
+    @CacheEvict(value = {"getAllForTodayWithMenu", "getAllMealsForToday"}, allEntries = true)
     public Restaurant create(Restaurant restaurant) {
         Assert.notNull(restaurant, "restaurant must not be null");
         return restaurantRepository.save(restaurant);
     }
 
-    @CacheEvict(value = "getAllForTodayWithMenu", allEntries = true)
+    @CacheEvict(value = {"getAllForTodayWithMenu", "getAllMealsForToday"}, allEntries = true)
     public void update(Restaurant restaurant) {
         Assert.notNull(restaurant, "restaurant must not be null");
         checkNotFound(restaurantRepository.save(restaurant), restaurant.id());
     }
 
     @Transactional
-    @CacheEvict(value = "getAllForTodayWithMenu", allEntries = true)
+    @CacheEvict(value = {"getAllForTodayWithMenu", "getAllMealsForToday"}, allEntries = true)
     public void delete(int id) {
         get(id);
         checkNotFound(restaurantRepository.delete(id), id);

@@ -22,7 +22,7 @@ spring:
 
   # https://docs.spring.io/spring-boot/docs/current/reference/html/appendix-application-properties.html#common-application-properties-cache
   cache:
-    cache-names: getAllForTodayWithMenu, users
+    cache-names: getAllForTodayWithMenu, users, getAllMealsForToday
     caffeine.spec: maximumSize=500,expireAfterAccess=60s
   servlet:
     encoding:
@@ -36,4 +36,7 @@ logging:
     com.github.denisdementevgithub.voteproject: DEBUG
     org.springframework.security: DEBUG
     org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver: DEBUG
+    org.springframework.cache: DEBUG
+    org.springframework.cache.interceptor: DEBUG
+    com.github.benmanes.caffeine: DEBUG
 springdoc.swagger-ui.path: /
